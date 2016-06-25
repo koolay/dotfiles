@@ -1,0 +1,3 @@
+Bundle 'mhinz/vim-startify'
+Bundle 'rking/ag'
+Bundle 'maksimr/vim-jsbeautify'
