@@ -1,2 +1,2 @@
 set runtimepath^=~/.vim/bundle/ag
-map <c-f> :call JsBeautify()<cr>
+map <leader>f :call JsBeautify()<cr>
