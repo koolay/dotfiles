@@ -1,3 +1,5 @@
 let g:spf13_bundle_groups=['general', 'writing', 'youcompleteme', 'programming', 'php', 'python', 'javascript', 'html', 'go', 'misc']
 let g:ag_working_path_mode="r"
 set guifont=Consolas:h16
+let g:syntastic_javascript_checkers = ['eslint']
+set nospell
