@@ -7,3 +7,5 @@ Bundle 'jelera/vim-javascript-syntax'
 Bundle 'mxw/vim-jsx'
 Bundle 'editorconfig/editorconfig-vim'
 Bundle 'garbas/vim-snipmate'
+Bundle 'posva/vim-vue'
+
