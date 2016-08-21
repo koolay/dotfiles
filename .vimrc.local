@@ -1,5 +1,7 @@
 set runtimepath^=~/.vim/bundle/ag
 map <leader>f :call JsBeautify()<cr>
+map <leader>j :call JsxBeautify()<cr>
+
 cmap w!! w !sudo tee > /dev/null %
 let NERDTreeQuitOnOpen=0
 let g:go_highlight_structs = 0

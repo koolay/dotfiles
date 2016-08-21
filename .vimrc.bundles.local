@@ -2,5 +2,8 @@ Bundle 'mhinz/vim-startify'
 Bundle 'rking/ag'
 Bundle 'maksimr/vim-jsbeautify'
 Bundle 'moll/vim-node'
+Bundle "justinj/vim-react-snippets"
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'mxw/vim-jsx'
+Bundle 'editorconfig/editorconfig-vim'
+Bundle 'garbas/vim-snipmate'
