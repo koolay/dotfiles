@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#use mycli https://github.com/dbcli/mycli
+
+dev="-h x.x.x.x -P 3306 -u dev --pass xxxx"
+localhost="-h localhost -P 3306 -u root --pass dev"
+
+declare -A hosts
+hosts=( ["pd"]="$dev" ["local"]="$localhost")
+
+if  [ "$#" -lt 2 ]
+then
+    mycli ${hosts[$1]}
+else
+    mycli ${hosts[$1]} -D $2
+fi
