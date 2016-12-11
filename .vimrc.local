@@ -1,12 +1,20 @@
 set runtimepath^=~/.vim/bundle/ag
-map <leader>f :call JsBeautify()<cr>
-map <leader>j :call JsxBeautify()<cr>
-
 set nospell
+" Use the Solarized Dark theme
+set background=dark
+" Don’t blink cursor in normal mode
+set guicursor=n:blinkon0
+" Better line-height
+set linespace=8
 cmap w!! w !sudo tee > /dev/null %
-let NERDTreeQuitOnOpen=0
-let g:go_highlight_structs = 0
-let g:go_highlight_interfaces = 0
-let g:go_highlight_operators = 0
-let g:go_def_mode = 'godef'
 
+" theme
+set guifont=Consolas:h16
+colorscheme solarized
+"colorscheme fruity
+"colorscheme ir_black
+"colorscheme molokai
+"colorscheme peaksea
+
+autocmd bufwritepost *.js silent !standard --fix -w %
+" set autoread
