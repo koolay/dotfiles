@@ -1,3 +1,8 @@
 Bundle 'rking/ag'
 Bundle 'mhinz/vim-startify'
 Bundle 'marijnh/tern_for_vim'
+Bundle 'editorconfig/editorconfig-vim'
+Bundle 'posva/vim-vue'
+Bundle 'mxw/vim-jsx'
+Bundle 'othree/jspc.vim'
+Bundle 'moll/vim-node'
