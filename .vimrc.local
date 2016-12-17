@@ -7,6 +7,7 @@ set background=dark
 set guicursor=n:blinkon0
 " Better line-height
 set linespace=8
+let NERDTreeQuitOnOpen=0
 cmap w!! w !sudo tee > /dev/null %
 
 " theme
