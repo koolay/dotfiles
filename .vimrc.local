@@ -30,9 +30,6 @@ autocmd FileType javascript noremap <leader>d :TernDef<CR>
 autocmd FileType javascript noremap <leader>ref :TernRefs<CR>
 autocmd FileType javascript noremap <leader>re :TernRename<CR>
 autocmd FileType javascript noremap <leader>td :TernDoc<CR>
-"autocmd bufwritepost *.js silent !standard --fix %
-autocmd FileType javascript noremap <buffer> <leader>f :call JsBeautify()<cr>
-set autoread
 
 "Make it easy to add javascript syntax highlighting to .vue files -- Vuejs
 autocmd BufNewFile,BufRead *.vue set filetype=javascript.html.vue
@@ -42,4 +39,7 @@ let g:snipMate.scope_aliases['javascript.html.vue'] = 'javascript,vue,html,css'
 " ignore html
 let syntastic_mode_map = { 'passive_filetypes': ['html'] }
 
-
+"autocmd bufwritepost *.js silent !standard --fix %
+autocmd FileType javascript noremap <buffer> <leader>f :call JsBeautify()<cr>
+autocmd FileType javascript.html.vue noremap <buffer> <leader>f :call HtmlBeautify()<cr>
+set autoread
