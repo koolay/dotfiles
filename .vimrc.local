@@ -9,6 +9,8 @@ set guicursor=n:blinkon0
 set linespace=8
 let NERDTreeQuitOnOpen=0
 cmap w!! w !sudo tee > /dev/null %
+" javascript doc
+nmap <silent> <C-d> ?function<cr>:noh<cr><Plug>(jsdoc)
 
 " theme
 set guifont=Consolas:h16
@@ -18,22 +20,26 @@ colorscheme solarized
 "colorscheme molokai
 "colorscheme peaksea
 
-autocmd FileType javascript noremap <buffer> <leader>r :!standard --fix %<CR><CR>
-
-
 " Javascript
 " ----------
 autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript setlocal commentstring=//\ %s
-" autocmd FileType javascript noremap <buffer> <leader>r :%!js-beautify --type js -j -q -B -f -<CR>
-autocmd FileType javascript noremap <buffer> <leader>r :!standard --fix %<CR><CR>
 autocmd FileType javascript let b:javascript_fold = 0
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 let g:tern_map_keys = 0
 autocmd FileType javascript noremap <leader>d :TernDef<CR>
 autocmd FileType javascript noremap <leader>ref :TernRefs<CR>
 autocmd FileType javascript noremap <leader>re :TernRename<CR>
 autocmd FileType javascript noremap <leader>td :TernDoc<CR>
-let javascript_enable_domhtmlcss=1
-let g:neomake_javascript_enabled_makers = ['standard']
-autocmd BufLeave *.js             normal! mJ
+"autocmd bufwritepost *.js silent !standard --fix %
+autocmd FileType javascript noremap <buffer> <leader>f :call JsBeautify()<cr>
+set autoread
+
+"Make it easy to add javascript syntax highlighting to .vue files -- Vuejs
+autocmd BufNewFile,BufRead *.vue set filetype=javascript.html.vue
+let g:snipMate = {}
+let g:snipMate.scope_aliases = {}
+let g:snipMate.scope_aliases['javascript.html.vue'] = 'javascript,vue,html,css'
+" ignore html
+let syntastic_mode_map = { 'passive_filetypes': ['html'] }
+
+

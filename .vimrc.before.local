@@ -3,6 +3,14 @@ let g:spf13_bundle_groups = ['general', 'writing', 'youcompleteme', 'programming
 let g:solarized_termtrans = 1
 let g:solarized_termcolors=256
 
-let g:syntastic_javascript_checkers = ['standard', 'eslint']
-let g:syntastic_javascript_standard_exec = "/usr/local/bin/standard"
-let g:syntastic_javascript_eslint_exec = "/usr/local/bin/eslint"
+let javascript_enable_domhtmlcss=1
+let g:syntastic_javascript_checkers = ['eslint','standard']
+
+let g:tern_show_argument_hints='on_hold'
+let g:tern_map_keys=1
+
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
