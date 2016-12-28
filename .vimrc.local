@@ -5,8 +5,6 @@ set nospell
 set background=dark
 " Don’t blink cursor in normal mode
 set guicursor=n:blinkon0
-" Better line-height
-set linespace=8
 let NERDTreeQuitOnOpen=0
 cmap w!! w !sudo tee > /dev/null %
 " javascript doc
@@ -39,6 +37,7 @@ let g:snipMate.scope_aliases['javascript.html.vue'] = 'javascript,vue,html,css'
 " ignore html
 let syntastic_mode_map = { 'passive_filetypes': ['html'] }
 
+let g:editorconfig_Beautifier = expand("<sfile>:p:h").'/.editorconfig'
 "autocmd bufwritepost *.js silent !standard --fix %
 autocmd FileType javascript noremap <buffer> <leader>f :call JsBeautify()<cr>
 autocmd FileType javascript.html.vue noremap <buffer> <leader>f :call HtmlBeautify()<cr>
