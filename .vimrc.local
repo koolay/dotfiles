@@ -1,3 +1,4 @@
+set termguicolors
 set autoread
 set runtimepath^=~/.vim/bundle/ag
 set nospell
@@ -12,7 +13,7 @@ nmap <silent> <C-d> ?function<cr>:noh<cr><Plug>(jsdoc)
 
 " theme
 set guifont=Consolas:h16
-colorscheme solarized
+"colorscheme solarized
 "colorscheme fruity
 "colorscheme ir_black
 "colorscheme molokai
