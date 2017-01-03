@@ -3,7 +3,7 @@
 " ######################################################################################################################
 
 " General {
-    set termguicolors
+    " set termguicolors
     filetype plugin indent on   " Automatically detect file types.
     syntax on                   " Syntax highlighting
     set mouse=a                 " Automatically enable mouse usage
@@ -28,7 +28,8 @@
     set tabpagemax=15               " Only show 15 tabs
     set showmode                    " Display the current mode
     set cursorline                  " Highlight current line
-
+    set guifont=Consolas:h16
+    let g:solarized_termcolors=256
     highlight clear SignColumn      " SignColumn should match background
     highlight clear LineNr          " Current line number row will have same background color in relative mode
 
@@ -83,7 +84,7 @@ call plug#begin('~/.config/nvim/plugged')
 " 1.1 Plugin list
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " theme {
-Plug 'morhetz/gruvbox'
+Plug 'altercation/vim-colors-solarized'
 set background=dark
 " }
 
@@ -117,7 +118,15 @@ let g:airline_theme="powerlineish"
 " }
 
 Plug 'easymotion/vim-easymotion'
+
 Plug 'AndrewRadev/splitjoin.vim'
+" {
+    let g:splitjoin_split_mapping = ''
+    let g:splitjoin_join_mapping = ''
+    noremap sj :SplitjoinJoin<cr>
+    noremap sk :SplitjoinSplit<cr>
+"}
+
 Plug 'thinca/vim-quickrun'
 
 "}}}
@@ -132,7 +141,7 @@ Plug 'benekastah/neomake'
 nnoremap ]e :lnext<CR>
 nnoremap [e :lprevious<CR>
 function ESLintFix()
-  silent execute "!./node_modules/.bin/eslint --fix %"
+  silent execute "!eslint --fix %"
   edit! %
 endfunction
 nnoremap <S-F> :call ESLintFix()<CR>
@@ -154,6 +163,11 @@ let g:neomake_info_sign    = {'text': 'i', 'texthl': 'NeomakeInfoSign'}
 
 " Moder JS support (indent, syntax, etc)
 Plug 'pangloss/vim-javascript'
+" javascript-libraries-syntax {
+Plug 'othree/javascript-libraries-syntax.vim'
+let g:used_javascript_libs = 'vue'
+" }
+Plug 'othree/yajs.vim'
 Plug 'moll/vim-node'
 " JSX syntax
 Plug 'mxw/vim-jsx'
@@ -173,10 +187,19 @@ autocmd FileType javascript noremap <leader>td :TernDoc<CR>
 
 " JS Documentation comments
 Plug 'heavenshell/vim-jsdoc'
+" {
+let g:jsdoc_allow_input_prompt = 1
+let g:jsdoc_input_description = 1
+let g:jsdoc_enable_es6 = 1
+nmap <silent> <C-d> ?function<cr>:noh<cr><Plug>(jsdoc)
+"}
 
-" auto fix eslint {
-" }
 
+" vue {
+Plug 'posva/vim-vue'
+au BufRead,BufNewFile *.vue set ft=javascript
+
+"}
 
 "}}}
 "
@@ -212,9 +235,9 @@ Plug 'honza/dockerfile.vim'
 " ---------------------------------------------------------------------------------------------------------------------
 " Fuzzy file finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes n \| ./install' }
-" Plug 'junegunn/fzf', { 'dir': '/usr/local/Cellar/fzf/0.13.2', 'do': './install --al' }
 Plug 'junegunn/fzf.vim'
 let g:fzf_action = {
+      \ 'ctrl-t': 'tab split',
       \ 'ctrl-s': 'split',
       \ 'ctrl-v': 'vsplit'
       \ }
@@ -262,6 +285,8 @@ Plug 'godlygeek/tabular', { 'on':  'Tabularize' }
 " 1.2 End of plugin declaration
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 call plug#end()
+
+colorscheme solarized
 "}}}
 
 
@@ -282,7 +307,6 @@ call plug#end()
     cmap cwd lcd %:p:h
     cmap cd. lcd %:p:h
 
-    nmap <silent> <C-d> ?function<cr>:noh<cr><Plug>(jsdoc)
 
     " For when you forget to sudo.. Really Write the file.
     cmap w!! w !sudo tee % >/dev/null
@@ -352,12 +376,6 @@ call plug#end()
 "
 
 " -----------------------------------------------------
-" JsDoc settings {{{
-" -----------------------------------------------------
-let g:jsdoc_allow_input_prompt=1
-let g:jsdoc_input_description=1
-let g:jsdoc_enable_es6=1
-"}}}
 
 " YouCompleteMe {
     let g:ycm_keep_logfiles = 1
@@ -386,8 +404,7 @@ let g:jsdoc_enable_es6=1
   " }
 
   " splitjoin {
-    nmap sj :SplitjoinSplit<cr>
-    nmap sk :SplitjoinJoin<cr> 
+    
   " }
 
 " golang {

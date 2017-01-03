@@ -1,4 +1,3 @@
-set termguicolors
 set autoread
 set runtimepath^=~/.vim/bundle/ag
 set nospell
