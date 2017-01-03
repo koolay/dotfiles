@@ -256,6 +256,11 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'itchyny/lightline.vim'
 " Buffers tabline
 Plug 'ap/vim-buftabline'
+Plug 'alvan/vim-closetag'
+"{
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.vue,*.jsx"
+"}
+
 "}}}
 
 " ---------------------------------------------------------------------------------------------------------------------
