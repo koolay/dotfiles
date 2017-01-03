@@ -88,6 +88,8 @@ Plug 'altercation/vim-colors-solarized'
 set background=dark
 " }
 
+Plug 'mhinz/vim-startify'
+
 " Automatically closing pair stuff
 Plug 'cohama/lexima.vim'
 
