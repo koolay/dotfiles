@@ -1,71 +1,7 @@
 " ######################################################################################################################
 " ### Author : koolay
 " ######################################################################################################################
-
-" General {
-    " set termguicolors
-    filetype plugin indent on   " Automatically detect file types.
-    syntax on                   " Syntax highlighting
-    set mouse=a                 " Automatically enable mouse usage
-    set mousehide               " Hide the mouse cursor while typing
-    scriptencoding utf-8
-
-    if has('clipboard')
-        if has('unnamedplus')  " When possible use + register for copy-paste
-            set clipboard=unnamed,unnamedplus
-        else         " On mac and Windows, use * register for copy-paste
-            set clipboard=unnamed
-        endif
-    endif
-
-    set iskeyword-=.                    " '.' is an end of word designator
-    set iskeyword-=#                    " '#' is an end of word designator
-    set iskeyword-=-                    " '-' is an end of word designator
-
-" }
-
-" UI {
-    set tabpagemax=15               " Only show 15 tabs
-    set showmode                    " Display the current mode
-    set cursorline                  " Highlight current line
-    set guifont=Consolas:h16
-    let g:solarized_termcolors=256
-    highlight clear SignColumn      " SignColumn should match background
-    highlight clear LineNr          " Current line number row will have same background color in relative mode
-
-    set backspace=indent,eol,start  " Backspace for dummies
-    set linespace=0                 " No extra spaces between rows
-    set number                      " Line numbers on
-    set showmatch                   " Show matching brackets/parenthesis
-    set incsearch                   " Find as you type search
-    set hlsearch                    " Highlight search terms
-    set winminheight=0              " Windows can be 0 line high
-    set ignorecase                  " Case insensitive search
-    set smartcase                   " Case sensitive when uc present
-    set wildmenu                    " Show list instead of just completing
-    set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
-    set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
-    set scrolljump=5                " Lines to scroll when cursor leaves screen
-    set scrolloff=3                 " Minimum lines to keep above and below cursor
-    set foldenable                  " Auto fold code
-    set list
-    set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
-    set wildignore=*.swp,*.bak,*.pyc,*.class
-    set noswapfile
-    set nobackup
-" }
-
-" Formatting {
-    set nowrap                      " Do not wrap long lines
-    set autoindent                  " Indent at the same level of the previous line
-    set shiftwidth=4                " Use indents of 4 spaces
-    set expandtab                   " Tabs are spaces, not tabs
-    set tabstop=4                   " An indentation every four columns
-    set softtabstop=4               " Let backspace delete indent
-    set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
-    set splitright                  " Puts new vsplit windows to the right of the current
-    set splitbelow                  " Puts new split windows to the bottom of the current
-" }
+filetype off
 
 " ======================================================================================================================
 " 1.0 Plugin manager (Plug) settings
@@ -84,8 +20,8 @@ call plug#begin('~/.config/nvim/plugged')
 " 1.1 Plugin list
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " theme {
-Plug 'altercation/vim-colors-solarized'
-set background=dark
+" Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
 " }
 
 Plug 'mhinz/vim-startify'
@@ -98,7 +34,46 @@ Plug 'SirVer/ultisnips'
 
 Plug 'honza/vim-snippets'
 
-Plug 'Valloric/YouCompleteMe'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+" Plug 'Valloric/YouCompleteMe'
+
+" { deoplete.nvim
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+    Plug 'zchee/deoplete-go', { 'do': 'make'}
+    " neocomplete like
+    set completeopt+=noinsert
+    " deoplete.nvim recommend
+    set completeopt+=noselect
+    let g:deoplete#enable_at_startup = 1
+    let g:tern_request_timeout = 1
+    let g:tern_show_signature_in_pum = '0'  " This do disable full signature type on autocomplete
+    let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+    let g:deoplete#sources#go#use_cache = 1
+
+    "Add extra filetypes
+    let g:tern#filetypes = [
+                    \ 'jsx',
+                    \ 'javascript.jsx',
+                    \ 'vue'
+                    \ ]
+    " remap Ultisnips for compatibility for YCM
+    let g:UltiSnipsExpandTrigger = '<C-j>'
+    let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+    let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+
+    " Enable omni completion.
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+    " Disable the neosnippet preview candidate window
+    " When enabled, there can be too much visual noise
+    " especially when splits are used.
+    set completeopt-=preview
+"}
 
 " Commenting support (gc)
 Plug 'tpope/vim-commentary'
@@ -117,6 +92,11 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme="powerlineish"
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
 " }
 
 Plug 'easymotion/vim-easymotion'
@@ -159,6 +139,7 @@ let g:neomake_info_sign    = {'text': 'i', 'texthl': 'NeomakeInfoSign'}
 " }
 
 
+
 " ---------------------------------------------------------------------------------------------------------------------
 " JS (ES6, React) {{{
 " ---------------------------------------------------------------------------------------------------------------------
@@ -199,7 +180,7 @@ nmap <silent> <C-d> ?function<cr>:noh<cr><Plug>(jsdoc)
 
 " vue {
 Plug 'posva/vim-vue'
-au BufRead,BufNewFile *.vue set ft=javascript
+autocmd BufRead,BufNewFile *.vue set ft=javascript
 
 "}
 
@@ -292,9 +273,77 @@ Plug 'godlygeek/tabular', { 'on':  'Tabularize' }
 " 1.2 End of plugin declaration
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 call plug#end()
-
-colorscheme solarized
 "}}}
+
+" General {
+    filetype plugin indent on   " Automatically detect file types.
+    syntax on                   " Syntax highlighting
+    set mouse=a                 " Automatically enable mouse usage
+    set mousehide               " Hide the mouse cursor while typing
+    scriptencoding utf-8
+
+    if has('clipboard')
+        if has('unnamedplus')  " When possible use + register for copy-paste
+            set clipboard=unnamed,unnamedplus
+        else         " On mac and Windows, use * register for copy-paste
+            set clipboard=unnamed
+        endif
+    endif
+
+    set iskeyword-=.                    " '.' is an end of word designator
+    set iskeyword-=#                    " '#' is an end of word designator
+    set iskeyword-=-                    " '-' is an end of word designator
+
+" }
+
+" UI {
+    set tabpagemax=15               " Only show 15 tabs
+    set showmode                    " Display the current mode
+    set cursorline                  " Highlight current line
+    set termguicolors
+    set background=light
+    let g:gruvbox_bold=1
+    let g:gruvbox_contrast_dark="hard" "soft, medium and hard
+    let g:gruvbox_contrast_light="hard"
+    color gruvbox
+    set guifont=Consolas:h16
+
+    let g:solarized_termcolors=256
+    highlight clear SignColumn      " SignColumn should match background
+    highlight clear LineNr          " Current line number row will have same background color in relative mode
+    set backspace=indent,eol,start  " Backspace for dummies
+    set linespace=0                 " No extra spaces between rows
+    set number                      " Line numbers on
+    set showmatch                   " Show matching brackets/parenthesis
+    set incsearch                   " Find as you type search
+    set hlsearch                    " Highlight search terms
+    set winminheight=0              " Windows can be 0 line high
+    set ignorecase                  " Case insensitive search
+    set smartcase                   " Case sensitive when uc present
+    set wildmenu                    " Show list instead of just completing
+    set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
+    set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
+    set scrolljump=5                " Lines to scroll when cursor leaves screen
+    set scrolloff=3                 " Minimum lines to keep above and below cursor
+    set foldenable                  " Auto fold code
+    set list
+    set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
+    set wildignore=*.swp,*.bak,*.pyc,*.class
+    set noswapfile
+    set nobackup
+" }
+
+" Formatting {
+    set nowrap                      " Do not wrap long lines
+    set autoindent                  " Indent at the same level of the previous line
+    set shiftwidth=4                " Use indents of 4 spaces
+    set expandtab                   " Tabs are spaces, not tabs
+    set tabstop=4                   " An indentation every four columns
+    set softtabstop=4               " Let backspace delete indent
+    set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
+    set splitright                  " Puts new vsplit windows to the right of the current
+    set splitbelow                  " Puts new split windows to the bottom of the current
+" }
 
 
 " Key (re)Mappings {
@@ -317,14 +366,6 @@ colorscheme solarized
 
     " For when you forget to sudo.. Really Write the file.
     cmap w!! w !sudo tee % >/dev/null
-
-    " Some helpers to edit mode
-    " http://vimcasts.org/e/14
-    cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-    map <leader>ew :e %%
-    map <leader>es :sp %%
-    map <leader>ev :vsp %%
-    map <leader>et :tabe %%
 
     " Adjust viewports to the same size
     map <Leader>= <C-w>=
@@ -379,60 +420,33 @@ colorscheme solarized
     "
   map <S-H> gT
   map <S-L> gt
- 
 "
 
 " -----------------------------------------------------
-
-" YouCompleteMe {
-    let g:ycm_keep_logfiles = 1
-    let g:ycm_log_level = 'debug'
-    let g:acp_enableAtStartup = 0
-
-    " enable completion from tags
-    let g:ycm_collect_identifiers_from_tags_files = 1
-
-    " remap Ultisnips for compatibility for YCM
-    let g:UltiSnipsExpandTrigger = '<C-j>'
-    let g:UltiSnipsJumpForwardTrigger = '<C-j>'
-    let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
-
-    " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-    " Disable the neosnippet preview candidate window
-    " When enabled, there can be too much visual noise
-    " especially when splits are used.
-    set completeopt-=preview
-  " }
-
-  " splitjoin {
-    
-  " }
-
 " golang {
-
+  let g:go_play_open_browser = 0
+  let g:go_fmt_command = "gofmt"
+  let g:go_fmt_fail_silently = 1
+  let g:go_snippet_engine = "neosnippet"
   let g:go_highlight_functions = 1
   let g:go_highlight_methods = 1
   let g:go_highlight_structs = 1
   let g:go_highlight_operators = 1
   let g:go_highlight_build_constraints = 1
-  let g:go_fmt_command = "goimports"
+  let g:go_doc_keywordprg_enabled = 0
+
   let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
   let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-  au FileType go nmap <Leader>s <Plug>(go-implements)
-  au FileType go nmap <Leader>i <Plug>(go-info)
-  au FileType go nmap <Leader>e <Plug>(go-rename)
-  au FileType go nmap <leader>r <Plug>(go-run)
-  au FileType go nmap <leader>b <Plug>(go-build)
-  au FileType go nmap <leader>t <Plug>(go-test)
-  au FileType go nmap <Leader>gd <Plug>(go-doc)
-  au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-  au FileType go nmap <leader>co <Plug>(go-coverage)
+  autocmd FileType go nmap gd <Plug>(go-def)
+  autocmd FileType go nmap <Leader>s <Plug>(go-def-split)
+  autocmd FileType go nmap <Leader>v <Plug>(go-def-vertical)
+  autocmd FileType go nmap <Leader>i <Plug>(go-info)
+  autocmd FileType go nmap  <leader>r  <Plug>(go-run)
+  autocmd FileType go nmap  <leader>b  <Plug>(go-build)
+  autocmd FileType go nmap  <leader>t  <Plug>(go-test)
+  autocmd FileType go nmap  <leader>tc  <Plug>(go-coverage)
+  autocmd FileType go nmap <Leader>d <Plug>(go-doc)
+
 " }
   
 " -----------------------------------------------------
