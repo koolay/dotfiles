@@ -1,29 +1,28 @@
 set autoread
-set runtimepath^=~/.vim/bundle/ag
 set nospell
 " Use the Solarized Dark theme
-set background=dark
+set background=light
 " Don’t blink cursor in normal mode
-set guicursor=n:blinkon0
-let NERDTreeQuitOnOpen=0
 cmap w!! w !sudo tee > /dev/null %
 " javascript doc
 nmap <silent> <C-d> ?function<cr>:noh<cr><Plug>(jsdoc)
 
 " theme
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+set termguicolors
 set guifont=Consolas:h16
+colorscheme gruvbox
 "colorscheme solarized
 "colorscheme fruity
 "colorscheme ir_black
 "colorscheme molokai
 "colorscheme peaksea
-
 " Javascript
 " ----------
-autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
 autocmd FileType javascript setlocal commentstring=//\ %s
-autocmd FileType javascript let b:javascript_fold = 0
-let g:tern_map_keys = 0
 autocmd FileType javascript noremap <leader>d :TernDef<CR>
 autocmd FileType javascript noremap <leader>ref :TernRefs<CR>
 autocmd FileType javascript noremap <leader>re :TernRename<CR>
@@ -34,11 +33,6 @@ autocmd BufNewFile,BufRead *.vue set filetype=javascript.html.vue
 let g:snipMate = {}
 let g:snipMate.scope_aliases = {}
 let g:snipMate.scope_aliases['javascript.html.vue'] = 'javascript,vue,html,css'
-" ignore html
-let syntastic_mode_map = { 'passive_filetypes': ['html'] }
 
-let g:editorconfig_Beautifier = expand("<sfile>:p:h").'/.editorconfig'
-"autocmd bufwritepost *.js silent !standard --fix %
-autocmd FileType javascript noremap <buffer> <leader>f :call JsBeautify()<cr>
-autocmd FileType javascript.html.vue noremap <buffer> <leader>f :call HtmlBeautify()<cr>
+noremap <Leader>f :Fixmyjs<CR>
 set autoread

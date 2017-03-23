@@ -50,7 +50,8 @@ Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
     let g:tern_show_signature_in_pum = '0'  " This do disable full signature type on autocomplete
     let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
     let g:deoplete#sources#go#use_cache = 1
-
+    let g:go_fmt_command = "goimports"
+    let g:go_fmt_autosave = 1
     "Add extra filetypes
     let g:tern#filetypes = [
                     \ 'jsx',
@@ -435,7 +436,7 @@ call plug#end()
   let g:go_highlight_build_constraints = 1
   let g:go_doc_keywordprg_enabled = 0
 
-  let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+  let g:syntastic_go_checkers = ['govet', 'errcheck']
   let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
   autocmd FileType go nmap gd <Plug>(go-def)
   autocmd FileType go nmap <Leader>s <Plug>(go-def-split)
