@@ -6,7 +6,6 @@ set background=light
 cmap w!! w !sudo tee > /dev/null %
 " javascript doc
 nmap <silent> <C-d> ?function<cr>:noh<cr><Plug>(jsdoc)
-
 " theme
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
@@ -34,5 +33,8 @@ let g:snipMate = {}
 let g:snipMate.scope_aliases = {}
 let g:snipMate.scope_aliases['javascript.html.vue'] = 'javascript,vue,html,css'
 
-noremap <Leader>f :Fixmyjs<CR>
+autocmd bufwritepost *.js silent !standard --fix %
+set autoread
+
+set runtimepath^=~/.vim/bundle/ag
 set autoread

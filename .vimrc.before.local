@@ -1,7 +1,6 @@
 let NERDTreeQuitOnOpen=0
 let g:spf13_bundle_groups=['general', 'writing', 'youcompleteme', 'programming', 'php', 'python', 'javascript', 'html', 'go', 'misc']
 
-let g:fixmyjs_rc_path = '$HOME/.eslintrc.js'
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
