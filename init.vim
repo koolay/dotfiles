@@ -35,45 +35,35 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-" Plug 'Valloric/YouCompleteMe'
 
 " { deoplete.nvim
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-    Plug 'zchee/deoplete-go', { 'do': 'make'}
-    " neocomplete like
-    set completeopt+=noinsert
-    " deoplete.nvim recommend
-    set completeopt+=noselect
-    let g:deoplete#enable_at_startup = 1
-    let g:tern_request_timeout = 1
-    let g:tern_show_signature_in_pum = '0'  " This do disable full signature type on autocomplete
-    let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-    let g:deoplete#sources#go#use_cache = 1
-    let g:go_fmt_command = "goimports"
-    let g:go_fmt_autosave = 1
+      Plug 'roxma/nvim-yarp'"
+      Plug 'ncm2/ncm2'
+      Plug 'ncm2/ncm2-bufword'
+      Plug 'ncm2/ncm2-path'
+      Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
+      Plug 'filipekiss/ncm2-look.vim', { 'for' : 'md' }                       " Look
+      Plug 'ncm2/ncm2-ultisnips'                                              " Snippets
+      Plug 'ncm2/ncm2-tern', { 'for': 'js', 'do' : 'npm i' }                  " Tern
+      Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                                 " VimScript
+      Plug 'ncm2/ncm2-go', { 'for' : 'go' }                                   " Golang
+      Plug 'ncm2/ncm2-jedi', { 'for' : 'python' }                             " Python
+      " " enable ncm2 for all buffers
+      autocmd BufEnter * call ncm2#enable_for_buffer()
+
+      " IMPORTANT: :help Ncm2PopupOpen for more information
+      set completeopt=noinsert,menuone,noselect
+      " LanguageServer client for NeoVim.
+      Plug 'autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'do': 'bash install.sh',
+      \ }
+
     "Add extra filetypes
-    let g:tern#filetypes = [
-                    \ 'jsx',
-                    \ 'javascript.jsx',
-                    \ 'vue'
-                    \ ]
     " remap Ultisnips for compatibility for YCM
-    let g:UltiSnipsExpandTrigger = '<C-j>'
-    let g:UltiSnipsJumpForwardTrigger = '<C-j>'
-    let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
-
-    " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-    " Disable the neosnippet preview candidate window
-    " When enabled, there can be too much visual noise
-    " especially when splits are used.
-    set completeopt-=preview
+    let g:UltiSnipsExpandTrigger = '<Tab>'
+    let g:UltiSnipsJumpForwardTrigger = '<Tab>'
+    " let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 "}
 
 " Commenting support (gc)
@@ -119,69 +109,47 @@ Plug 'thinca/vim-quickrun'
 " ---------------------------------------------------------------------------------------------------------------------
 Plug 'ervandew/supertab'
 
-" lint Asynchronous maker and linter (needs linters to work) {}
-Plug 'benekastah/neomake'
-nnoremap ]e :lnext<CR>
-nnoremap [e :lprevious<CR>
-function ESLintFix()
-  silent execute "!eslint --fix %"
-  edit! %
-endfunction
-nnoremap <S-F> :call ESLintFix()<CR>
+" ALE {{{
+    Plug 'w0rp/ale' " Asynchonous linting engine
+    let g:ale_set_highlights = 0
+    let g:ale_change_sign_column_color = 0
+    let g:ale_sign_column_always = 1
+    let g:ale_sign_error = '✖'
+    let g:ale_sign_warning = '⚠'
+    let g:ale_echo_msg_error_str = '✖'
+    let g:ale_echo_msg_warning_str = '⚠'
+    let g:ale_echo_msg_format = '%severity% %s% [%linter%% code%]'
+    " let g:ale_completion_enabled = 1
 
-let g:neomake_open_list = 1
-let g:neomake_javascript_enabled_makers = ['eslint']
-autocmd! BufWritePost * Neomake
-let g:neomake_message_sign = {'text': '>', 'texthl': 'NeomakeMessageSign'}
-let g:neomake_warning_sign = {'text': '!', 'texthl': 'Identifier'}
-let g:neomake_error_sign   = {'text': 'X', 'texthl': 'Statement'}
-let g:neomake_info_sign    = {'text': 'i', 'texthl': 'NeomakeInfoSign'}
+    let g:ale_linters = {
+    \   'javascript': ['eslint'],
+    \   'typescript': ['tsserver', 'tslint'],
+    \   'typescript.tsx': ['tsserver', 'tslint'],
+    \   'html': []
+    \}
+    let g:ale_fixers = {}
+    let g:ale_fixers['javascript'] = ['prettier']
+    let g:ale_fixers['typescript'] = ['prettier', 'tslint']
+    let g:ale_fixers['json'] = ['prettier']
+    let g:ale_fixers['css'] = ['prettier']
+    let g:ale_javascript_prettier_use_local_config = 1
+    let g:ale_fix_on_save = 0
+    " Use quickfix list
+    let g:ale_set_quickfix = 1
+    nmap <silent> [e <Plug>(ale_previous_wrap)
+    nmap <silent> ]e <Plug>(ale_next_wrap)
 
+" }}}
 " }
 
-
-
-" ---------------------------------------------------------------------------------------------------------------------
-" JS (ES6, React) {{{
-" ---------------------------------------------------------------------------------------------------------------------
-
-" Moder JS support (indent, syntax, etc)
-Plug 'pangloss/vim-javascript'
-" javascript-libraries-syntax {
-Plug 'othree/javascript-libraries-syntax.vim'
-let g:used_javascript_libs = 'vue'
 " }
 Plug 'othree/yajs.vim'
 Plug 'moll/vim-node'
-" JSX syntax
-Plug 'mxw/vim-jsx'
 " Typescript syntax
 Plug 'leafgarland/typescript-vim'
 " JSON syntax
 Plug 'sheerun/vim-json'
-" Autocomplete using flow (npm install -g flow-bin)
-Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
-" tern {
-Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
-autocmd FileType javascript noremap <leader>d :TernDef<CR>
-autocmd FileType javascript noremap <leader>ref :TernRefs<CR>
-autocmd FileType javascript noremap <leader>re :TernRename<CR>
-autocmd FileType javascript noremap <leader>td :TernDoc<CR>
 " }
-
-" JS Documentation comments
-Plug 'heavenshell/vim-jsdoc'
-" {
-let g:jsdoc_allow_input_prompt = 1
-let g:jsdoc_input_description = 1
-let g:jsdoc_enable_es6 = 1
-nmap <silent> <C-d> ?function<cr>:noh<cr><Plug>(jsdoc)
-"}
-
-
-" vue {
-Plug 'posva/vim-vue'
-autocmd BufRead,BufNewFile *.vue set ft=javascript
 
 "}
 
@@ -193,8 +161,6 @@ autocmd BufRead,BufNewFile *.vue set ft=javascript
 
 " HTML5 syntax
 Plug 'othree/html5.vim'
-" SCSS syntax
-Plug 'cakebaker/scss-syntax.vim'
 " Color highlighter
 Plug 'lilydjwg/colorizer', { 'for': ['css', 'sass', 'scss', 'less', 'html', 'xdefaults', 'javascript', 'javascript.jsx'] }
 "}}}
@@ -253,6 +219,11 @@ let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.vue,*.jsx"
 
 " Fugitive
 Plug 'tpope/vim-fugitive'
+nmap <silent> <leader>gs :Gstatus<cr>
+nmap <leader>ge :Gedit<cr>
+nmap <silent><leader>gr :Gread<cr>
+nmap <silent><leader>gb :Gblame<cr>
+
 " Git log viewer (Gitv! for file mode)
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 " Git changes showed on line numbers
@@ -298,8 +269,10 @@ call plug#end()
 " }
 
 " UI {
+"
+    set encoding=UTF-8
     set tabpagemax=15               " Only show 15 tabs
-    set showmode                    " Display the current mode
+    set noshowmode                    " Display the current mode
     set cursorline                  " Highlight current line
     set termguicolors
     set background=light
@@ -308,6 +281,7 @@ call plug#end()
     let g:gruvbox_contrast_light="hard"
     color gruvbox
     set guifont=Consolas:h16
+
 
     let g:solarized_termcolors=256
     highlight clear SignColumn      " SignColumn should match background
@@ -429,12 +403,6 @@ call plug#end()
   let g:go_fmt_command = "gofmt"
   let g:go_fmt_fail_silently = 1
   let g:go_snippet_engine = "neosnippet"
-  let g:go_highlight_functions = 1
-  let g:go_highlight_methods = 1
-  let g:go_highlight_structs = 1
-  let g:go_highlight_operators = 1
-  let g:go_highlight_build_constraints = 1
-  let g:go_doc_keywordprg_enabled = 0
 
   let g:syntastic_go_checkers = ['govet', 'errcheck']
   let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
@@ -448,6 +416,56 @@ call plug#end()
   autocmd FileType go nmap  <leader>tc  <Plug>(go-coverage)
   autocmd FileType go nmap <Leader>d <Plug>(go-doc)
 
+  au FileType go nmap <leader>gDv <Plug>(go-doc-vertical)
+
+  " Run goimports when running gofmt
+  let g:go_fmt_command = "goreturns"
+
+  " Set neosnippet as snippet engine
+  let g:go_snippet_engine = "neosnippet"
+
+  " Enable syntax highlighting per default
+  let g:go_highlight_types = 1
+  let g:go_highlight_fields = 1
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_structs = 1
+  let g:go_highlight_operators = 1
+  let g:go_highlight_build_constraints = 1
+  let g:go_highlight_extra_types = 1
+
+  " Show the progress when running :GoCoverage
+  let g:go_echo_command_info = 1
+
+  " Highlight variable uses
+  let g:go_auto_sameids = 1
+
+  " Fix for location list when vim-go is used together with Syntastic
+  let g:go_list_type = "quickfix"
+
+  " Add the failing test name to the output of :GoTest
+  let g:go_test_show_name = 1
+
+  let g:go_gocode_propose_source=1
+
+  let g:go_fmt_autosave = 1
+  " gometalinter configuration
+  let g:go_metalinter_command = ""
+  let g:go_metalinter_deadline = "5s"
+  let g:go_metalinter_enabled = [
+      \ 'deadcode',
+      \ 'gas',
+      \ 'goconst',
+      \ 'gocyclo',
+      \ 'golint',
+      \ 'gosimple',
+      \ 'ineffassign',
+      \ 'vet',
+      \ 'vetshadow'
+  \]
+
+  " Set whether the JSON tags should be snakecase or camelcase.
+  let g:go_addtags_transform = "snakecase"
 " }
   
 " -----------------------------------------------------
