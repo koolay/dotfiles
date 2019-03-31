@@ -418,6 +418,10 @@ call plug#end()
 
     let mapleader = ','
     let maplocalleader = '_'
+    nnoremap <leader>wo :only<CR>
+    nnoremap <leader>ws :split<CR>
+    nnoremap <leader>wn :tabnew<CR>
+    nnoremap <leader>wv :vsplit<CR>
 
     " clear highlighted search
     noremap <space> :set hlsearch! hlsearch?<cr>
@@ -458,7 +462,7 @@ call plug#end()
     nmap <leader>nt :NERDTreeFind<CR>
     nnoremap <c-e> :NERDTreeToggle<cr>
     " Start nerdtree when opening vim
-    let g:nerdtree_tabs_open_on_console_startup = 0
+    let g:nerdtree_tabs_open_on_console_startup = 1
 
     " Don't start nerdtree when opening a diff
     let g:nerdtree_tabs_no_startup_for_diff = 1
