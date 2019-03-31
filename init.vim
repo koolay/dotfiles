@@ -179,6 +179,17 @@ Plug 'keith/tmux.vim'
 Plug 'honza/dockerfile.vim'
 "}}}
 "
+" tagbar {{{
+
+  Plug 'majutsushi/tagbar'
+  let g:tagbar_left = 1
+  let g:tagbar_width = 35
+  let g:tagbar_autofocus = 1
+  let g:tagbar_autoclose = 0
+  let g:tagbar_indent = 2
+  let g:tagbar_show_linenumbers = 1
+  " let g:tagbar_iconchars = ['►', '▼']
+" }}}
 
 " ---------------------------------------------------------------------------------------------------------------------
 " Unite fuzzy searcher {{{
@@ -186,12 +197,46 @@ Plug 'honza/dockerfile.vim'
 " Fuzzy file finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes n \| ./install' }
 Plug 'junegunn/fzf.vim'
+let g:fzf_layout = { 'down': '~30%' }
+
 let g:fzf_action = {
-      \ 'ctrl-t': 'tab split',
+      \ 'ctrl-n': 'tab split',
       \ 'ctrl-s': 'split',
       \ 'ctrl-v': 'vsplit'
       \ }
 nnoremap <c-p> :FZF<cr>
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+function! s:fzf_statusline()
+  " Override statusline as you like
+  highlight fzf1 ctermfg=161 ctermbg=251
+  highlight fzf2 ctermfg=23 ctermbg=251
+  highlight fzf3 ctermfg=237 ctermbg=251
+  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+endfunction
+
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
 "}}}
 "
 
@@ -374,6 +419,10 @@ call plug#end()
     let mapleader = ','
     let maplocalleader = '_'
 
+    " clear highlighted search
+    noremap <space> :set hlsearch! hlsearch?<cr>
+    " activate spell-checking alternatives. typing: zg, to ignore file
+    nmap ;s :set invspell spelllang=en<cr>
     " ,ev : open vimrc
     nnoremap <leader>ev :e $MYVIMRC<cr>
 
@@ -408,7 +457,17 @@ call plug#end()
       
     nmap <leader>nt :NERDTreeFind<CR>
     nnoremap <c-e> :NERDTreeToggle<cr>
-    let g:nerdtree_tabs_open_on_gui_startup=0
+    " Start nerdtree when opening vim
+    let g:nerdtree_tabs_open_on_console_startup = 0
+
+    " Don't start nerdtree when opening a diff
+    let g:nerdtree_tabs_no_startup_for_diff = 1
+
+    " Sync scroll and cursor across tabs
+    let g:nerdtree_tabs_synchronize_view = 1
+
+    " Don't focus nerdtree when changing tabs
+    let g:nerdtree_tabs_focus_on_files = 1
     map <C-J> <C-W>j<C-W>_
     map <C-K> <C-W>k<C-W>_
     map <C-L> <C-W>l<C-W>_
