@@ -508,6 +508,7 @@ call plug#end()
   let g:go_fmt_command = "gofmt"
   let g:go_fmt_fail_silently = 1
   let g:go_snippet_engine = "neosnippet"
+  let g:go_info_mode="gopls"
 
   let g:syntastic_go_checkers = ['govet', 'errcheck']
   let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
@@ -554,8 +555,9 @@ call plug#end()
   let g:go_gocode_propose_source=1
 
   let g:go_fmt_autosave = 1
+  let g:go_highlight_function_parameters = 1
   " gometalinter configuration
-  let g:go_metalinter_command = ""
+  let g:go_metalinter_command = "golangci-lint"
   let g:go_metalinter_deadline = "5s"
   let g:go_metalinter_enabled = [
       \ 'deadcode',
