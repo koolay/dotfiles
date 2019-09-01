@@ -122,15 +122,15 @@ Plug 'ervandew/supertab'
     " let g:ale_completion_enabled = 1
 
     let g:ale_linters = {
-    \   'javascript': ['eslint'],
-    \   'typescript': ['tsserver', 'tslint'],
-    \   'typescript.tsx': ['tsserver', 'tslint'],
-    \   'html': [],
-    \   'go': ['golangci-lint'],
-    \}
+      \   'javascript': ['eslint'],
+      \   'typescript': ['tsserver', 'tslint'],
+      \   'typescript.tsx': ['tsserver', 'tslint'],
+      \   'html': [],
+      \   'go': ['golangci-lint'],
+      \}
     let g:ale_fixers = {
       \ 'go': ['gofmt', 'goimports'],
-    }
+      \}
     let g:ale_fixers['javascript'] = ['prettier']
     let g:ale_fixers['typescript'] = ['prettier', 'tslint']
     let g:ale_fixers['json'] = ['prettier']
