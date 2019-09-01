@@ -23,7 +23,7 @@ call plug#begin('~/.config/nvim/plugged')
 " Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
 " }
-
+Plug 'jparise/vim-graphql'
 Plug 'mhinz/vim-startify'
 
 " Automatically closing pair stuff
@@ -125,15 +125,18 @@ Plug 'ervandew/supertab'
     \   'javascript': ['eslint'],
     \   'typescript': ['tsserver', 'tslint'],
     \   'typescript.tsx': ['tsserver', 'tslint'],
-    \   'html': []
+    \   'html': [],
+    \   'go': ['golangci-lint'],
     \}
-    let g:ale_fixers = {}
+    let g:ale_fixers = {
+      \ 'go': ['gofmt', 'goimports'],
+    }
     let g:ale_fixers['javascript'] = ['prettier']
     let g:ale_fixers['typescript'] = ['prettier', 'tslint']
     let g:ale_fixers['json'] = ['prettier']
     let g:ale_fixers['css'] = ['prettier']
     let g:ale_javascript_prettier_use_local_config = 1
-    let g:ale_fix_on_save = 0
+    let g:ale_fix_on_save = 1
     " Use quickfix list
     let g:ale_set_quickfix = 1
     nmap <silent> [e <Plug>(ale_previous_wrap)
@@ -277,21 +280,20 @@ autocmd! User FzfStatusLine call <SID>fzf_statusline()
         nmap <silent> <leader>k :call ToggleNerdTree()<cr>
         " find the current file in nerdtree without needing to reload the drawer
         nmap <silent> <leader>y :NERDTreeFind<cr>
-
         let NERDTreeShowHidden=1
         " let NERDTreeDirArrowExpandable = '▷'
         " let NERDTreeDirArrowCollapsible = '▼'
         let g:NERDTreeIndicatorMapCustom = {
-        \ "Modified"  : "✹",
-        \ "Staged"    : "✚",
-        \ "Untracked" : "✭",
-        \ "Renamed"   : "➜",
-        \ "Unmerged"  : "═",
-        \ "Deleted"   : "✖",
-        \ "Dirty"     : "✗",
-        \ "Clean"     : "✔︎",
+        \ "Modified"  : '*',
+        \ "Staged"    : '+',
+        \ "Untracked" : '✭',
+        \ "Renamed"   : '➜',
+        \ "Unmerged"  : '═',
+        \ "Deleted"   : '✖',
+        \ "Dirty"     : '*',
+        \ "Clean"     : '✔︎',
         \ 'Ignored'   : '☒',
-        \ "Unknown"   : "?"
+        \ "Unknown"   : '?'
         \ }
 " }}}
 
@@ -312,10 +314,10 @@ let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.vue,*.jsx"
 
 " Fugitive
 Plug 'tpope/vim-fugitive'
-nmap <silent> <leader>gs :Gstatus<cr>
-nmap <leader>ge :Gedit<cr>
-nmap <silent><leader>gr :Gread<cr>
-nmap <silent><leader>gb :Gblame<cr>
+
+nnoremap <Leader>gb :Gblame -w<cr>
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gd :Gvdiff<cr>
 
 " Git log viewer (Gitv! for file mode)
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
@@ -576,4 +578,3 @@ call plug#end()
 " }
   
 " -----------------------------------------------------
-
