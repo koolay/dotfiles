@@ -33,37 +33,52 @@ Plug 'cohama/lexima.vim'
 Plug 'SirVer/ultisnips'
 
 Plug 'honza/vim-snippets'
-
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 
 " { deoplete.nvim
-      Plug 'roxma/nvim-yarp'"
-      Plug 'ncm2/ncm2'
-      Plug 'ncm2/ncm2-bufword'
-      Plug 'ncm2/ncm2-path'
-      Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
-      Plug 'filipekiss/ncm2-look.vim', { 'for' : 'md' }                       " Look
-      Plug 'ncm2/ncm2-ultisnips'                                              " Snippets
-      Plug 'ncm2/ncm2-tern', { 'for': 'js', 'do' : 'npm i' }                  " Tern
-      Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                                 " VimScript
-      Plug 'ncm2/ncm2-go', { 'for' : 'go' }                                   " Golang
-      Plug 'ncm2/ncm2-jedi', { 'for' : 'python' }                             " Python
-      " " enable ncm2 for all buffers
-      autocmd BufEnter * call ncm2#enable_for_buffer()
+Plug 'roxma/nvim-yarp'"
 
-      " IMPORTANT: :help Ncm2PopupOpen for more information
-      set completeopt=noinsert,menuone,noselect
-      " LanguageServer client for NeoVim.
-      Plug 'autozimu/LanguageClient-neovim', {
-      \ 'branch': 'next',
-      \ 'do': 'bash install.sh',
-      \ }
+" LanguageServer client for NeoVim.
+Plug 'autozimu/LanguageClient-neovim', {
+\ 'branch': 'next',
+\ 'do': 'bash install.sh',
+\ }
+" go get -u github.com/sourcegraph/go-langserver
+let g:LanguageClient_serverCommands = {
+    \ 'go': ['go-langserver'],
+    \ 'python': ['pyls'],
+    \ }
 
-    "Add extra filetypes
-    " remap Ultisnips for compatibility for YCM
-    let g:UltiSnipsExpandTrigger = '<Tab>'
-    let g:UltiSnipsJumpForwardTrigger = '<Tab>'
-    " let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+" ******************************************
+" COC:
+" ******************************************
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
+
+"----------------------------------------------
+
+"Add extra filetypes
+"
+" remap Ultisnips for compatibility for YCM
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
 "}
 
 " Commenting support (gc)
@@ -111,6 +126,7 @@ Plug 'ervandew/supertab'
 
 " ALE {{{
     Plug 'w0rp/ale' " Asynchonous linting engine
+
     let g:ale_set_highlights = 0
     let g:ale_change_sign_column_color = 0
     let g:ale_sign_column_always = 1
@@ -119,6 +135,12 @@ Plug 'ervandew/supertab'
     let g:ale_echo_msg_error_str = '✖'
     let g:ale_echo_msg_warning_str = '⚠'
     let g:ale_echo_msg_format = '%severity% %s% [%linter%% code%]'
+    let g:ale_fix_on_save = 1
+    let g:ale_list_window_size = 3
+    " Use quickfix list
+    let g:ale_set_quickfix = 1
+    nmap <silent> [e <Plug>(ale_previous_wrap)
+    nmap <silent> ]e <Plug>(ale_next_wrap)
     " let g:ale_completion_enabled = 1
 
     let g:ale_linters = {
@@ -130,17 +152,34 @@ Plug 'ervandew/supertab'
       \}
     let g:ale_fixers = {
       \ 'go': ['gofmt', 'goimports'],
+      \   'markdown': ['prettier'],
+      \   'javascript': ['prettier'],
+      \   'json': ['prettier'],
       \}
     let g:ale_fixers['javascript'] = ['prettier']
     let g:ale_fixers['typescript'] = ['prettier', 'tslint']
     let g:ale_fixers['json'] = ['prettier']
     let g:ale_fixers['css'] = ['prettier']
     let g:ale_javascript_prettier_use_local_config = 1
-    let g:ale_fix_on_save = 1
-    " Use quickfix list
-    let g:ale_set_quickfix = 1
-    nmap <silent> [e <Plug>(ale_previous_wrap)
-    nmap <silent> ]e <Plug>(ale_next_wrap)
+    let g:ale_go_golangci_lint_package = 1
+    let g:ale_go_golangci_lint_options = '--fast --enable-all  
+          \ --disable depguard
+          \ --disable dupl
+          \ --disable gochecknoglobals
+          \ --disable gochecknoinits
+          \ --disable goconst
+          \ --disable gocyclo
+          \ --disable gosec
+          \ --disable nakedret
+          \ --disable prealloc
+          \ --disable scopelint
+          \ --disable structcheck
+          \ --disable maligned
+          \ --disable lll
+          \ --disable golint
+          \ --disable unparam
+          \ --disable deadcode
+          \ --disable varcheck'
 
 " }}}
 " }
@@ -386,7 +425,7 @@ call plug#end()
     set number                      " Line numbers on
     set showmatch                   " Show matching brackets/parenthesis
     set incsearch                   " Find as you type search
-    set hlsearch                    " Highlight search terms
+    " set hlsearch                    " Highlight search terms
     set winminheight=0              " Windows can be 0 line high
     set ignorecase                  " Case insensitive search
     set smartcase                   " Case sensitive when uc present
@@ -426,7 +465,7 @@ call plug#end()
     nnoremap <leader>wv :vsplit<CR>
 
     " clear highlighted search
-    noremap <space> :set hlsearch! hlsearch?<cr>
+    nnoremap <space> :noh<cr>
     " activate spell-checking alternatives. typing: zg, to ignore file
     nmap ;s :set invspell spelllang=en<cr>
     " ,ev : open vimrc
@@ -510,21 +549,10 @@ call plug#end()
   let g:go_fmt_command = "gofmt"
   let g:go_fmt_fail_silently = 1
   let g:go_snippet_engine = "neosnippet"
-  let g:go_info_mode="gopls"
+  " let g:go_info_mode="gopls"
 
   let g:syntastic_go_checkers = ['govet', 'errcheck']
   let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-  autocmd FileType go nmap gd <Plug>(go-def)
-  autocmd FileType go nmap <Leader>s <Plug>(go-def-split)
-  autocmd FileType go nmap <Leader>v <Plug>(go-def-vertical)
-  autocmd FileType go nmap <Leader>i <Plug>(go-info)
-  autocmd FileType go nmap  <leader>r  <Plug>(go-run)
-  autocmd FileType go nmap  <leader>b  <Plug>(go-build)
-  autocmd FileType go nmap  <leader>t  <Plug>(go-test)
-  autocmd FileType go nmap  <leader>tc  <Plug>(go-coverage)
-  autocmd FileType go nmap <Leader>d <Plug>(go-doc)
-
-  au FileType go nmap <leader>gDv <Plug>(go-doc-vertical)
 
   " Run goimports when running gofmt
   let g:go_fmt_command = "goreturns"
