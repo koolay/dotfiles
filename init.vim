@@ -26,6 +26,8 @@ Plug 'morhetz/gruvbox'
 Plug 'jparise/vim-graphql'
 Plug 'mhinz/vim-startify'
 
+Plug 'ambv/black',                   { 'for': 'python' }
+
 " Automatically closing pair stuff
 Plug 'cohama/lexima.vim'
 
@@ -34,42 +36,108 @@ Plug 'SirVer/ultisnips'
 
 Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 
 " { deoplete.nvim
 Plug 'roxma/nvim-yarp'"
 
-" LanguageServer client for NeoVim.
-Plug 'autozimu/LanguageClient-neovim', {
-\ 'branch': 'next',
-\ 'do': 'bash install.sh',
-\ }
-" go get -u github.com/sourcegraph/go-langserver
-let g:LanguageClient_serverCommands = {
-    \ 'go': ['go-langserver'],
-    \ 'python': ['pyls'],
-    \ }
-
 " ******************************************
 " COC:
 " ******************************************
-
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
 
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Remap keys for gotos
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <leader>rn <Plug>(coc-rename)
+nnoremap <silent> U :call <SID>show_documentation()<CR>
+
+
+"--------ale---------------
+Plug 'w0rp/ale'
+let g:ale_python_flake8_options = '--max-line-length 120'
+let g:python_black_options = "--line-length=120 --skip-string-normalization"
+let g:ale_linters = {
+      \   'javascript': ['eslint'],
+      \   'typescript': ['tsserver', 'tslint'],
+      \   'typescript.tsx': ['tsserver', 'tslint'],
+      \   'html': [],
+      \   'go': ['golangci-lint'],
+      \}
+
+let g:ale_fixers = {
+      \ 'go': ['gofmt', 'goimports'],
+      \ 'markdown': ['prettier'],
+      \ 'javascript': ['prettier'],
+      \ 'json': ['prettier'],
+      \}
+
+let g:ale_javascript_prettier_use_local_config = 1
+let g:ale_go_golangci_lint_package = 1
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+let g:ale_echo_msg_error_str = '✖'
+let g:ale_echo_msg_warning_str = '⚠'
+let g:ale_echo_msg_format = '%severity% %s% [%linter%% code%]'
+let g:ale_fix_on_save = 1
+let g:ale_list_window_size = 3
+" Use quickfix list
+let g:ale_set_quickfix = 1
+nmap <silent> [e <Plug>(ale_previous_wrap)
+nmap <silent> ]e <Plug>(ale_next_wrap)
+
+let g:ale_fix_on_save = 1
+" better whitespace
+let g:strip_whitespace_on_save = 1
+" black
+let g:black_linelength = 120
+let g:LanguageClient_diagnosticsEnable = 0
+let g:black_skip_string_normalization = 1
+let g:LanguageClient_serverCommands = { 'go': ['gopls'], 'python': ['pyls'] }
+let g:ale_go_golangci_lint_options = '--fast --enable-all  
+          \ --disable depguard
+          \ --disable dupl
+          \ --disable gochecknoglobals
+          \ --disable gochecknoinits
+          \ --disable goconst
+          \ --disable gocyclo
+          \ --disable gosec
+          \ --disable nakedret
+          \ --disable prealloc
+          \ --disable scopelint
+          \ --disable structcheck
+          \ --disable maligned
+          \ --disable lll
+          \ --disable golint
+          \ --disable unparam
+          \ --disable deadcode
+          \ --disable varcheck'
+
 
 "----------------------------------------------
 
@@ -122,80 +190,13 @@ Plug 'thinca/vim-quickrun'
 " ---------------------------------------------------------------------------------------------------------------------
 " Language agnostic plugins {{{
 " ---------------------------------------------------------------------------------------------------------------------
-Plug 'ervandew/supertab'
 
-" ALE {{{
-    Plug 'w0rp/ale' " Asynchonous linting engine
-
-    let g:ale_set_highlights = 0
-    let g:ale_change_sign_column_color = 0
-    let g:ale_sign_column_always = 1
-    let g:ale_sign_error = '✖'
-    let g:ale_sign_warning = '⚠'
-    let g:ale_echo_msg_error_str = '✖'
-    let g:ale_echo_msg_warning_str = '⚠'
-    let g:ale_echo_msg_format = '%severity% %s% [%linter%% code%]'
-    let g:ale_fix_on_save = 1
-    let g:ale_list_window_size = 3
-    " Use quickfix list
-    let g:ale_set_quickfix = 1
-    nmap <silent> [e <Plug>(ale_previous_wrap)
-    nmap <silent> ]e <Plug>(ale_next_wrap)
-    " let g:ale_completion_enabled = 1
-
-    let g:ale_linters = {
-      \   'javascript': ['eslint'],
-      \   'typescript': ['tsserver', 'tslint'],
-      \   'typescript.tsx': ['tsserver', 'tslint'],
-      \   'html': [],
-      \   'go': ['golangci-lint'],
-      \}
-    let g:ale_fixers = {
-      \ 'go': ['gofmt', 'goimports'],
-      \   'markdown': ['prettier'],
-      \   'javascript': ['prettier'],
-      \   'json': ['prettier'],
-      \}
-    let g:ale_fixers['javascript'] = ['prettier']
-    let g:ale_fixers['typescript'] = ['prettier', 'tslint']
-    let g:ale_fixers['json'] = ['prettier']
-    let g:ale_fixers['css'] = ['prettier']
-    let g:ale_javascript_prettier_use_local_config = 1
-    let g:ale_go_golangci_lint_package = 1
-    let g:ale_go_golangci_lint_options = '--fast --enable-all  
-          \ --disable depguard
-          \ --disable dupl
-          \ --disable gochecknoglobals
-          \ --disable gochecknoinits
-          \ --disable goconst
-          \ --disable gocyclo
-          \ --disable gosec
-          \ --disable nakedret
-          \ --disable prealloc
-          \ --disable scopelint
-          \ --disable structcheck
-          \ --disable maligned
-          \ --disable lll
-          \ --disable golint
-          \ --disable unparam
-          \ --disable deadcode
-          \ --disable varcheck'
-
-" }}}
-" }
-
-" }
 Plug 'othree/yajs.vim'
 Plug 'moll/vim-node'
 " Typescript syntax
 Plug 'leafgarland/typescript-vim'
 " JSON syntax
 Plug 'sheerun/vim-json'
-" }
-
-"}
-
-"}}}
 "
 " ---------------------------------------------------------------------------------------------------------------------
 " HTML/CSS {{{
@@ -340,6 +341,10 @@ autocmd! User FzfStatusLine call <SID>fzf_statusline()
 Plug 'itchyny/lightline.vim'
 " Buffers tabline
 Plug 'ap/vim-buftabline'
+
+let g:buftabline_show=1
+let g:buftabline_numbers=1
+
 Plug 'alvan/vim-closetag'
 "{
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.vue,*.jsx"
@@ -409,7 +414,7 @@ call plug#end()
     set noshowmode                    " Display the current mode
     set cursorline                  " Highlight current line
     set termguicolors
-    set background=light
+    set background=dark
     let g:gruvbox_bold=1
     let g:gruvbox_contrast_dark="hard" "soft, medium and hard
     let g:gruvbox_contrast_light="hard"
@@ -542,67 +547,3 @@ call plug#end()
   map <S-H> gT
   map <S-L> gt
 "
-
-" -----------------------------------------------------
-" golang {
-  let g:go_play_open_browser = 0
-  let g:go_fmt_command = "gofmt"
-  let g:go_fmt_fail_silently = 1
-  let g:go_snippet_engine = "neosnippet"
-  " let g:go_info_mode="gopls"
-
-  let g:syntastic_go_checkers = ['govet', 'errcheck']
-  let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-
-  " Run goimports when running gofmt
-  let g:go_fmt_command = "goreturns"
-
-  " Set neosnippet as snippet engine
-  let g:go_snippet_engine = "neosnippet"
-
-  " Enable syntax highlighting per default
-  let g:go_highlight_types = 1
-  let g:go_highlight_fields = 1
-  let g:go_highlight_functions = 1
-  let g:go_highlight_methods = 1
-  let g:go_highlight_structs = 1
-  let g:go_highlight_operators = 1
-  let g:go_highlight_build_constraints = 1
-  let g:go_highlight_extra_types = 1
-
-  " Show the progress when running :GoCoverage
-  let g:go_echo_command_info = 1
-
-  " Highlight variable uses
-  let g:go_auto_sameids = 1
-
-  " Fix for location list when vim-go is used together with Syntastic
-  let g:go_list_type = "quickfix"
-
-  " Add the failing test name to the output of :GoTest
-  let g:go_test_show_name = 1
-
-  let g:go_gocode_propose_source=1
-
-  let g:go_fmt_autosave = 1
-  let g:go_highlight_function_parameters = 1
-  " gometalinter configuration
-  let g:go_metalinter_command = "golangci-lint"
-  let g:go_metalinter_deadline = "5s"
-  let g:go_metalinter_enabled = [
-      \ 'deadcode',
-      \ 'gas',
-      \ 'goconst',
-      \ 'gocyclo',
-      \ 'golint',
-      \ 'gosimple',
-      \ 'ineffassign',
-      \ 'vet',
-      \ 'vetshadow'
-  \]
-
-  " Set whether the JSON tags should be snakecase or camelcase.
-  let g:go_addtags_transform = "snakecase"
-" }
-  
-" -----------------------------------------------------
