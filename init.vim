@@ -46,6 +46,20 @@ Plug 'roxma/nvim-yarp'"
 " ******************************************
 " COC:
 " ******************************************
+"
+let g:coc_global_extensions = [
+    \'coc-tsserver',
+    \'coc-tslint-plugin',
+    \'coc-eslint',
+    \'coc-json',
+    \'coc-snippets',
+    \'coc-prettier',
+    \'coc-css',
+    \'coc-yank',
+    \'coc-git',
+    \'coc-python',
+    \]
+
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -119,27 +133,32 @@ let g:black_linelength = 120
 let g:LanguageClient_diagnosticsEnable = 0
 let g:black_skip_string_normalization = 1
 let g:LanguageClient_serverCommands = { 'go': ['gopls'], 'python': ['pyls'] }
-let g:ale_go_golangci_lint_options = '--fast --enable-all  
-          \ --disable depguard
-          \ --disable dupl
-          \ --disable gochecknoglobals
-          \ --disable gochecknoinits
-          \ --disable goconst
-          \ --disable gocyclo
-          \ --disable gosec
-          \ --disable nakedret
-          \ --disable prealloc
-          \ --disable scopelint
-          \ --disable structcheck
-          \ --disable maligned
-          \ --disable lll
-          \ --disable golint
-          \ --disable unparam
-          \ --disable deadcode
-          \ --disable varcheck'
-
 
 "----------------------------------------------
+"
+"------------------------------------------------
+" golang
+"-----------------------------------------------
+Plug 'fatih/vim-go'
+
+let g:go_code_completion_enabled = 0
+let g:go_auto_type_info = 0
+let g:go_fmt_autosave = 0
+let g:go_mod_fmt_autosave = 0
+let g:go_def_mapping_enabled = 0
+let g:go_get_update = 1
+let g:go_metalinter_enabled = []
+let g:go_metalinter_autosave = 0
+
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+"----------------------end-----------------------
 
 "Add extra filetypes
 "

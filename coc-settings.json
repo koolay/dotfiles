@@ -10,5 +10,17 @@
         "lintTool": "golangci-lint"
       }
     }
+  },
+  "eslint": {
+    "filetypes": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+    "autoFixOnSave": true
+  },
+  "prettier": {
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "jsxBracketSameLine": true,
+    "eslintIntegration": true
   }
 }
