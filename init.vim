@@ -27,6 +27,9 @@ Plug 'jparise/vim-graphql'
 Plug 'mhinz/vim-startify'
 
 Plug 'ambv/black',                   { 'for': 'python' }
+Plug 'kristijanhusak/vim-carbon-now-sh'
+
+vnoremap <F5> :CarbonNowSh<CR>
 
 " Automatically closing pair stuff
 Plug 'cohama/lexima.vim'
@@ -88,6 +91,8 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <leader>rn <Plug>(coc-rename)
+nmap <silent> ]e <Plug>(coc-diagnostic-next-error)
+nmap <silent> [e <Plug>(coc-diagnostic-prev-error)
 nnoremap <silent> U :call <SID>show_documentation()<CR>
 
 
@@ -140,6 +145,7 @@ let g:LanguageClient_serverCommands = { 'go': ['gopls'], 'python': ['pyls'] }
 " golang
 "-----------------------------------------------
 Plug 'fatih/vim-go'
+Plug 'buoto/gotests-vim'
 
 let g:go_code_completion_enabled = 0
 let g:go_auto_type_info = 0
@@ -159,6 +165,19 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 "----------------------end-----------------------
+"
+"-----------------------------------------------
+"UnitTest
+"----------------------------------------------
+
+Plug 'janko/vim-test'
+nmap <silent> <leader>t :TestNearest<CR>
+" nmap <silent> <leader>T :TestFile<CR>
+" nmap <silent> <leader>a :TestSuite<CR>
+" nmap <silent> <leader>l :TestLast<CR>
+" nmap <silent> <leader>g :TestVisit<CR>
+"-----------------------end--------------------
+"
 
 "Add extra filetypes
 "
