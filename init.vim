@@ -101,6 +101,7 @@ Plug 'w0rp/ale'
 let g:ale_python_flake8_options = '--max-line-length 120'
 let g:python_black_options = "--line-length=120 --skip-string-normalization"
 let g:ale_linters = {
+      \   'python': ['pylint'],
       \   'javascript': ['eslint'],
       \   'typescript': ['tsserver', 'tslint'],
       \   'typescript.tsx': ['tsserver', 'tslint'],
@@ -125,6 +126,8 @@ let g:ale_echo_msg_warning_str = '⚠'
 let g:ale_echo_msg_format = '%severity% %s% [%linter%% code%]'
 let g:ale_fix_on_save = 1
 let g:ale_list_window_size = 3
+let pipenv_venv_path = system('pipenv --venv')
+let g:ale_python_auto_pipenv = 1
 " Use quickfix list
 let g:ale_set_quickfix = 1
 nmap <silent> [e <Plug>(ale_previous_wrap)
@@ -457,7 +460,14 @@ call plug#end()
     let g:gruvbox_contrast_dark="hard" "soft, medium and hard
     let g:gruvbox_contrast_light="hard"
     color gruvbox
-    set guifont=Consolas:h16
+    " macVim
+    if has('macunix')
+      set guifont=FiraCode\ Nerd\ Font\ Retina\ 16
+
+    " Linux GUI
+    else
+      set guifont=FiraCode\ Nerd\ Font\ Retina\ 16
+    endif
 
 
     let g:solarized_termcolors=256
