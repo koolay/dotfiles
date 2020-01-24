@@ -34,9 +34,6 @@ vnoremap <F5> :CarbonNowSh<CR>
 " Automatically closing pair stuff
 Plug 'cohama/lexima.vim'
 
-" Snippet support (C-j)
-Plug 'SirVer/ultisnips'
-
 Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
