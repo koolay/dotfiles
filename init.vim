@@ -26,6 +26,8 @@ Plug 'morhetz/gruvbox'
 Plug 'jparise/vim-graphql'
 Plug 'mhinz/vim-startify'
 
+Plug 'mcchrish/nnn.vim'
+
 Plug 'ambv/black',                   { 'for': 'python' }
 Plug 'kristijanhusak/vim-carbon-now-sh'
 
@@ -46,6 +48,7 @@ Plug 'roxma/nvim-yarp'"
 " ******************************************
 " COC:
 " ******************************************
+"
 "
 let g:coc_global_extensions = [
     \'coc-tsserver',
@@ -92,7 +95,6 @@ nmap <silent> ]e <Plug>(coc-diagnostic-next-error)
 nmap <silent> [e <Plug>(coc-diagnostic-prev-error)
 nnoremap <silent> U :call <SID>show_documentation()<CR>
 
-
 "--------ale---------------
 Plug 'w0rp/ale'
 let g:ale_python_flake8_options = '--max-line-length 120'
@@ -109,8 +111,6 @@ let g:ale_linters = {
 let g:ale_fixers = {
       \ 'go': ['gofmt', 'goimports'],
       \ 'markdown': ['prettier'],
-      \ 'javascript': ['prettier'],
-      \ 'json': ['prettier'],
       \}
 
 let g:ale_javascript_prettier_use_local_config = 1
@@ -130,7 +130,6 @@ let g:ale_set_quickfix = 1
 nmap <silent> [e <Plug>(ale_previous_wrap)
 nmap <silent> ]e <Plug>(ale_next_wrap)
 
-let g:ale_fix_on_save = 1
 " better whitespace
 let g:strip_whitespace_on_save = 1
 " black
