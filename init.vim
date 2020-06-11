@@ -185,6 +185,7 @@ nmap <silent> <leader>t :TestNearest<CR>
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
+let g:ultisnips_python_style = "google"
 "}
 
 " Commenting support (gc)
