@@ -37,8 +37,6 @@ Plug 'cohama/lexima.vim'
 
 Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 
 " { deoplete.nvim
@@ -59,6 +57,7 @@ let g:coc_global_extensions = [
     \'coc-yank',
     \'coc-git',
     \'coc-python',
+    \'coc-yaml',
     \]
 
 inoremap <silent><expr> <TAB>
