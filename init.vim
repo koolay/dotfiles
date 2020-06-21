@@ -27,6 +27,7 @@ Plug 'morhetz/gruvbox'
 " }
 Plug 'jparise/vim-graphql'
 Plug 'mhinz/vim-startify'
+Plug 'SirVer/ultisnips'
 
 "{
 Plug 'mcchrish/nnn.vim'
@@ -62,8 +63,6 @@ Plug 'cohama/lexima.vim'
 
 Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 
 " { deoplete.nvim
@@ -85,6 +84,7 @@ let g:coc_global_extensions = [
     \'coc-yank',
     \'coc-git',
     \'coc-python',
+    \'coc-yaml',
     \]
 
 inoremap <silent><expr> <TAB>
@@ -208,6 +208,7 @@ nmap <silent> <leader>t :TestNearest<CR>
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
+let g:ultisnips_python_style = "google"
 "}
 
 " Commenting support (gc)
