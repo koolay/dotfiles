@@ -1,6 +1,8 @@
 " ######################################################################################################################
 " ### Author : koolay
 " ######################################################################################################################
+
+"export NNN_PLUG='o:fzopen;p:mocplay;d:diffs;g:gutenberg;m:nmount;n:notes;v:imgviu;t:imgthumb'
 filetype off
 
 " ======================================================================================================================
@@ -26,7 +28,29 @@ Plug 'morhetz/gruvbox'
 Plug 'jparise/vim-graphql'
 Plug 'mhinz/vim-startify'
 
+"{
 Plug 'mcchrish/nnn.vim'
+" Disable default mappings
+let g:nnn#set_default_mappings = 0
+
+" Then set your own
+"
+nnoremap <c-e> :NnnPicker<cr>
+
+" Opens the nnn window in a split
+let g:nnn#layout = 'new' " or vnew, tabnew etc.
+
+" Or pass a dictionary with window size
+let g:nnn#layout = { 'left': '~20%' } " or right, up, down
+
+" Floating window (neovim latest and vim with patch 8.2.191)
+let g:nnn#layout = { 'window': { 'width': 0.8, 'height': 0.8, 'highlight': 'Debug' } }
+let g:nnn#action = {
+      \ '<c-t>': 'tab split',
+      \ '<c-x>': 'split',
+      \ '<c-v>': 'vsplit' }
+"}
+
 
 Plug 'ambv/black',                   { 'for': 'python' }
 Plug 'kristijanhusak/vim-carbon-now-sh'
@@ -323,56 +347,8 @@ autocmd! User FzfStatusLine call <SID>fzf_statusline()
 " ---------------------------------------------------------------------------------------------------------------------
 " Interface improving {{{
 " ---------------------------------------------------------------------------------------------------------------------
-
-" Nerdtree file browser
-" NERDTree {{{
-        Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTreeToggle'] }
-        Plug 'jistr/vim-nerdtree-tabs'
-        Plug 'Xuyuanp/nerdtree-git-plugin'
-        Plug 'ryanoasis/vim-devicons'
-        Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-        let g:WebDevIconsOS = 'Darwin'
-        let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-        let g:DevIconsEnableFoldersOpenClose = 1
-        let g:DevIconsEnableFolderExtensionPatternMatching = 1
-        let NERDTreeDirArrowExpandable = "\u00a0" " make arrows invisible
-        let NERDTreeDirArrowCollapsible = "\u00a0" " make arrows invisible
-        let NERDTreeNodeDelimiter = "\u263a" " smiley face
-
-        augroup nerdtree
-            autocmd!
-            autocmd FileType nerdtree setlocal nolist " turn off whitespace characters
-            autocmd FileType nerdtree setlocal nocursorline " turn off line highlighting for performance
-        augroup END
-
-        " Toggle NERDTree
-        function! ToggleNerdTree()
-            if @% != "" && @% !~ "Startify" && (!exists("g:NERDTree") || (g:NERDTree.ExistsForTab() && !g:NERDTree.IsOpen()))
-                :NERDTreeFind
-            else
-                :NERDTreeToggle
-            endif
-        endfunction
-        " toggle nerd tree
-        nmap <silent> <leader>k :call ToggleNerdTree()<cr>
-        " find the current file in nerdtree without needing to reload the drawer
-        nmap <silent> <leader>y :NERDTreeFind<cr>
-        let NERDTreeShowHidden=1
-        " let NERDTreeDirArrowExpandable = '▷'
-        " let NERDTreeDirArrowCollapsible = '▼'
-        let g:NERDTreeIndicatorMapCustom = {
-        \ "Modified"  : '*',
-        \ "Staged"    : '+',
-        \ "Untracked" : '✭',
-        \ "Renamed"   : '➜',
-        \ "Unmerged"  : '═',
-        \ "Deleted"   : '✖',
-        \ "Dirty"     : '*',
-        \ "Clean"     : '✔︎',
-        \ 'Ignored'   : '☒',
-        \ "Unknown"   : '?'
-        \ }
-" }}}
+"
+Plug 'ryanoasis/vim-devicons'
 
 " Lightline (simple status line)
 Plug 'itchyny/lightline.vim'
@@ -546,28 +522,6 @@ call plug#end()
 
     " Easier formatting
     nnoremap <silent> <leader>q gwip
-    " NerdTree {
-
-      
-    nmap <leader>nt :NERDTreeFind<CR>
-    nnoremap <c-e> :NERDTreeToggle<cr>
-    " Start nerdtree when opening vim
-    let g:nerdtree_tabs_open_on_console_startup = 1
-
-    " Don't start nerdtree when opening a diff
-    let g:nerdtree_tabs_no_startup_for_diff = 1
-
-    " Sync scroll and cursor across tabs
-    let g:nerdtree_tabs_synchronize_view = 1
-
-    " Don't focus nerdtree when changing tabs
-    let g:nerdtree_tabs_focus_on_files = 1
-    map <C-J> <C-W>j<C-W>_
-    map <C-K> <C-W>k<C-W>_
-    map <C-L> <C-W>l<C-W>_
-    map <C-H> <C-W>h<C-W>_
-
-    " }
     
     " Tabularize {
     nmap <Leader>a& :Tabularize /&<CR>
