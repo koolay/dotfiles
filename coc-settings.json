@@ -1,6 +1,14 @@
 {
   "coc.preferences.enableFloatHighlight": true,
   "coc.preferences.formatOnSaveFiletypes": ["python", "go"],
+  "coc.preferences.rootPatterns": [
+    ".eslintrc.json",
+    ".eslintrc",
+    ".vim",
+    ".git",
+    ".hg",
+    ".projections.json"
+  ],
   "languageserver": {
     "golang": {
       "command": "gopls",
@@ -23,13 +31,19 @@
   "python.linting.pylintEnabled": true,
   "python.linting.lintOnSave": true,
 
-  "javascript.suggestionActions.enabled": false,
-  "eslint.filetypes": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
-  "eslint.autoFix": true,
+  "eslint.autoFix": false,
   "eslint.autoFixOnSave": true,
-
-  "prettier.semi": false,
+  "eslint.filetypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.options": {
+    "configFile": ".eslintrc.json"
+  },
   "prettier.eslintIntegration": true,
+  "prettier.semi": false,
   "prettier.tabWidth": 4,
   "prettier.singleQuote": true,
   "prettier.trailingComma": "all",
