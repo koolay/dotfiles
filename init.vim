@@ -127,8 +127,8 @@ let pipenv_venv_path = system('pipenv --venv')
 let g:ale_python_auto_pipenv = 1
 " Use quickfix list
 let g:ale_set_quickfix = 1
-nmap <silent> [e <Plug>(ale_previous_wrap)
-nmap <silent> ]e <Plug>(ale_next_wrap)
+nmap <silent> [c <Plug>(ale_previous_wrap)
+nmap <silent> ]c <Plug>(ale_next_wrap)
 
 let g:ale_fix_on_save = 1
 " better whitespace
