@@ -29,29 +29,56 @@ Plug 'jparise/vim-graphql'
 Plug 'mhinz/vim-startify'
 Plug 'SirVer/ultisnips'
 
-"{
-Plug 'mcchrish/nnn.vim'
-" Disable default mappings
-let g:nnn#set_default_mappings = 0
+" Nerdtree file browser
+" NERDTree {{{
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTreeToggle'] }
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+let g:WebDevIconsOS = 'Darwin'
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:DevIconsEnableFoldersOpenClose = 1
+let g:DevIconsEnableFolderExtensionPatternMatching = 1
+let NERDTreeDirArrowExpandable = "\u00a0" " make arrows invisible
+let NERDTreeDirArrowCollapsible = "\u00a0" " make arrows invisible
+let NERDTreeNodeDelimiter = "\u263a" " smiley face
 
-" Then set your own
-"
-nnoremap <c-e> :NnnPicker<cr>
+augroup nerdtree
+    autocmd!
+    autocmd FileType nerdtree setlocal nolist " turn off whitespace characters
+    autocmd FileType nerdtree setlocal nocursorline " turn off line highlighting for performance
+augroup END
 
-" Opens the nnn window in a split
-let g:nnn#layout = 'new' " or vnew, tabnew etc.
+" Toggle NERDTree
+function! ToggleNerdTree()
+    if @% != "" && @% !~ "Startify" && (!exists("g:NERDTree") || (g:NERDTree.ExistsForTab() && !g:NERDTree.IsOpen()))
+        :NERDTreeFind
+    else
+        :NERDTreeToggle
+    endif
+endfunction
+" find the current file in nerdtree without needing to reload the drawer
+nmap <leader>nt :NERDTreeFind<CR>
+" toggle nerd tree
+nnoremap <c-e> :call ToggleNerdTree()<cr>
 
-" Or pass a dictionary with window size
-let g:nnn#layout = { 'left': '~20%' } " or right, up, down
-
-" Floating window (neovim latest and vim with patch 8.2.191)
-let g:nnn#layout = { 'window': { 'width': 0.8, 'height': 0.8, 'highlight': 'Debug' } }
-let g:nnn#action = {
-      \ '<c-t>': 'tab split',
-      \ '<c-x>': 'split',
-      \ '<c-v>': 'vsplit' }
-"}
-
+let NERDTreeShowHidden=1
+" let NERDTreeDirArrowExpandable = '▷'
+" let NERDTreeDirArrowCollapsible = '▼'
+let g:NERDTreeIndicatorMapCustom = {
+\ "Modified"  : '*',
+\ "Staged"    : '+',
+\ "Untracked" : '✭',
+\ "Renamed"   : '➜',
+\ "Unmerged"  : '═',
+\ "Deleted"   : '✖',
+\ "Dirty"     : '*',
+\ "Clean"     : '✔︎',
+\ 'Ignored'   : '☒',
+\ "Unknown"   : '?'
+\ }
+" }}}
 
 Plug 'ambv/black',                   { 'for': 'python' }
 Plug 'kristijanhusak/vim-carbon-now-sh'
@@ -64,9 +91,7 @@ Plug 'cohama/lexima.vim'
 Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-
-" { deoplete.nvim
-Plug 'roxma/nvim-yarp'"
+Plug 'roxma/nvim-yarp'
 
 " ******************************************
 " COC:
@@ -194,7 +219,7 @@ let g:go_highlight_extra_types = 1
 "----------------------------------------------
 
 Plug 'janko/vim-test'
-nmap <silent> <leader>t :TestNearest<CR>
+" nmap <silent> <leader>t :TestNearest<CR>
 " nmap <silent> <leader>T :TestFile<CR>
 " nmap <silent> <leader>a :TestSuite<CR>
 " nmap <silent> <leader>l :TestLast<CR>
@@ -435,11 +460,13 @@ call plug#end()
     color gruvbox
     " macVim
     if has('macunix')
-      set guifont=FiraCode\ Nerd\ Font\ Retina\ 16
+      set guifont=JetBrrainsMono\ Nerd\ Font\ Medium\ 16
+      " set guifont=FiraCode\ Nerd\ Font\ Retina\ 16
 
     " Linux GUI
     else
-      set guifont=FiraCode\ Nerd\ Font\ Retina\ 16
+      set guifont=JetBrrainsMono\ Nerd\ Font\ Medium\ 16
+      " set guifont=FiraCode\ Nerd\ Font\ Retina\ 16
     endif
 
 
@@ -523,7 +550,30 @@ call plug#end()
 
     " Easier formatting
     nnoremap <silent> <leader>q gwip
-    
+    " NerdTree {
+
+    " toggle nerd tree
+    nnoremap <c-e> :call ToggleNerdTree()<cr>
+    nmap <leader>nt :NERDTreeFind<CR>
+    " nnoremap <c-e> :NERDTreeToggle<cr>
+    " Start nerdtree when opening vim
+    let g:nerdtree_tabs_open_on_console_startup = 1
+
+    " Don't start nerdtree when opening a diff
+    let g:nerdtree_tabs_no_startup_for_diff = 1
+
+    " Sync scroll and cursor across tabs
+    let g:nerdtree_tabs_synchronize_view = 1
+
+    " Don't focus nerdtree when changing tabs
+    let g:nerdtree_tabs_focus_on_files = 1
+    map <C-J> <C-W>j<C-W>_
+    map <C-K> <C-W>k<C-W>_
+    map <C-L> <C-W>l<C-W>_
+    map <C-H> <C-W>h<C-W>_
+
+    " }
+
     " Tabularize {
     nmap <Leader>a& :Tabularize /&<CR>
     vmap <Leader>a& :Tabularize /&<CR>
