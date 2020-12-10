@@ -61,7 +61,7 @@ endfunction
 " find the current file in nerdtree without needing to reload the drawer
 nmap <leader>nt :NERDTreeFind<CR>
 " toggle nerd tree
-nnoremap <c-e> :call ToggleNerdTree()<cr>
+" nnoremap <c-e> :call ToggleNerdTree()<cr>
 
 let NERDTreeShowHidden=1
 " let NERDTreeDirArrowExpandable = '▷'
@@ -303,6 +303,45 @@ Plug 'lilydjwg/colorizer', { 'for': ['css', 'sass', 'scss', 'less', 'html', 'xde
 Plug 'martin-svk/vim-yaml'
 " Markdown syntax
 Plug 'tpope/vim-markdown'
+
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+
+"---------vim-floaterm------
+"{{{
+" Terminal in floating window
+Plug 'voldikss/vim-floaterm'
+let g:floaterm_keymap_new = '<Leader>ft'
+nnoremap   <silent>   <F9> :FloatermNew --height=0.4 --width=0.98 --wintype=floating --position=bottom --autoclose=2 --title=
+let g:floaterm_open_command = 'tabe'
+"}}}
+
+" Automatic pane resizing
+Plug 'camspiers/lens.vim'
+
+""""""""""""""""""""""""""""""
+" RNVIMR
+""""""""""""""""""""""""""""""
+" Ranger file browser integration
+Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
+" Maps Ranger 
+nnoremap <c-e> :RnvimrToggle<cr>
+
+" Make Ranger replace Netrw and be the file explorer
+let g:rnvimr_ex_enable = 1
+
+" Make Ranger to be hidden after picking a file
+let g:rnvimr_enable_picker = 1
+
+" Customize the initial layout
+let g:rnvimr_layout = {
+            \ 'relative': 'editor',
+            \ 'width': float2nr(round(1.0 * &columns)),
+            \ 'height': float2nr(round(0.42 * &lines)),
+            \ 'col': float2nr(round(0.0 * &columns)),
+            \ 'row': float2nr(round(0.54 * &lines)),
+            \ 'style': 'minimal'
+            \ }
+
 " Tmux syntax
 Plug 'keith/tmux.vim'
 " Dockerfile
@@ -553,7 +592,7 @@ call plug#end()
     " NerdTree {
 
     " toggle nerd tree
-    nnoremap <c-e> :call ToggleNerdTree()<cr>
+    " nnoremap <c-e> :call ToggleNerdTree()<cr>
     nmap <leader>nt :NERDTreeFind<CR>
     " nnoremap <c-e> :NERDTreeToggle<cr>
     " Start nerdtree when opening vim
