@@ -60,13 +60,29 @@
     ],
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
-    "python.linting.lintOnSave": true,
+    "python.linting.lintOnSave": false,
+
+    "java.home": "/usr/lib/jvm/jdk-14.0.2",
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-1.8",
+            "path": "/usr/lib/jvm/java-8-openjdk-amd64",
+            "default": true
+        },
+        {
+            "name": "JavaSE-14",
+            "path": "/usr/lib/jvm/jdk-14.0.2"
+        }
+    ],
 
     "languageserver": {
         "golang": {
             "command": "gopls",
             "filetypes": ["go"],
             "rootPatterns": ["go.mod", ".git/"],
+            "initializationOptions": {
+                    "usePlaceholders": true
+            },
             "settings": {
                 "completeUnimported": true,
                 "usePlaceholders": true

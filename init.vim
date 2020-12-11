@@ -109,6 +109,7 @@ let g:coc_global_extensions = [
     \'coc-yank',
     \'coc-git',
     \'coc-python',
+    \'coc-java',
     \'coc-yaml',
     \]
 
