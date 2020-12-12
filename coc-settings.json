@@ -62,7 +62,6 @@
     "python.linting.pylintEnabled": true,
     "python.linting.lintOnSave": false,
 
-    "java.home": "/usr/lib/jvm/jdk-14.0.2",
     "java.configuration.runtimes": [
         {
             "name": "JavaSE-1.8",
