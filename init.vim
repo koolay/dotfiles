@@ -213,6 +213,21 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
+
+" Debug shortcuts
+nnoremap <leader>bp :GoDebugBreakpoint<CR>
+nnoremap <leader>bn :GoDebugContinue<CR>
+
+" we leave this hanging for flag input
+nnoremap <leader>bs :GoDebugStart
+nnoremap <leader>be :GoDebugStop<CR>
+
+let g:go_debug_windows = {
+      \ 'vars':       'rightbelow 30vnew',
+      \ 'stack':      'rightbelow 10new',
+      \ 'out':        'botright 10new',
+\ }
+
 "----------------------end-----------------------
 "
 "-----------------------------------------------
@@ -304,6 +319,7 @@ Plug 'lilydjwg/colorizer', { 'for': ['css', 'sass', 'scss', 'less', 'html', 'xde
 Plug 'martin-svk/vim-yaml'
 " Markdown syntax
 Plug 'tpope/vim-markdown'
+Plug 'iloginow/vim-stylus'
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
