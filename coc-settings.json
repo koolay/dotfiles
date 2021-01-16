@@ -6,13 +6,18 @@
     "git.changedSign.text": "┃",
     "git.changeRemovedSign.text": "┃",
     "suggest.maxPreviewWidth": 100,
+    "diagnostic.displayByAle": true,
     "diagnostic.checkCurrentLine": true,
     "diagnostic.maxWindowHeight": 20,
     "diagnostic.errorSign": "✖",
     "diagnostic.warningSign": "⚠",
     "diagnostic.infoSign": "●",
     "diagnostic.hintSign": "○",
+    "diagnostic.separateRelatedInformationAsDiagnostics": true,
     "git.addGBlameToBufferVar": true,
+    "go.goplsOptions": {
+       "gofumpt": true
+    },
     "coc.preferences.formatOnType": true,
     "coc.preferences.formatOnSaveFiletypes": [
         "go",
@@ -22,13 +27,6 @@
         "javascript.jsx",
         "typescript.tsx"
     ],
-    "diagnostic-languageserver.formatters": {
-       "gofumpt": {
-         "command": "gofumpt",
-         "args": ["-s", "-extra"],
-         "rootPatterns": ["go.mod", ".git"]
-       }
-    },
     "explorer.icon.enableNerdfont": true,
     "explorer.sources": [
         { "name": "buffer", "expand": true },
@@ -46,7 +44,7 @@
     "explorer.keyMappings": {
         "<cr>": ["expandable?", ["expanded?", "collapse", "expand"], "open"]
     },
-    "eslint.enable": true,
+    "eslint.enable": false,
     "eslint.autoFixOnSave": false,
     "eslint.autoFix": false,
     "python.venvPath": "~/.pyenv",
@@ -58,8 +56,8 @@
         "--verbose",
         "--skip-string-normalization"
     ],
-    "python.linting.enabled": true,
-    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": false,
+    "python.linting.pylintEnabled": false,
     "python.linting.lintOnSave": false,
 
     "java.configuration.runtimes": [
@@ -78,56 +76,16 @@
         "golang": {
             "command": "gopls",
             "filetypes": ["go"],
+            "disableWorkspaceFolders": true,
             "rootPatterns": ["go.mod", ".git/"],
             "initializationOptions": {
-                    "usePlaceholders": true
+               "usePlaceholders": true,
+               "gofumpt": true
             },
             "settings": {
                 "completeUnimported": true,
                 "usePlaceholders": true
             }
-        }
-    },
-    "diagnostic-languageserver.filetypes": {
-        "sh": "shellcheck",
-        "go": ["golangci-lint"]
-    },
-    "diagnostic-languageserver.linters": {
-        "golangci-lint": {
-            "args": ["run", "--out-format", "json", "%file"],
-            "command": "golangci-lint",
-            "debounce": 100,
-            "parseJson": {
-                "column": "Pos.Column",
-                "errorsRoot": "Issues",
-                "line": "Pos.Line",
-                "message": "${Text} [${FromLinter}]"
-            },
-            "rootPatterns": [".git", "go.mod"],
-            "sourceName": "golangci-lint"
-        },
-        "shellcheck": {
-            "args": ["--format=gcc", "--external-sources", "-"],
-            "command": "shellcheck",
-            "debounce": 100,
-            "formatLines": 1,
-            "formatPattern": [
-                "^[^:]+:(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
-                {
-                    "column": 2,
-                    "line": 1,
-                    "message": 4,
-                    "security": 3
-                }
-            ],
-            "offsetColumn": 0,
-            "offsetLine": 0,
-            "securities": {
-                "error": "error",
-                "note": "warning",
-                "warning": "warning"
-            },
-            "sourceName": "shellcheck"
         }
     }
 }

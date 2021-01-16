@@ -147,8 +147,6 @@ nnoremap <silent> U :call <SID>show_documentation()<CR>
 
 "--------ale---------------
 Plug 'w0rp/ale'
-let g:ale_python_flake8_options = '--max-line-length 120'
-let g:python_black_options = "--line-length=120 --skip-string-normalization"
 let g:ale_linters = {
       \   'python': ['pylint'],
       \   'javascript': ['eslint'],
@@ -163,8 +161,15 @@ let g:ale_fixers = {
       \ 'markdown': ['prettier'],
       \}
 
-let g:ale_javascript_prettier_use_local_config = 1
+let g:ale_python_flake8_options = '--max-line-length 120'
+let g:python_black_options = "--line-length=120 --skip-string-normalization"
+let b:ale_go_golangci_lint_options = '--fast --enable-all'
 let g:ale_go_golangci_lint_package = 1
+" go get mvdan.cc/gofumpt
+let g:ale_go_gofmt_executable = 'gofumpt'
+let g:ale_go_gofmt_options = '-l -w'
+
+let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
@@ -184,7 +189,6 @@ nmap <silent> ]c <Plug>(ale_next_wrap)
 let g:strip_whitespace_on_save = 1
 " black
 let g:black_linelength = 120
-let g:LanguageClient_diagnosticsEnable = 0
 let g:black_skip_string_normalization = 1
 let g:LanguageClient_serverCommands = { 'go': ['gopls'], 'python': ['pyls'] }
 
@@ -204,6 +208,8 @@ let g:go_def_mapping_enabled = 0
 let g:go_get_update = 1
 let g:go_metalinter_enabled = []
 let g:go_metalinter_autosave = 0
+let g:go_gopls_gofumpt = 1
+let g:go_fmt_command="gopls"
 
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
