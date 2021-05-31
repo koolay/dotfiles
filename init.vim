@@ -144,9 +144,11 @@ nmap <leader>rn <Plug>(coc-rename)
 nmap <silent> ]e <Plug>(coc-diagnostic-next-error)
 nmap <silent> [e <Plug>(coc-diagnostic-prev-error)
 nnoremap <silent> U :call <SID>show_documentation()<CR>
+nmap <Esc> :call coc#float#close_all() <CR>
 
 "--------ale---------------
-Plug 'w0rp/ale'
+let g:ale_disable_lsp = 1
+Plug 'dense-analysis/ale'
 let g:ale_linters = {
       \   'python': ['pylint'],
       \   'javascript': ['eslint'],
@@ -176,6 +178,8 @@ let g:ale_sign_warning = '⚠'
 let g:ale_echo_msg_error_str = '✖'
 let g:ale_echo_msg_warning_str = '⚠'
 let g:ale_echo_msg_format = '%severity% %s% [%linter%% code%]'
+
+let g:ale_lint_on_enter = 1
 let g:ale_fix_on_save = 1
 let g:ale_list_window_size = 3
 let pipenv_venv_path = system('pipenv --venv')
@@ -200,6 +204,7 @@ let g:LanguageClient_serverCommands = { 'go': ['gopls'], 'python': ['pyls'] }
 Plug 'fatih/vim-go'
 Plug 'buoto/gotests-vim'
 
+let g:LanguageClient_diagnosticsEnable = 0
 let g:go_code_completion_enabled = 0
 let g:go_auto_type_info = 0
 let g:go_fmt_autosave = 0

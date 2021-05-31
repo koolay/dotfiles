@@ -14,10 +14,15 @@
     "diagnostic.infoSign": "●",
     "diagnostic.hintSign": "○",
     "diagnostic.separateRelatedInformationAsDiagnostics": true,
-    "git.addGBlameToBufferVar": true,
-    "go.goplsOptions": {
-       "gofumpt": true
+
+    "diagnostic-languageserver.formatters": {
+       "gofumpt": {
+         "command": "gofumpt",
+         "args": ["-s", "-extra"],
+         "rootPatterns": ["go.mod", ".git"]
+       }
     },
+    "git.addGBlameToBufferVar": true,
     "coc.preferences.formatOnType": true,
     "coc.preferences.formatOnSaveFiletypes": [
         "go",
@@ -32,21 +37,9 @@
         { "name": "buffer", "expand": true },
         { "name": "file", "expand": true }
     ],
-    "explorer.file.column.git.icon.added": "✚",
-    "explorer.file.column.git.icon.deleted": "✖",
-    "explorer.file.column.git.icon.renamed": "➜",
-    "explorer.file.column.git.icon.unmerged": "═",
-    "explorer.file.column.git.icon.untracked": "?",
-    "explorer.file.column.git.icon.modified": "✹",
-    "explorer.file.column.git.icon.ignored": "☒",
     "explorer.openAction.for.directory": "expandOrCollapse",
     "explorer.previewAction.onHover": false,
-    "explorer.keyMappings": {
-        "<cr>": ["expandable?", ["expanded?", "collapse", "expand"], "open"]
-    },
-    "eslint.enable": false,
     "eslint.autoFixOnSave": false,
-    "eslint.autoFix": false,
     "python.venvPath": "~/.pyenv",
     "python.pipenvPath": "~/.pyenv/shims/pipenv",
     "python.jediEnabled": false,
