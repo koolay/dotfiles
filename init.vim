@@ -29,6 +29,19 @@ Plug 'jparise/vim-graphql'
 Plug 'mhinz/vim-startify'
 Plug 'SirVer/ultisnips'
 
+Plug 'ludovicchabant/vim-gutentags'
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.project']
+let g:gutentags_ctags_tagfile = '.tags'
+let s:vim_tags = expand('~/.cache/tags')
+let g:gutentags_cache_dir = s:vim_tags
+if !isdirectory(s:vim_tags)
+   silent! call mkdir(s:vim_tags, 'p')
+endif
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+pxI']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+
 " Nerdtree file browser
 " NERDTree {{{
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTreeToggle'] }
@@ -379,12 +392,14 @@ Plug 'honza/dockerfile.vim'
 " tagbar {{{
 
   Plug 'majutsushi/tagbar'
-  let g:tagbar_left = 1
+  let g:tagbar_right = 1
   let g:tagbar_width = 35
   let g:tagbar_autofocus = 1
   let g:tagbar_autoclose = 0
   let g:tagbar_indent = 2
   let g:tagbar_show_linenumbers = 1
+
+  map <C-m> :TagbarToggle<CR>
   " let g:tagbar_iconchars = ['►', '▼']
 " }}}
 
