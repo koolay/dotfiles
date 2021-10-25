@@ -4,7 +4,9 @@ return {
   font_size = 16.0,
   font_antialias = "Subpixel",
   font_hinting = "Full",
-  font = wezterm.font("JetBrains Mono", {italic=false}),
+  font = wezterm.font_with_fallback({
+      "JetBrainsMono Nerd Font",
+  }),
   color_scheme = "Batman",
   keys = {
     {key = "f", mods = "CTRL|SUPER", action = "ToggleFullScreen"},
