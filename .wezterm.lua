@@ -14,20 +14,20 @@ return {
     {key = "-", mods = "CTRL", action = wezterm.action{SplitHorizontal = {domain = "CurrentPaneDomain"}}},
     {
       key = "h",
-      mods = "CTRL",
+      mods = "CTRL|SHIFT",
       action = wezterm.action {ActivatePaneDirection = "Left"}
     }, {
-      key = ";",
-      mods = "CTRL",
+      key = "l",
+      mods = "CTRL|SHIFT",
       action = wezterm.action {ActivatePaneDirection = "Right"}
     },
     {
       key = "k",
-      mods = "CTRL",
+      mods = "CTRL|SHIFT",
       action = wezterm.action {ActivatePaneDirection = "Up"}
     }, {
       key = "j",
-      mods = "CTRL",
+      mods = "CTRL|SHIFT",
       action = wezterm.action {ActivatePaneDirection = "Down"}
     }
   }
