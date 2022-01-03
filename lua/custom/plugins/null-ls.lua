@@ -41,8 +41,6 @@ local sources = {
         },
     }),
 
-   b.diagnostics.golangci_lint,
-
    b.formatting.sqlformat.with({
       extra_args = function(params)
           return {
