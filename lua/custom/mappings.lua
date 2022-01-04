@@ -21,4 +21,6 @@ hooks.add("setup_mappings", function(map)
     map("n", "<leader>gs", ":G<CR>", opts)
     map("n", "<leader>gb", ":G blame<CR>", opts)
     map("n", "<leader>t", ":TroubleToggle<CR>", opts)
+
+    map("n", " ", ":noh<CR>", opts)
  end)

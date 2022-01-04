@@ -1,11 +1,12 @@
 vim
 ----
 
-## javascript
+## Install tools
 
-```
-npm install -g eslint
-npm install -g eslint_d
-npm install -g eslint-plugin-react
+- [ripgrep](https://github.com/BurntSushi/ripgrep)
 
-```
+- [nnn](https://github.com/jarun/nnn)
+
+- [tealdeer](https://github.com/dbrgn/tealdeer) 
+
+- [golangci-lint](https://github.com/golangci/golangci-lint)
