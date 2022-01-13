@@ -53,7 +53,9 @@ local sources = {
       end,
     }),
 
-   b.formatting.black,
+   b.formatting.black.with({
+     args = { "--line-length", "120" },
+   }),
 
    -- Lua
    b.formatting.stylua.with({

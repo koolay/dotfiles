@@ -15,12 +15,14 @@ hooks.add("setup_mappings", function(map)
 
     map("n", "ge", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
     map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-    map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-    map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+    map("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+    map("n", "[d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 
-    map("n", "<leader>gs", ":G<CR>", opts)
-    map("n", "<leader>gb", ":G blame<CR>", opts)
     map("n", "<leader>t", ":TroubleToggle<CR>", opts)
+
+    map("n", "<Leader>gb", ":Gblame -w<cr>", opts)
+    map("n", "<leader>gs", ":Gstatus<cr>", opts)
+    map("n", "<leader>gd", ":Gvdiff<cr>", opts)
 
     map("n", " ", ":noh<CR>", opts)
  end)
