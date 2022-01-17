@@ -2,6 +2,7 @@
 # VERSION: 3.0
 SETUVAR --export GOPRIVATE:gitlab\x2emypaas\x2ecom\x2ecn
 SETUVAR --export GOPROXY:https\x3a//goproxy\x2eio\x2cdirect
+SETUVAR --export LANG:en_US\x2eUTF\x2d8
 SETUVAR --export NPM_CONFIG_PREFIX:/Users/huwl/\x2enpm\x2dglobal
 SETUVAR ZO_CMD:zo
 SETUVAR Z_CMD:z
