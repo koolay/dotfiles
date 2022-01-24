@@ -16,7 +16,10 @@ lvim.format_on_save = true
 lvim.lint_on_save = true
 lvim.line_wrap_cursor_movement = true
 
-lvim.colorscheme = "onedarker"
+lvim.builtin.lualine.options.theme = "gruvbox-material"
+vim.g.gruvbox_material_background = "hard"
+lvim.colorscheme = "gruvbox-material"
+
 vim.opt.guifont = "JetBrainsMono Nerd Font:h14"
 
 lvim.builtin.treesitter.rainbow.enable = false
@@ -56,6 +59,20 @@ lvim.keys.normal_mode["[d"] = "<Cmd>lua vim.diagnostic.goto_prev()<CR>"
 --     ["<C-k>"] = actions.move_selection_previous,
 --   },
 -- }
+
+lvim.builtin.which_key.mappings["f"] = {
+  name = "hop (easy motion)",
+  w = { "<cmd>HopWord<CR>", "HopWord" },
+  l = { "<cmd>HopLine<CR>", "HopLine" },
+  f = { "<cmd>HopChar2<CR>", "HopChar2" },
+}
+
+lvim.builtin.which_key.mappings["r"] = {
+  name = "Replace",
+  r = { "<cmd>lua require('spectre').open()<cr>", "Replace" },
+  w = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Replace Word" },
+  f = { "<cmd>lua require('spectre').open_file_search()<cr>", "Replace Buffer" },
+}
 
 -- Use which-key to add extra bindings with the leader-key prefix
 -- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
@@ -126,8 +143,101 @@ require("lvim.lsp.manager").setup("pylsp", opts)
 
 -- Additional Plugins
 lvim.plugins = {
+  { "sainnhe/gruvbox-material" },
+  { "SirVer/ultisnips" },
+  { "honza/vim-snippets" },
   { "tpope/vim-surround" },
   { "godlygeek/tabular" },
+  -- Easymotion like navigation
+  {
+    "phaazon/hop.nvim",
+    as = "hop",
+    branch = "v1",
+    event = "BufRead",
+    config = function()
+      -- you can configure Hop the way you like here; see :h hop-config
+      require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
+    end,
+  },
+  -- better %
+  {
+    "andymass/vim-matchup",
+    event = "CursorMoved",
+    config = function()
+      vim.g.matchup_matchparen_offscreen = { method = "popup" }
+    end,
+  },
+  -- Better quick fix
+  {
+    "kevinhwang91/nvim-bqf",
+    event = "BufRead",
+    ft = "qf",
+    config = function()
+      require("bqf").setup({
+        auto_enable = true,
+        preview = {
+          win_height = 12,
+          win_vheight = 12,
+          delay_syntax = 80,
+          border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
+        },
+        func_map = {
+          vsplit = "",
+          ptogglemode = "z,",
+          stoggleup = "",
+        },
+        filter = {
+          fzf = {
+            action_for = { ["ctrl-s"] = "split" },
+            extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
+          },
+        },
+      })
+    end,
+  },
+  -- Preview markdown in browser
+  {
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    ft = "markdown",
+    config = function()
+      vim.g.mkdp_auto_start = 1
+    end,
+  },
+  -- Find & Replace
+  {
+    "windwp/nvim-spectre",
+    event = "BufRead",
+  },
+  -- UI for debugger
+  {
+    "rcarriga/nvim-dap-ui",
+    config = function()
+      require("dapui").setup()
+    end,
+    ft = { "python", "rust", "go" },
+    requires = { "mfussenegger/nvim-dap" },
+    disable = not lvim.builtin.dap.active,
+  },
+  {
+    "sindrets/diffview.nvim",
+    event = "BufRead",
+    requires = "nvim-lua/plenary.nvim",
+  },
+  -- Show variables, functions in a buffer
+  {
+    "simrat39/symbols-outline.nvim",
+    cmd = "SymbolsOutline",
+  },
+  -- Visual indentation
+  -- {
+  --   "lukas-reineke/indent-blankline.nvim",
+  --   -- event = "BufReadPre",
+  --   config = function()
+  --     require("user.blankline")
+  --   end,
+  -- },
+  { "tanvirtin/vgit.nvim", requires = "nvim-lua/plenary.nvim" },
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
@@ -177,6 +287,8 @@ require("null-ls").setup({
     }),
   },
 })
+
+vim.g.EasyMotion_smartcase = 1
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- lvim.autocommands.custom_groups = {
