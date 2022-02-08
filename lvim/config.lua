@@ -11,10 +11,19 @@ an executable
 -- general
 lvim.log.level = "debug"
 lvim.log.override_notify = true
+lvim.builtin.nvimtree.highlight_opened_files = 1
+
+-- Ensure telescope shows full path to files.
+lvim.builtin.telescope.defaults.path_display = { "absolute" }
+
+-- We want a bigger telescope window
+lvim.builtin.telescope.defaults.layout_config.width = 0.9
 
 lvim.format_on_save = true
 lvim.lint_on_save = true
 lvim.line_wrap_cursor_movement = true
+
+lvim.builtin.dap.active = true
 
 lvim.builtin.lualine.options.theme = "gruvbox-material"
 vim.g.gruvbox_material_background = "hard"
@@ -59,7 +68,19 @@ lvim.keys.normal_mode["[d"] = "<Cmd>lua vim.diagnostic.goto_prev()<CR>"
 --     ["<C-k>"] = actions.move_selection_previous,
 --   },
 -- }
+--
+--
+lvim.builtin.which_key.mappings["g"]["d"] = {
+  name = "Diff",
+  o = { "<cmd>:DiffviewOpen<cr>", "Show all modified files" },
+  c = { "<cmd>:DiffviewClose<cr>", "Close" },
+  h = { "<cmd>:DiffviewFileHistory<cr>", "File History" },
+  p = { "<cmd>:DiffviewFileHistory . <cr>", "Project History" },
+  f = { "<cmd>:DiffviewToggleFiles<cr>", "Toggle Files" },
+  r = { "<cmd>:DiffviewRefresh<cr>", "Refresh" },
+}
 
+lvim.builtin.which_key.mappings["l"]["o"] = { "<cmd>SymbolsOutline<cr>", "Outline" }
 lvim.builtin.which_key.mappings["f"] = {
   name = "hop (easy motion)",
   w = { "<cmd>HopWord<CR>", "HopWord" },
@@ -74,17 +95,35 @@ lvim.builtin.which_key.mappings["r"] = {
   f = { "<cmd>lua require('spectre').open_file_search()<cr>", "Replace Buffer" },
 }
 
+lvim.builtin.which_key.vmappings["v"] = {
+  name = "Refactoring",
+  r = { "<Cmd>lua require('refactoring').refactor('Extract Function')<CR>", "Extract Function" },
+}
+
 -- Use which-key to add extra bindings with the leader-key prefix
 -- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
--- lvim.builtin.which_key.mappings["t"] = {
---   name = "+Trouble",
---   r = { "<cmd>Trouble lsp_references<cr>", "References" },
---   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
---   d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
---   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
---   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
---   w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
--- }
+lvim.builtin.which_key.mappings["t"] = {
+  name = "+Trouble",
+  l = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "LocationList" },
+  w = { "<cmd>Trouble workspace_diagnostics<CR>", "Diagnostics" },
+}
+
+-- dap debugger mappings
+lvim.builtin.which_key.mappings["dU"] = { "<cmd>lua require('dapui').toggle()<cr>", "Toggle Debugger UI" }
+lvim.builtin.which_key.mappings["de"] = { "<cmd>lua require('dapui').eval()<cr>", "Eval" }
+lvim.builtin.which_key.mappings["dB"] = {
+  "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
+  "Add breakpoint condition",
+}
+lvim.builtin.which_key.mappings["dl"] = {
+  "<cmd>lua require'dap'.list_breakpoints() vim.fn.QuickFixToggle() <CR>",
+  "Toggle breakpoints list",
+}
+
+-- lvim.keys.normal_mode["<C-F5>"] = "<cmd>:lua require('dap').continue()<CR>"
+-- lvim.keys.normal_mode["<F8>"] = "<cmd>:lua require('dap').toggle_breakpoint()<CR>"
+-- lvim.keys.normal_mode["<F9>"] = "<cmd>:lua require('dap').step_over()<CR>"
+-- lvim.keys.normal_mode["<F10>"] = "<cmd>:lua require('dap').step_into()<CR>"
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -117,8 +156,10 @@ lvim.builtin.treesitter.highlight.enabled = true
 lvim.lsp.automatic_servers_installation = true
 lvim.lsp.diagnostics.virtual_text = true
 lvim.lsp.default_keybinds = true
-lvim.lsp.diagnostics.update_in_insert = true
+lvim.lsp.diagnostics.update_in_insert = false
 lvim.lsp.diagnostics.underline = true
+
+-- plugin settings
 
 -- ---@usage Select which servers should be configured manually. Requires `:LvimCacheRest` to take effect.
 -- See the full default list `:lua print(vim.inspect(lvim.lsp.override))`
@@ -143,16 +184,34 @@ require("lvim.lsp.manager").setup("pylsp", opts)
 
 -- Additional Plugins
 lvim.plugins = {
+  { "lewis6991/impatient.nvim" },
   { "sainnhe/gruvbox-material" },
-  { "SirVer/ultisnips" },
-  { "honza/vim-snippets" },
   { "tpope/vim-surround" },
   { "godlygeek/tabular" },
+  {
+    "max397574/better-escape.nvim",
+    config = function()
+      require("better_escape").setup()
+    end,
+  },
+  {
+    "tzachar/cmp-tabnine",
+    config = function()
+      local tabnine = require("cmp_tabnine.config")
+      tabnine:setup({
+        max_lines = 1000,
+        max_num_results = 20,
+        sort = true,
+      })
+    end,
+
+    run = "./install.sh",
+    requires = "hrsh7th/nvim-cmp",
+  },
   -- Easymotion like navigation
   {
     "phaazon/hop.nvim",
     as = "hop",
-    branch = "v1",
     event = "BufRead",
     config = function()
       -- you can configure Hop the way you like here; see :h hop-config
@@ -167,32 +226,11 @@ lvim.plugins = {
       vim.g.matchup_matchparen_offscreen = { method = "popup" }
     end,
   },
-  -- Better quick fix
   {
-    "kevinhwang91/nvim-bqf",
-    event = "BufRead",
-    ft = "qf",
+    "ThePrimeagen/refactoring.nvim",
+
     config = function()
-      require("bqf").setup({
-        auto_enable = true,
-        preview = {
-          win_height = 12,
-          win_vheight = 12,
-          delay_syntax = 80,
-          border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
-        },
-        func_map = {
-          vsplit = "",
-          ptogglemode = "z,",
-          stoggleup = "",
-        },
-        filter = {
-          fzf = {
-            action_for = { ["ctrl-s"] = "split" },
-            extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
-          },
-        },
-      })
+      require("refactoring").setup()
     end,
   },
   -- Preview markdown in browser
@@ -209,7 +247,16 @@ lvim.plugins = {
     "windwp/nvim-spectre",
     event = "BufRead",
   },
-  -- UI for debugger
+  -- debugger
+  { "vim-test/vim-test" },
+  { "rcarriga/vim-ultest", requires = { "vim-test/vim-test" }, run = ":UpdateRemotePlugins" },
+  {
+    "leoluz/nvim-dap-go",
+    config = function()
+      require("dap-go").setup()
+    end,
+    requires = { "mfussenegger/nvim-dap" },
+  },
   {
     "rcarriga/nvim-dap-ui",
     config = function()
@@ -217,8 +264,9 @@ lvim.plugins = {
     end,
     ft = { "python", "rust", "go" },
     requires = { "mfussenegger/nvim-dap" },
-    disable = not lvim.builtin.dap.active,
+    disable = false,
   },
+  { "theHamsta/nvim-dap-virtual-text" },
   {
     "sindrets/diffview.nvim",
     event = "BufRead",
@@ -226,58 +274,60 @@ lvim.plugins = {
   },
   -- Show variables, functions in a buffer
   {
-    "simrat39/symbols-outline.nvim",
+    "koolay/symbols-outline.nvim",
     cmd = "SymbolsOutline",
+    config = function()
+      require("symbols-outline").setup({
+        relative = false,
+        -- Get a wider sidebar for SymbolsOutline, min 40 columns on smaller screens.
+        width = math.ceil(math.min(vim.o.columns, math.max(40, vim.o.columns / 6))),
+        -- No preview by default
+        auto_preview = false,
+        keymaps = { -- These keymaps can be a string or a table for multiple keys
+          close = { "<Esc>", "q" },
+          goto_location = "<Cr>",
+          focus_location = "o",
+          hover_symbol = "<C-space>",
+          toggle_preview = "K",
+          rename_symbol = "r",
+          code_actions = "a",
+        },
+      })
+    end,
   },
-  -- Visual indentation
-  -- {
-  --   "lukas-reineke/indent-blankline.nvim",
-  --   -- event = "BufReadPre",
-  --   config = function()
-  --     require("user.blankline")
-  --   end,
-  -- },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    event = "BufRead",
+    setup = function()
+      vim.g.indent_blankline_filetype_exclude = {
+        "go",
+        "terminal",
+        "dashboard",
+        "Outline",
+      }
+
+      vim.g.indent_blankline_show_trailing_blankline_indent = false
+      vim.g.indent_blankline_show_first_indent_level = true
+      vim.g.indent_blankline_indent_level = 10
+      vim.g.indent_blankline_use_treesitter = true
+    end,
+  },
   { "tanvirtin/vgit.nvim", requires = "nvim-lua/plenary.nvim" },
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
     requires = "kyazdani42/nvim-web-devicons",
     config = function()
-      require("trouble").setup({
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      })
+      require("trouble").setup({})
     end,
   },
   {
     "ray-x/lsp_signature.nvim",
+    event = "BufEnter",
     config = function()
-      require("lsp_signature").on_attach({
-        bind = true,
-        doc_lines = 0,
-        floating_window = true,
-        fix_pos = true,
-        hint_enable = true,
-        hint_prefix = " ",
-        hint_scheme = "String",
-        hi_parameter = "Search",
-        max_height = 22,
-        max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
-        handler_opts = {
-          border = "single", -- double, single, shadow, none
-        },
-        zindex = 200, -- by default it will be on top of all floating windows, set to 50 send it to bottom
-        padding = "", -- character to pad on left and right of signature can be ' ', or '|'  etc
-      })
+      require("lsp_signature").setup()
     end,
-    event = "InsertEnter",
   },
-
-  -- {
-  --   "folke/trouble.nvim",
-  --   cmd = "TroubleToggle",
-  -- },
 }
 
 require("null-ls").setup({
@@ -288,7 +338,9 @@ require("null-ls").setup({
   },
 })
 
-vim.g.EasyMotion_smartcase = 1
+lvim.lsp.on_attach_callback = function(client, bufnr)
+  require("lsp_signature").on_attach()
+end
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- lvim.autocommands.custom_groups = {

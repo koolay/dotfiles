@@ -1,5 +1,5 @@
-vim.opt_local.shiftwidth = 8
-vim.opt_local.softtabstop = 8
+vim.opt_local.shiftwidth = 0
+vim.opt_local.softtabstop = 0
 
 -- local linters = require("lvim.lsp.null-ls.linters")
 -- linters.setup({
