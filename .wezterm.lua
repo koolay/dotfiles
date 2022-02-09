@@ -7,6 +7,7 @@ return {
   font = wezterm.font_with_fallback({
     "JetBrainsMono Nerd Font",
   }),
+  -- https://github.com/mbadolato/iTerm2-Color-Schemes
   color_scheme = "Doom Peacock",
   keys = {
     { key = "f", mods = "CTRL|SUPER", action = "ToggleFullScreen" },
