@@ -19,7 +19,13 @@ lvim.builtin.telescope.defaults.path_display = { "absolute" }
 -- We want a bigger telescope window
 lvim.builtin.telescope.defaults.layout_config.width = 0.9
 
-lvim.format_on_save = true
+lvim.format_on_save = {
+  ---@usage pattern string pattern used for the autocommand (Default: '*')
+  pattern = "*",
+  ---@usage timeout number timeout in ms for the format request (Default: 1000)
+  timeout = 5000,
+}
+
 lvim.lint_on_save = true
 lvim.line_wrap_cursor_movement = true
 

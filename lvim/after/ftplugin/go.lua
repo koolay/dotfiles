@@ -12,7 +12,10 @@ vim.opt_local.softtabstop = 0
 
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
-  { command = "gofumpt", filetypes = { "go" } },
+  {
+    command = "goimports",
+    filetypes = { "go" },
+  },
   {
     command = "golines",
     filetypes = { "go" },
