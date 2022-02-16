@@ -21,7 +21,7 @@ lvim.builtin.telescope.defaults.layout_config.width = 0.9
 
 lvim.format_on_save = {
   ---@usage pattern string pattern used for the autocommand (Default: '*')
-  pattern = "*",
+  -- pattern = "*",
   ---@usage timeout number timeout in ms for the format request (Default: 1000)
   timeout = 5000,
 }
@@ -329,7 +329,7 @@ lvim.plugins = {
   },
   {
     "ray-x/lsp_signature.nvim",
-    event = "BufEnter",
+    event = "BufRead",
     config = function()
       require("lsp_signature").setup()
     end,
@@ -344,8 +344,13 @@ require("null-ls").setup({
   },
 })
 
-lvim.lsp.on_attach_callback = function(client, bufnr)
+lvim.lsp.on_attach_callback = function(client, _)
   require("lsp_signature").on_attach()
+  -- volid conflict with null-ls
+  if client.name == "gopls" then
+    client.resolved_capabilities.document_formatting = false
+    client.resolved_capabilities.document_range_formatting = false
+  end
 end
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
