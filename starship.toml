@@ -1,0 +1,96 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+command_timeout = 5000
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character] # The name of the module we are configuring is "character"
+success_symbol = "[➜](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
+error_symbol = "[✖](bold red)"
+
+
+[buf]
+symbol = " "
+style = "fg:#00a1ff"
+
+[c]
+symbol = " "
+style = "fg:#00a1ff"
+
+[conda]
+symbol = " "
+style = "fg:#00a1ff"
+
+[dart]
+symbol = " "
+style = "fg:#00a1ff"
+
+[git_branch]
+symbol = " "
+style = "fg:#00a1ff"
+
+[golang]
+symbol = ' '
+style = "fg:#00a1ff"
+
+[python]
+symbol = " "
+python_binary = "python3"
+style = "fg:#00a1ff"
+
+[nim]
+symbol = " "
+style = "fg:#00a1ff"
+
+[nix_shell]
+symbol = " "
+style = "fg:#00a1ff"
+
+[nodejs]
+symbol = " "
+style = "fg:#00a1ff"
+
+[package]
+symbol = " "
+style = "fg:#00a1ff"
+
+[haskell]
+symbol = " "
+style = "fg:#00a1ff"
+
+[hg_branch]
+symbol = " "
+style = "fg:#00a1ff"
+
+[java]
+symbol = " "
+style = "fg:#00a1ff"
+
+[julia]
+symbol = " "
+style = "fg:#00a1ff"
+
+[spack]
+symbol = "🅢 "
+style = "fg:#00a1ff"
+
+[rust]
+symbol = " "
+style = "fg:#00a1ff"
+
+[directory]
+read_only = " "
+style = "fg:#ffffff"
+truncation_length = 30
+truncation_symbol = "…/"
+truncate_to_repo = false
+fish_style_pwd_dir_length = 1
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[git_metrics]
+added_style = "#42b983"
+deleted_style = "#f20c84"
+format = '([+$added]($added_style))([-$deleted]($deleted_style)) '
+disabled = false
