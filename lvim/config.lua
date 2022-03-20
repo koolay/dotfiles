@@ -50,7 +50,7 @@ lvim.keys.normal_mode[",e"] = "NvimTreeToggle<CR>"
 lvim.keys.normal_mode["U"] = "<Cmd>lua vim.lsp.buf.hover()<CR>"
 lvim.keys.normal_mode[" "] = ":noh<CR>"
 lvim.keys.normal_mode["<C-p>"] = "<Cmd>Telescope find_files theme=get_ivy<CR>"
-lvim.keys.normal_mode["<C-w>"] = "<Cmd>Telescope live_grep<CR>"
+lvim.keys.normal_mode["<C-w>"] = "<Cmd>lua require('telescope').extensions.live_grep_raw.live_grep_raw()<CR>"
 
 lvim.keys.normal_mode["<C-q>"] = "<cmd>lua vim.diagnostic.setloclist()<CR>"
 lvim.keys.normal_mode["]d"] = "<Cmd>lua vim.diagnostic.goto_next()<CR>"
@@ -250,6 +250,7 @@ lvim.plugins = {
   { "nvim-treesitter/nvim-treesitter-refactor" },
   { "AndrewRadev/splitjoin.vim" },
   { "godlygeek/tabular" },
+  { "nvim-telescope/telescope-live-grep-raw.nvim" },
   {
     "nvim-lua/lsp-status.nvim",
     event = "BufEnter",
