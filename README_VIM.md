@@ -25,3 +25,6 @@ $ pip3 install python-lsp-server, black, pylint
 
 
 ```
+
+> Shortcuts:
+> move selected lines: `SHIFT + g/k`

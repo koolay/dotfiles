@@ -6,6 +6,12 @@
 
 - (jless)[https://github.com/PaulJuliusMartinez/jless]
 
+- (gup)(https://github.com/nao1215/gup)
+
+- (colima)[https://github.com/abiosoft/colima]
+
+- (dsq)[https://github.com/multiprocessio/dsq]
+
 ## setup.sh
 
 ```bash

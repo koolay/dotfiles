@@ -15,7 +15,6 @@ lvim.builtin.nvimtree.highlight_opened_files = 1
 
 -- Ensure telescope shows full path to files.
 lvim.builtin.telescope.defaults.path_display = { "absolute" }
-
 -- We want a bigger telescope window
 lvim.builtin.telescope.defaults.layout_config.width = 0.9
 
@@ -56,6 +55,9 @@ lvim.keys.normal_mode["<C-w>"] = "<Cmd>Telescope live_grep<CR>"
 lvim.keys.normal_mode["<C-q>"] = "<cmd>lua vim.diagnostic.setloclist()<CR>"
 lvim.keys.normal_mode["]d"] = "<Cmd>lua vim.diagnostic.goto_next()<CR>"
 lvim.keys.normal_mode["[d"] = "<Cmd>lua vim.diagnostic.goto_prev()<CR>"
+
+lvim.keys.normal_mode["sk"] = "<cmd>SplitjoinJoin<CR>"
+lvim.keys.normal_mode["sj"] = "<cmd>SplitjoinSplit<CR>"
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
@@ -103,7 +105,10 @@ lvim.builtin.which_key.mappings["r"] = {
 
 lvim.builtin.which_key.vmappings["v"] = {
   name = "Refactoring",
-  r = { "<Cmd>lua require('refactoring').refactor('Extract Function')<CR>", "Extract Function" },
+  r = {
+    "<Esc><Cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
+    "Extract Function",
+  },
 }
 
 -- Use which-key to add extra bindings with the leader-key prefix
@@ -175,6 +180,55 @@ lvim.lsp.diagnostics.underline = true
 local opts = {} -- check the lspconfig documentation for a list of all possible options
 require("lvim.lsp.manager").setup("pylsp", opts)
 
+-- lsp-status.nvim {{{
+local configure_lsp_status = function()
+  local lsp_status = require("lsp-status")
+
+  -- https://github.com/nvim-lua/lsp-status.nvim/issues/7#issuecomment-691056312
+  -- use LSP SymbolKinds themselves as the kind labels
+  -- local kind_labels_mt = {__index = function (_, k) return k end}
+  -- local kind_labels = {}
+  -- setmetatable(kind_labels, kind_labels_mt)
+
+  -- lsp_status.register_progress() -- register the progress message handler (use fidget.nvim instead?)
+
+  lsp_status.config({
+    diagnostics = false, -- this is displayed in another component
+    current_function = true, -- default: true
+    indicator_errors = "",
+    indicator_warnings = "",
+    indicator_info = "",
+    indicator_hint = "",
+    indicator_ok = "",
+    -- component_separator = ' ' .. lvim.builtin.lualine.options.component_separators.left .. ' ',
+    -- show_filename = true,
+    kind_labels = {
+      Text = "",
+      Method = "ƒ",
+      Function = "",
+      Constructor = "",
+      Variable = "",
+      Class = "",
+      Interface = "ﰮ",
+      Module = "",
+      Property = "",
+      Unit = "",
+      Value = "",
+      Enum = "了",
+      Keyword = "",
+      Snippet = "﬌",
+      Color = "",
+      File = "",
+      Folder = "",
+      EnumMember = "",
+      Constant = "",
+      Struct = "",
+    },
+    status_symbol = "ʪ",
+  })
+end
+-- }}}
+
 -- -- you can set a custom on_attach function that will be used for all the language servers
 -- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
 -- lvim.lsp.on_attach_callback = function(client, bufnr)
@@ -193,7 +247,16 @@ lvim.plugins = {
   { "lewis6991/impatient.nvim" },
   { "sainnhe/gruvbox-material" },
   { "tpope/vim-surround" },
+  { "nvim-treesitter/nvim-treesitter-refactor" },
+  { "AndrewRadev/splitjoin.vim" },
   { "godlygeek/tabular" },
+  {
+    "nvim-lua/lsp-status.nvim",
+    event = "BufEnter",
+    config = configure_lsp_status,
+    before = "lualine.nvim",
+    after = "nvim-lspconfig",
+  }, -- show current lsp context in statusbar e.g. function I'm in
   {
     "max397574/better-escape.nvim",
     config = function()
@@ -234,9 +297,25 @@ lvim.plugins = {
   },
   {
     "ThePrimeagen/refactoring.nvim",
+    branch = "master",
+    requires = {
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-treesitter/nvim-treesitter" },
+    },
 
     config = function()
-      require("refactoring").setup()
+      require("refactoring").setup({
+        -- prompt for return type
+        prompt_func_return_type = {
+          go = true,
+          java = true,
+        },
+        -- prompt for function parameters
+        prompt_func_param_type = {
+          go = true,
+          java = true,
+        },
+      })
     end,
   },
   -- Preview markdown in browser
@@ -252,6 +331,12 @@ lvim.plugins = {
   {
     "windwp/nvim-spectre",
     event = "BufRead",
+    config = function()
+      require("spectre").setup({
+        color_devicons = true,
+        live_update = false,
+      })
+    end,
   },
   -- debugger
   { "vim-test/vim-test" },
@@ -284,6 +369,7 @@ lvim.plugins = {
     cmd = "SymbolsOutline",
     config = function()
       require("symbols-outline").setup({
+        show_guides = true,
         relative = false,
         -- Get a wider sidebar for SymbolsOutline, min 40 columns on smaller screens.
         width = math.ceil(math.min(vim.o.columns, math.max(40, vim.o.columns / 6))),
@@ -309,7 +395,7 @@ lvim.plugins = {
         "go",
         "terminal",
         "dashboard",
-        "Outline",
+        -- "Outline",
       }
 
       vim.g.indent_blankline_show_trailing_blankline_indent = false
@@ -330,9 +416,11 @@ lvim.plugins = {
   {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",
-    config = function()
-      require("lsp_signature").setup()
-    end,
+    -- config = function()
+    --   require("lsp_signature").setup({
+    --     hint_enable = false,
+    --   })
+    -- end,
   },
 }
 
@@ -345,7 +433,9 @@ require("null-ls").setup({
 })
 
 lvim.lsp.on_attach_callback = function(client, _)
-  require("lsp_signature").on_attach()
+  require("lsp_signature").on_attach({
+    hint_enable = false,
+  })
   -- volid conflict with null-ls
   if client.name == "gopls" then
     client.resolved_capabilities.document_formatting = false
