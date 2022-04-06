@@ -32,11 +32,15 @@ lvim.builtin.dap.active = true
 
 lvim.builtin.lualine.options.theme = "gruvbox-material"
 vim.g.gruvbox_material_background = "hard"
+
 lvim.colorscheme = "gruvbox-material"
+vim.g.colors_name = lvim.colorscheme
+vim.cmd("colorscheme " .. lvim.colorscheme)
 
 vim.opt.guifont = "JetBrainsMono Nerd Font:h14"
 
 lvim.builtin.treesitter.rainbow.enable = false
+lvim.builtin.treesitter.indent = { enable = true, disable = { "go" } }
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = ","
@@ -58,6 +62,11 @@ lvim.keys.normal_mode["[d"] = "<Cmd>lua vim.diagnostic.goto_prev()<CR>"
 
 lvim.keys.normal_mode["sk"] = "<cmd>SplitjoinJoin<CR>"
 lvim.keys.normal_mode["sj"] = "<cmd>SplitjoinSplit<CR>"
+
+lvim.keys.insert_mode["<C-j>"] = { "v:lua.tab_complete()", { expr = true } }
+
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", { expr = true })
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", { expr = true })
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
@@ -138,7 +147,11 @@ lvim.builtin.which_key.mappings["dl"] = {
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
-lvim.builtin.dashboard.active = true
+-- lvim.builtin.dashboard.active = true
+-- lvim.builtin.alpha.mode = "dashbaord"
+-- lvim.builtin.alpha.active = true
+
+-- lvim.builtin.lualine.options.globalstatus = true
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
@@ -395,7 +408,7 @@ lvim.plugins = {
       vim.g.indent_blankline_filetype_exclude = {
         "go",
         "terminal",
-        "dashboard",
+        "alpha",
         -- "Outline",
       }
 
@@ -417,16 +430,15 @@ lvim.plugins = {
   {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",
-    -- config = function()
-    --   require("lsp_signature").setup({
-    --     hint_enable = false,
-    --   })
-    -- end,
+  },
+  {
+    "jjo/vim-cue",
   },
 }
 
 require("null-ls").setup({
   sources = {
+    require("null-ls").builtins.formatting.cue_fmt,
     require("null-ls").builtins.diagnostics.golangci_lint.with({
       args = { "run", "--fix=false", "--out-format=json", "$DIRNAME", "--path-prefix", "$ROOT" },
     }),
@@ -436,6 +448,9 @@ require("null-ls").setup({
 lvim.lsp.on_attach_callback = function(client, _)
   require("lsp_signature").on_attach({
     hint_enable = false,
+    hi_parameter = "Search",
+    floating_window_above_cur_line = false,
+    fix_pos = true,
   })
   -- volid conflict with null-ls
   if client.name == "gopls" then
