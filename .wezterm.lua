@@ -18,7 +18,8 @@ return {
     "JetBrainsMono Nerd Font",
   }),
   -- https://github.com/mbadolato/iTerm2-Color-Schemes
-  color_scheme = "Doom Peacock",
+  -- color_scheme = "Doom Peacock",
+  color_scheme = "Batman",
   keys = {
     { key = "f", mods = "CTRL|SUPER", action = "ToggleFullScreen" },
     { key = "=", mods = "CTRL", action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },

@@ -1,7 +1,7 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR --export GOPRIVATE:gitlab\x2emypaas\x2ecom\x2ecn
-SETUVAR --export GOPROXY:https\x3a//mirrors\x2ealiyun\x2ecom/goproxy\x2cdirect
+SETUVAR --export GOPROXY:https\x3a//goproxy\x2ecn\x2cdirect
 SETUVAR --export LANG:en_US\x2eUTF\x2d8
 SETUVAR --export NPM_CONFIG_PREFIX:/Users/huwl/\x2enpm\x2dglobal
 SETUVAR ZO_CMD:zo
@@ -14,7 +14,8 @@ SETUVAR _fisher_PatrickF1_2F_fzf_2E_fish_files:/Users/huwl/\x2econfig/fish/funct
 SETUVAR _fisher_evanlucas_2F_fish_2D_kubectl_2D_completions_files:/Users/huwl/\x2econfig/fish/completions/kubectl\x2efish
 SETUVAR _fisher_jethrokuan_2F_z_files:/Users/huwl/\x2econfig/fish/functions/__z\x2efish\x1e/Users/huwl/\x2econfig/fish/functions/__z_add\x2efish\x1e/Users/huwl/\x2econfig/fish/functions/__z_clean\x2efish\x1e/Users/huwl/\x2econfig/fish/functions/__z_complete\x2efish\x1e/Users/huwl/\x2econfig/fish/conf\x2ed/z\x2efish
 SETUVAR _fisher_jorgebucaran_2F_fisher_files:/Users/huwl/\x2econfig/fish/functions/fisher\x2efish\x1e/Users/huwl/\x2econfig/fish/completions/fisher\x2efish
-SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ejethrokuan/z\x1ePatrickF1/fzf\x2efish\x1eevanlucas/fish\x2dkubectl\x2dcompletions
+SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ejethrokuan/z\x1ePatrickF1/fzf\x2efish\x1eevanlucas/fish\x2dkubectl\x2dcompletions\x1ereitzig/sdkman\x2dfor\x2dfish\x40v1\x2e4\x2e0
+SETUVAR _fisher_reitzig_2F_sdkman_2D_for_2D_fish_40_v1_2E_34_2E_30__files:/Users/huwl/\x2econfig/fish/functions/sdk\x2efish\x1e/Users/huwl/\x2econfig/fish/conf\x2ed/sdk\x2efish\x1e/Users/huwl/\x2econfig/fish/completions/sdk\x2efish
 SETUVAR fish_color_autosuggestion:555\x1ebrblack
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:005fd7

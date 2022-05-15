@@ -16,7 +16,7 @@ lvim.builtin.nvimtree.highlight_opened_files = 1
 -- Ensure telescope shows full path to files.
 lvim.builtin.telescope.defaults.path_display = { "absolute" }
 -- We want a bigger telescope window
-lvim.builtin.telescope.defaults.layout_config.width = 0.9
+lvim.builtin.telescope.defaults.layout_config.width = 0.99
 
 lvim.format_on_save = {
   ---@usage pattern string pattern used for the autocommand (Default: '*')
@@ -177,7 +177,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- generic LSP settings
 
 -- ---@usage disable automatic installation of servers
-lvim.lsp.automatic_servers_installation = true
+lvim.lsp.automatic_servers_installation = false
 lvim.lsp.diagnostics.virtual_text = true
 lvim.lsp.default_keybinds = true
 lvim.lsp.diagnostics.update_in_insert = false
@@ -263,6 +263,7 @@ lvim.plugins = {
   { "nvim-treesitter/nvim-treesitter-refactor" },
   { "AndrewRadev/splitjoin.vim" },
   { "godlygeek/tabular" },
+  { "rrethy/vim-hexokinase" },
   { "nvim-telescope/telescope-live-grep-raw.nvim" },
   {
     "nvim-lua/lsp-status.nvim",
@@ -335,10 +336,8 @@ lvim.plugins = {
   -- Preview markdown in browser
   {
     "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
-    ft = "markdown",
-    config = function()
-      vim.g.mkdp_auto_start = 1
+    run = function()
+      vim.fn["mkdp#util#install"]()
     end,
   },
   -- Find & Replace
@@ -353,14 +352,20 @@ lvim.plugins = {
     end,
   },
   -- debugger
-  { "vim-test/vim-test" },
+  {
+    "vim-test/vim-test",
+    config = function()
+      vim.g["test#go#runner"] = "gotest"
+    end,
+  },
+  { "buoto/gotests-vim" },
   { "rcarriga/vim-ultest", requires = { "vim-test/vim-test" }, run = ":UpdateRemotePlugins" },
   {
     "leoluz/nvim-dap-go",
     config = function()
       require("dap-go").setup()
     end,
-    requires = { "mfussenegger/nvim-dap" },
+    -- requires = { "mfussenegger/nvim-dap" },
   },
   {
     "rcarriga/nvim-dap-ui",
@@ -406,7 +411,7 @@ lvim.plugins = {
     event = "BufRead",
     setup = function()
       vim.g.indent_blankline_filetype_exclude = {
-        "go",
+        -- "go",
         "terminal",
         "alpha",
         -- "Outline",

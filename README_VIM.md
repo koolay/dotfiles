@@ -28,3 +28,10 @@ $ pip3 install python-lsp-server, black, pylint
 
 > Shortcuts:
 > move selected lines: `SHIFT + g/k`
+
+## Fix some package in lvim 
+
+```
+~/.local/share/lunarvim/site/pack/packer/start/{package}
+
+```
