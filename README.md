@@ -2,26 +2,31 @@
 
 ## tools 
 
-- (kit)[https://github.com/johnlindquist/kit]
+- [ kit ]( https://github.com/johnlindquist/kit )
   Script Kit. Automate Anything.
 
-- (jless)[https://github.com/PaulJuliusMartinez/jless]
+- [ jless ]( https://github.com/PaulJuliusMartinez/jless )
   jless is a command-line JSON viewer designed for reading, exploring, and searching through JSON data.
 
-- (colima)[https://github.com/abiosoft/colima]
+- [ colima ]( https://github.com/abiosoft/colima )
   Container runtimes on macOS (and Linux) with minimal setup
 
-- (dsq)[https://github.com/multiprocessio/dsq]
+- [ dsq ]( https://github.com/multiprocessio/dsq )
   Commandline tool for running SQL queries against JSON, CSV, Excel, Parquet, and more.
 
-- (gron)[https://github.com/tomnomnom/gron]
+- [ gron ]( https://github.com/tomnomnom/gron )
   Make JSON greppable!
 
-- (fx)[https://github.com/antonmedv/fx]
+- [ fx ]( https://github.com/antonmedv/fx )
   Terminal JSON viewer
 
-- (cargo)[https://github.com/ekzhang/bore]
-  Bore is a simple CLI tool for making tunnels to localhost
+- [ cargo ]( https://github.com/ekzhang/bore )
+  `Bore`` is a simple CLI tool for making tunnels to localhost
+
+- [ xplr ](https://github.com/sayanarijit/xplr)
+  `xplr` is a terminal UI based file explorer that aims to increase our terminal productivity by being a flexible, interactive orchestrator for the ever growing awesome command-line utilities that work with the file-system.
+
+
   
 
 ## setup.sh

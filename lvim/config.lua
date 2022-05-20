@@ -189,10 +189,6 @@ lvim.lsp.diagnostics.underline = true
 -- See the full default list `:lua print(vim.inspect(lvim.lsp.override))`
 -- vim.list_extend(lvim.lsp.override, { "pylsp" })
 
--- ---@usage setup a server -- see: https://www.lunarvim.org/languages/#overriding-the-default-configuration
-local opts = {} -- check the lspconfig documentation for a list of all possible options
-require("lvim.lsp.manager").setup("pylsp", opts)
-
 -- lsp-status.nvim {{{
 local configure_lsp_status = function()
   local lsp_status = require("lsp-status")
@@ -406,6 +402,7 @@ lvim.plugins = {
       })
     end,
   },
+  { "tpope/vim-sleuth" },
   {
     "lukas-reineke/indent-blankline.nvim",
     event = "BufRead",
