@@ -2,6 +2,9 @@
 
 ## tools 
 
+- [cheat](https://github.com/cheat/cheat)
+  命令行提示帮助工具, the only linux command
+
 - [ kit ]( https://github.com/johnlindquist/kit )
   Script Kit. Automate Anything.
 
@@ -14,19 +17,14 @@
 - [ dsq ]( https://github.com/multiprocessio/dsq )
   Commandline tool for running SQL queries against JSON, CSV, Excel, Parquet, and more.
 
-- [ gron ]( https://github.com/tomnomnom/gron )
-  Make JSON greppable!
-
-- [ fx ]( https://github.com/antonmedv/fx )
-  Terminal JSON viewer
-
 - [ cargo ]( https://github.com/ekzhang/bore )
   `Bore`` is a simple CLI tool for making tunnels to localhost
 
 - [ xplr ](https://github.com/sayanarijit/xplr)
   `xplr` is a terminal UI based file explorer that aims to increase our terminal productivity by being a flexible, interactive orchestrator for the ever growing awesome command-line utilities that work with the file-system.
 
-
+- [ ugit ](https://github.com/Bhupesh-V/ugit)
+  ugit helps undo git commands. 
   
 
 ## setup.sh

@@ -86,12 +86,12 @@ vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", { expr = true })
 --   },
 -- }
 --
---
+-- sindrets/diffview.nvim
 lvim.builtin.which_key.mappings["g"]["d"] = {
   name = "Diff",
   o = { "<cmd>:DiffviewOpen<cr>", "Show all modified files" },
   c = { "<cmd>:DiffviewClose<cr>", "Close" },
-  h = { "<cmd>:DiffviewFileHistory<cr>", "File History" },
+  h = { "<cmd>:VGit buffer_history_preview<cr>", "File History" },
   p = { "<cmd>:DiffviewFileHistory . <cr>", "Project History" },
   f = { "<cmd>:DiffviewToggleFiles<cr>", "Toggle Files" },
   r = { "<cmd>:DiffviewRefresh<cr>", "Refresh" },
@@ -343,7 +343,7 @@ lvim.plugins = {
     config = function()
       require("spectre").setup({
         color_devicons = true,
-        live_update = false,
+        live_update = true,
       })
     end,
   },
@@ -420,7 +420,19 @@ lvim.plugins = {
       vim.g.indent_blankline_use_treesitter = true
     end,
   },
-  { "tanvirtin/vgit.nvim", requires = "nvim-lua/plenary.nvim" },
+  {
+    "tanvirtin/vgit.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("vgit").setup({
+        settings = {
+          live_blame = {
+            enabled = false,
+          },
+        },
+      })
+    end,
+  },
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
@@ -435,6 +447,10 @@ lvim.plugins = {
   },
   {
     "jjo/vim-cue",
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    requires = "nvim-treesitter/nvim-treesitter",
   },
 }
 
