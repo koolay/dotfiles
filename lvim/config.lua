@@ -7,11 +7,49 @@ a global executable or a path to
 an executable
 ]]
 -- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
-
+--
 -- general
 lvim.log.level = "debug"
 lvim.log.override_notify = true
 lvim.builtin.nvimtree.highlight_opened_files = 1
+
+-- {{ cmp
+local cmp = require("cmp")
+local luasnip = require("luasnip")
+local jumpable = require("lvim.core.cmp").methods.jumpable
+local check_backspace = require("lvim.core.cmp").methods.check_backspace
+local is_emmet_active = require("lvim.core.cmp").methods.is_emmet_active
+
+lvim.builtin.cmp.mapping["<CR>"] = cmp.mapping.confirm({
+  behavior = cmp.ConfirmBehavior.Replace,
+  select = true,
+})
+
+lvim.builtin.cmp.mapping["<Tab>"] = cmp.mapping(function(fallback)
+  if luasnip.expandable() then
+    luasnip.expand()
+  elseif jumpable() then
+    luasnip.jump(1)
+  elseif check_backspace() then
+    fallback()
+  elseif is_emmet_active() then
+    return vim.fn["cmp#complete"]()
+  else
+    fallback()
+  end
+end, {
+  "i",
+  "s",
+})
+-- }}
+-- {{ luasnip
+
+lvim.builtin.luasnip = {
+  sources = {
+    friendly_snippets = false,
+  },
+}
+-- }}
 
 -- Ensure telescope shows full path to files.
 lvim.builtin.telescope.defaults.path_display = { "absolute" }
@@ -54,7 +92,7 @@ lvim.keys.normal_mode[",e"] = "NvimTreeToggle<CR>"
 lvim.keys.normal_mode["U"] = "<Cmd>lua vim.lsp.buf.hover()<CR>"
 lvim.keys.normal_mode[" "] = ":noh<CR>"
 lvim.keys.normal_mode["<C-p>"] = "<Cmd>Telescope find_files theme=get_ivy<CR>"
-lvim.keys.normal_mode["<C-w>"] = "<Cmd>lua require('telescope').extensions.live_grep_raw.live_grep_raw()<CR>"
+lvim.keys.normal_mode["<C-w>"] = "<Cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>"
 
 lvim.keys.normal_mode["<C-q>"] = "<cmd>lua vim.diagnostic.setloclist()<CR>"
 lvim.keys.normal_mode["]d"] = "<Cmd>lua vim.diagnostic.goto_next()<CR>"
@@ -260,7 +298,7 @@ lvim.plugins = {
   { "AndrewRadev/splitjoin.vim" },
   { "godlygeek/tabular" },
   { "rrethy/vim-hexokinase" },
-  { "nvim-telescope/telescope-live-grep-raw.nvim" },
+  { "nvim-telescope/telescope-live-grep-args.nvim" },
   {
     "nvim-lua/lsp-status.nvim",
     event = "BufEnter",
@@ -274,11 +312,13 @@ lvim.plugins = {
       require("better_escape").setup()
     end,
   },
+  { "github/copilot.vim" },
   {
     "tzachar/cmp-tabnine",
     config = function()
       local tabnine = require("cmp_tabnine.config")
       tabnine:setup({
+        run_on_every_keystroke = true,
         max_lines = 1000,
         max_num_results = 20,
         sort = true,
@@ -354,8 +394,24 @@ lvim.plugins = {
       vim.g["test#go#runner"] = "gotest"
     end,
   },
+  -- generate unitest for golang
   { "buoto/gotests-vim" },
-  { "rcarriga/vim-ultest", requires = { "vim-test/vim-test" }, run = ":UpdateRemotePlugins" },
+  {
+    "nvim-neotest/neotest",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-neotest/neotest-go",
+    },
+    config = function()
+      require("neotest").setup({
+        adapters = {
+          require("neotest-go"),
+        },
+      })
+    end,
+  },
   {
     "leoluz/nvim-dap-go",
     config = function()
@@ -452,7 +508,16 @@ lvim.plugins = {
     "nvim-treesitter/nvim-treesitter-context",
     requires = "nvim-treesitter/nvim-treesitter",
   },
+  {
+    "declancm/cinnamon.nvim",
+    config = function()
+      require("cinnamon").setup()
+    end,
+  },
+  { "honza/vim-snippets" },
 }
+
+local custom_go_actions = require("user.null_ls.go")
 
 require("null-ls").setup({
   sources = {
@@ -460,6 +525,10 @@ require("null-ls").setup({
     require("null-ls").builtins.diagnostics.golangci_lint.with({
       args = { "run", "--fix=false", "--out-format=json", "$DIRNAME", "--path-prefix", "$ROOT" },
     }),
+
+    -- -- Custom actions
+    custom_go_actions.gomodifytags,
+    custom_go_actions.gostructhelper,
   },
 })
 
