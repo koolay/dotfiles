@@ -9,7 +9,7 @@ an executable
 -- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
 --
 -- general
-lvim.log.level = "debug"
+-- lvim.log.level = "debug"
 lvim.log.override_notify = true
 lvim.builtin.nvimtree.highlight_opened_files = 1
 
@@ -17,7 +17,7 @@ lvim.builtin.nvimtree.highlight_opened_files = 1
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 local jumpable = require("lvim.core.cmp").methods.jumpable
-local check_backspace = require("lvim.core.cmp").methods.check_backspace
+local check_backspace = require("lvim.core.cmp").methods.has_words_before
 local is_emmet_active = require("lvim.core.cmp").methods.is_emmet_active
 
 lvim.builtin.cmp.mapping["<CR>"] = cmp.mapping.confirm({
@@ -25,22 +25,23 @@ lvim.builtin.cmp.mapping["<CR>"] = cmp.mapping.confirm({
   select = true,
 })
 
-lvim.builtin.cmp.mapping["<Tab>"] = cmp.mapping(function(fallback)
-  if luasnip.expandable() then
-    luasnip.expand()
-  elseif jumpable() then
-    luasnip.jump(1)
-  elseif check_backspace() then
-    fallback()
-  elseif is_emmet_active() then
-    return vim.fn["cmp#complete"]()
-  else
-    fallback()
-  end
-end, {
-  "i",
-  "s",
-})
+-- lvim.builtin.cmp.mapping["<Tab>"] = cmp.mapping(function(fallback)
+--   if luasnip.expandable() then
+--     luasnip.expand()
+--   elseif jumpable() then
+--     luasnip.jump(1)
+--   elseif check_backspace() then
+--     fallback()
+--   elseif is_emmet_active() then
+--     return vim.fn["cmp#complete"]()
+--   else
+--     fallback()
+--   end
+-- end, {
+--   "i",
+--   "s",
+-- })
+
 -- }}
 -- {{ luasnip
 
@@ -57,8 +58,9 @@ lvim.builtin.telescope.defaults.path_display = { "absolute" }
 lvim.builtin.telescope.defaults.layout_config.width = 0.99
 
 lvim.format_on_save = {
+  enabled = true,
   ---@usage pattern string pattern used for the autocommand (Default: '*')
-  -- pattern = "*",
+  pattern = "*.go,*.js,*.ts,*.rs,*.md,*.lua,*.json",
   ---@usage timeout number timeout in ms for the format request (Default: 1000)
   timeout = 5000,
 }
@@ -190,10 +192,10 @@ lvim.builtin.which_key.mappings["dl"] = {
 -- lvim.builtin.alpha.active = true
 
 -- lvim.builtin.lualine.options.globalstatus = true
-lvim.builtin.notify.active = true
+-- lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 0
+-- lvim.builtin.nvimtree.show_icons.git = 0
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -395,7 +397,13 @@ lvim.plugins = {
     end,
   },
   -- generate unitest for golang
-  { "buoto/gotests-vim" },
+  {
+    "yasudanaoya/gotests-nvim",
+    ft = "go",
+    config = function()
+      require("gotests").setup()
+    end,
+  },
   {
     "nvim-neotest/neotest",
     requires = {
@@ -422,11 +430,20 @@ lvim.plugins = {
   {
     "rcarriga/nvim-dap-ui",
     config = function()
-      require("dapui").setup()
+      require("dapui").setup({
+        icons = { expanded = "▾", collapsed = "▸", current_frame = "▸" },
+        mappings = {
+          -- Use a table to apply multiple mappings
+          expand = { "<CR>", "<2-LeftMouse>" },
+          open = "o",
+          remove = "d",
+          edit = "e",
+          repl = "r",
+          toggle = "t",
+        },
+      })
     end,
     ft = { "python", "rust", "go" },
-    requires = { "mfussenegger/nvim-dap" },
-    disable = false,
   },
   { "theHamsta/nvim-dap-virtual-text" },
   {
@@ -460,23 +477,6 @@ lvim.plugins = {
   },
   { "tpope/vim-sleuth" },
   {
-    "lukas-reineke/indent-blankline.nvim",
-    event = "BufRead",
-    setup = function()
-      vim.g.indent_blankline_filetype_exclude = {
-        -- "go",
-        "terminal",
-        "alpha",
-        -- "Outline",
-      }
-
-      vim.g.indent_blankline_show_trailing_blankline_indent = false
-      vim.g.indent_blankline_show_first_indent_level = true
-      vim.g.indent_blankline_indent_level = 10
-      vim.g.indent_blankline_use_treesitter = true
-    end,
-  },
-  {
     "tanvirtin/vgit.nvim",
     requires = "nvim-lua/plenary.nvim",
     config = function()
@@ -500,6 +500,9 @@ lvim.plugins = {
   {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",
+    config = function()
+      require("lsp_signature").on_attach()
+    end,
   },
   {
     "jjo/vim-cue",
@@ -515,6 +518,41 @@ lvim.plugins = {
     end,
   },
   { "honza/vim-snippets" },
+  { "mattn/vim-goaddtags" },
+  {
+    "kevinhwang91/rnvimr",
+    cmd = "RnvimrToggle",
+    config = function()
+      vim.g.rnvimr_draw_border = 1
+      vim.g.rnvimr_pick_enable = 1
+      vim.g.rnvimr_bw_enable = 1
+    end,
+  },
+  {
+    "earthly/earthly.vim",
+  },
+  {
+    "nacro90/numb.nvim",
+    event = "BufRead",
+    config = function()
+      require("numb").setup({
+        show_numbers = true, -- Enable 'number' for the window while peeking
+        show_cursorline = true, -- Enable 'cursorline' for the window while peeking
+      })
+    end,
+  },
+  { "kevinhwang91/nvim-bqf" },
+  {
+    "simrat39/inlay-hints.nvim",
+    config = function()
+      require("inlay-hints").setup({
+        only_current_line = true,
+        eol = {
+          right_align = true,
+        },
+      })
+    end,
+  },
 }
 
 local custom_go_actions = require("user.null_ls.go")
@@ -539,11 +577,6 @@ lvim.lsp.on_attach_callback = function(client, _)
     floating_window_above_cur_line = false,
     fix_pos = true,
   })
-  -- volid conflict with null-ls
-  if client.name == "gopls" then
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
-  end
 end
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
