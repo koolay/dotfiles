@@ -26,6 +26,11 @@
 - [ ugit ](https://github.com/Bhupesh-V/ugit)
   ugit helps undo git commands. 
   
+- [ lnav ](https://lnav.org/)
+An advanced log file viewer for the small-scale
+
+- [SketchyBar](https://github.com/FelixKratz/SketchyBar)
+MacOS 状态栏
 
 ## setup.sh
 

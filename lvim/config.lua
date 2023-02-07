@@ -20,6 +20,16 @@ local jumpable = require("lvim.core.cmp").methods.jumpable
 local check_backspace = require("lvim.core.cmp").methods.has_words_before
 local is_emmet_active = require("lvim.core.cmp").methods.is_emmet_active
 
+local bookmarks = {
+  ["github"] = {
+    ["name"] = "search github from neovim",
+    ["code_search"] = "https://github.com/search?q=%s&type=code",
+    ["repo_search"] = "https://github.com/search?q=%s&type=repositories",
+    ["issues_search"] = "https://github.com/search?q=%s&type=issues",
+    ["pulls_search"] = "https://github.com/search?q=%s&type=pullrequests",
+  },
+}
+
 lvim.builtin.cmp.mapping["<CR>"] = cmp.mapping.confirm({
   behavior = cmp.ConfirmBehavior.Replace,
   select = true,
@@ -178,6 +188,16 @@ lvim.builtin.which_key.mappings["dB"] = {
 lvim.builtin.which_key.mappings["dl"] = {
   "<cmd>lua require'dap'.list_breakpoints() vim.fn.QuickFixToggle() <CR>",
   "Toggle breakpoints list",
+}
+
+lvim.builtin.which_key.mappings["bs"] = {
+  "<cmd>lua require('browse').input_search()<cr>",
+  "browse bookmarks",
+}
+
+lvim.builtin.which_key.mappings["bo"] = {
+  "<cmd>lua require('browse').open_bookmarks({ bookmarks = require('user.browse') })<cr>",
+  "browse bookmarks",
 }
 
 -- lvim.keys.normal_mode["<C-F5>"] = "<cmd>:lua require('dap').continue()<CR>"
@@ -550,6 +570,15 @@ lvim.plugins = {
         eol = {
           right_align = true,
         },
+      })
+    end,
+  },
+  {
+    "lalitmee/browse.nvim",
+    config = function()
+      require("browse").setup({
+        -- search provider you want to use
+        provider = "google", -- duckduckgo, bing
       })
     end,
   },
