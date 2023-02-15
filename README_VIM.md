@@ -22,6 +22,8 @@ $ pip3 install python-lsp-server, black, pylint
 
 :LspInstall pylsp
 
+# install golang tools 
+:GoInstallDeps
 
 
 ```

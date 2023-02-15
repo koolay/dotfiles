@@ -68,7 +68,7 @@ lvim.format_on_save = {
 lvim.lint_on_save = true
 lvim.line_wrap_cursor_movement = true
 
-lvim.builtin.dap.active = true
+-- lvim.builtin.dap.active = true
 
 lvim.builtin.lualine.options.theme = "gruvbox-material"
 vim.g.gruvbox_material_background = "hard"
@@ -427,24 +427,24 @@ lvim.plugins = {
     end,
     -- requires = { "mfussenegger/nvim-dap" },
   },
-  {
-    "rcarriga/nvim-dap-ui",
-    config = function()
-      require("dapui").setup({
-        icons = { expanded = "▾", collapsed = "▸", current_frame = "▸" },
-        mappings = {
-          -- Use a table to apply multiple mappings
-          expand = { "<CR>", "<2-LeftMouse>" },
-          open = "o",
-          remove = "d",
-          edit = "e",
-          repl = "r",
-          toggle = "t",
-        },
-      })
-    end,
-    ft = { "python", "rust", "go" },
-  },
+  -- {
+  --   "rcarriga/nvim-dap-ui",
+  --   config = function()
+  --     require("dapui").setup({
+  --       icons = { expanded = "▾", collapsed = "▸", current_frame = "▸" },
+  --       mappings = {
+  --         -- Use a table to apply multiple mappings
+  --         expand = { "<CR>", "<2-LeftMouse>" },
+  --         open = "o",
+  --         remove = "d",
+  --         edit = "e",
+  --         repl = "r",
+  --         toggle = "t",
+  --       },
+  --     })
+  --   end,
+  --   ft = { "python", "rust", "go" },
+  -- },
   { "theHamsta/nvim-dap-virtual-text" },
   {
     "sindrets/diffview.nvim",
@@ -553,22 +553,63 @@ lvim.plugins = {
       })
     end,
   },
+  {
+    "terrastruct/d2-vim",
+  },
+  {
+    "lalitmee/browse.nvim",
+    config = function()
+      require("browse").setup({
+        -- search provider you want to use
+        provider = "google", -- default
+      })
+    end,
+  },
+  {
+    "woosaaahh/sj.nvim",
+    config = function()
+      local sj = require("sj")
+      sj.setup()
+
+      vim.keymap.set("n", "s", sj.run)
+      vim.keymap.set("n", "<A-,>", sj.prev_match)
+      vim.keymap.set("n", "<A-;>", sj.next_match)
+      vim.keymap.set("n", "<localleader>s", sj.redo)
+    end,
+  },
+  {
+    "olexsmir/gopher.nvim",
+    requires = { -- dependencies
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+  },
+  -- {
+  --   -- TODO fix
+  --   "kevinhwang91/nvim-ufo",
+  --   config = function()
+  --     require("kevinhwang91/promise-async").setup()
+  --     -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+  --     vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+  --     vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+  --   end,
+  -- },
 }
 
-local custom_go_actions = require("user.null_ls.go")
+-- local custom_go_actions = require("user.null_ls.go")
 
-require("null-ls").setup({
-  sources = {
-    require("null-ls").builtins.formatting.cue_fmt,
-    require("null-ls").builtins.diagnostics.golangci_lint.with({
-      args = { "run", "--fix=false", "--out-format=json", "$DIRNAME", "--path-prefix", "$ROOT" },
-    }),
+-- require("null-ls").setup({
+--   sources = {
+--     require("null-ls").builtins.formatting.cue_fmt,
+--     require("null-ls").builtins.diagnostics.golangci_lint.with({
+--       args = { "run", "--fix=false", "--out-format=json", "$DIRNAME", "--path-prefix", "$ROOT" },
+--     }),
 
-    -- -- Custom actions
-    custom_go_actions.gomodifytags,
-    custom_go_actions.gostructhelper,
-  },
-})
+--     -- -- Custom actions
+--     custom_go_actions.gomodifytags,
+--     custom_go_actions.gostructhelper,
+--   },
+-- })
 
 lvim.lsp.on_attach_callback = function(client, _)
   require("lsp_signature").on_attach({

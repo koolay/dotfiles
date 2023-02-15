@@ -1,0 +1,26 @@
+lastupdatecheck: 0
+recentrepos:
+- /home/huwl/dotfiles
+- /home/huwl/gitlab/mks/starship-branch-backend
+- /home/huwl/gitlab/mks/starship-pipeline-backend
+- /home/huwl/github/tbls
+- /home/huwl/gitlab/fwy/uranus
+- /home/huwl/gitlab/mks/appship
+- /home/huwl/gitlab/fwy/satum
+- /home/huwl/gitlab/mks/starship-admin
+- /home/huwl/gitlab/mks/gopush
+- /home/huwl/gitlab/mks/clusterd
+- /home/huwl/gitlab/mks/gpkg
+- /home/huwl/github/apiserver-network-proxy
+- /home/huwl/github/mercure
+- /home/huwl/gitlab/mks/starship-ops-backend
+- /home/huwl/gitlab/fast/tracker-go
+- /home/huwl/gitlab/fwy/d2
+- /home/huwl/gitlab/mks/starship-cmdb-backend
+- /home/huwl/gitlab/mks/starship-auth-backend
+- /home/huwl/gitlab/fwy/Nebula.net
+- /home/huwl/gitlab/fast/pulsar-keda
+startuppopupversion: 5
+customcommandshistory:
+- q
+hidecommandlog: false
