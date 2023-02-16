@@ -75,7 +75,7 @@ vim.g.gruvbox_material_background = "hard"
 
 lvim.colorscheme = "gruvbox-material"
 vim.g.colors_name = lvim.colorscheme
-vim.cmd("colorscheme " .. lvim.colorscheme)
+-- vim.cmd("colorscheme " .. lvim.colorscheme)
 
 vim.opt.guifont = "JetBrainsMono Nerd Font:h14"
 
@@ -299,7 +299,7 @@ lvim.plugins = {
   { "nvim-treesitter/nvim-treesitter-refactor" },
   { "AndrewRadev/splitjoin.vim" },
   { "godlygeek/tabular" },
-  { "rrethy/vim-hexokinase" },
+  -- { "rrethy/vim-hexokinase", build = "make hexokinase" },
   { "nvim-telescope/telescope-live-grep-args.nvim" },
   {
     "nvim-lua/lsp-status.nvim",
@@ -327,13 +327,13 @@ lvim.plugins = {
       })
     end,
 
-    run = "./install.sh",
-    requires = "hrsh7th/nvim-cmp",
+    build = "./install.sh",
+    dependencies = "hrsh7th/nvim-cmp",
   },
   -- Easymotion like navigation
   {
     "phaazon/hop.nvim",
-    as = "hop",
+    name = "hop",
     event = "BufRead",
     config = function()
       -- you can configure Hop the way you like here; see :h hop-config
@@ -351,7 +351,7 @@ lvim.plugins = {
   {
     "ThePrimeagen/refactoring.nvim",
     branch = "master",
-    requires = {
+    dependencies = {
       { "nvim-lua/plenary.nvim" },
       { "nvim-treesitter/nvim-treesitter" },
     },
@@ -374,7 +374,7 @@ lvim.plugins = {
   -- Preview markdown in browser
   {
     "iamcco/markdown-preview.nvim",
-    run = function()
+    build = function()
       vim.fn["mkdp#util#install"]()
     end,
   },
@@ -406,7 +406,7 @@ lvim.plugins = {
   },
   {
     "nvim-neotest/neotest",
-    requires = {
+    dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "antoinemadec/FixCursorHold.nvim",
@@ -425,7 +425,7 @@ lvim.plugins = {
     config = function()
       require("dap-go").setup()
     end,
-    -- requires = { "mfussenegger/nvim-dap" },
+    -- dependencies   = { "mfussenegger/nvim-dap" },
   },
   -- {
   --   "rcarriga/nvim-dap-ui",
@@ -449,7 +449,7 @@ lvim.plugins = {
   {
     "sindrets/diffview.nvim",
     event = "BufRead",
-    requires = "nvim-lua/plenary.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
   },
   -- Show variables, functions in a buffer
   {
@@ -478,7 +478,7 @@ lvim.plugins = {
   { "tpope/vim-sleuth" },
   {
     "tanvirtin/vgit.nvim",
-    requires = "nvim-lua/plenary.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
     config = function()
       require("vgit").setup({
         settings = {
@@ -492,7 +492,7 @@ lvim.plugins = {
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
-    requires = "kyazdani42/nvim-web-devicons",
+    dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
       require("trouble").setup({})
     end,
@@ -509,7 +509,7 @@ lvim.plugins = {
   },
   {
     "nvim-treesitter/nvim-treesitter-context",
-    requires = "nvim-treesitter/nvim-treesitter",
+    dependencies = "nvim-treesitter/nvim-treesitter",
   },
   {
     "declancm/cinnamon.nvim",
@@ -579,7 +579,7 @@ lvim.plugins = {
   },
   {
     "olexsmir/gopher.nvim",
-    requires = { -- dependencies
+    dependencies = { -- dependencies
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },

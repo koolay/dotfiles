@@ -18,9 +18,12 @@ vim
 
 ```bash
 
+# ubuntu needs
+$ apt install python3.10-venv
 $ pip3 install python-lsp-server, black, pylint
 
 :LspInstall pylsp
+:make hexokinase
 
 # install golang tools 
 :GoInstallDeps
