@@ -7,6 +7,9 @@
 --   },
 -- })
 
+vim.list_extend(lvim.plugins, { { "leoluz/nvim-dap-go" }, { "olexsmir/gopher.nvim" } })
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "gopls" })
+
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
   {
@@ -26,9 +29,6 @@ formatters.setup({
     filetypes = { "go" },
   },
 })
-
-vim.list_extend(lvim.plugins, { { "leoluz/nvim-dap-go" }, { "olexsmir/gopher.nvim" } })
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "gopls" })
 
 local lsp_manager = require("lvim.lsp.manager")
 lsp_manager.setup("golangci_lint_ls", {
@@ -54,6 +54,14 @@ lsp_manager.setup("gopls", {
         tidy = true,
       },
     },
+  },
+})
+
+local code_actions = require("lvim.lsp.null-ls.code_actions")
+code_actions.setup({
+  {
+    command = "proselint",
+    args = { "--json" },
   },
 })
 

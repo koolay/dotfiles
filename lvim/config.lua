@@ -192,7 +192,7 @@ lvim.builtin.which_key.mappings["dl"] = {
 
 lvim.builtin.which_key.mappings["bs"] = {
   "<cmd>lua require('browse').input_search()<cr>",
-  "browse bookmarks",
+  "google search",
 }
 
 lvim.builtin.which_key.mappings["bo"] = {

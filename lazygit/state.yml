@@ -1,8 +1,9 @@
 lastupdatecheck: 0
 recentrepos:
-- /home/huwl/dotfiles
-- /home/huwl/gitlab/mks/starship-branch-backend
 - /home/huwl/gitlab/mks/starship-pipeline-backend
+- /home/huwl/gitlab/mks/starship-branch-backend
+- /home/huwl/gitlab/mks/starship-ops-backend
+- /home/huwl/dotfiles
 - /home/huwl/github/tbls
 - /home/huwl/gitlab/fwy/uranus
 - /home/huwl/gitlab/mks/appship
@@ -13,7 +14,6 @@ recentrepos:
 - /home/huwl/gitlab/mks/gpkg
 - /home/huwl/github/apiserver-network-proxy
 - /home/huwl/github/mercure
-- /home/huwl/gitlab/mks/starship-ops-backend
 - /home/huwl/gitlab/fast/tracker-go
 - /home/huwl/gitlab/fwy/d2
 - /home/huwl/gitlab/mks/starship-cmdb-backend
