@@ -1,9 +1,9 @@
 lastupdatecheck: 0
 recentrepos:
+- /home/huwl/dotfiles
 - /home/huwl/gitlab/mks/starship-pipeline-backend
 - /home/huwl/gitlab/mks/starship-branch-backend
 - /home/huwl/gitlab/mks/starship-ops-backend
-- /home/huwl/dotfiles
 - /home/huwl/github/tbls
 - /home/huwl/gitlab/fwy/uranus
 - /home/huwl/gitlab/mks/appship
