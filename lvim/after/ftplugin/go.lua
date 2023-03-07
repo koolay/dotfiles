@@ -24,10 +24,10 @@ formatters.setup({
       "--base-formatter=gofumpt",
     },
   },
-  {
-    command = "goimports-reviser",
-    filetypes = { "go" },
-  },
+  -- {
+  --   command = "goimports-reviser",
+  --   filetypes = { "go" },
+  -- },
 })
 
 local lsp_manager = require("lvim.lsp.manager")
