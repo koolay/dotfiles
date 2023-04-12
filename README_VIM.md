@@ -18,10 +18,16 @@ vim
 
 ```bash
 
+# ubuntu needs
+$ apt install python3.10-venv
+$ npm install tree-sitter-cli
 $ pip3 install python-lsp-server, black, pylint
+$ npm install -g sql-formatter
 
-:LspInstall pylsp
+:make hexokinase
 
+# install golang tools 
+:GoInstallDeps
 
 
 ```

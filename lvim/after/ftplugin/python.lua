@@ -1,38 +1,29 @@
--- local linters = require("lvim.lsp.null-ls.linters")
--- linters.setup({
---   {
---     command = "pylint",
---     filetypes = { "python" },
---     extra_args = { "--max-line-length", "120" },
---   },
--- })
-
 -- ---@usage setup a server -- see: https://www.lunarvim.org/languages/#overriding-the-default-configuration
-require("lvim.lsp.manager").setup("pylsp", {
-  filetypes = { "python" },
-  settings = {
-    python = {
-      linting = {
-        flake8Enabled = false,
-        pylintEnabled = true,
-        mypyEnabled = true,
-        pycodestyleEnabled = false,
-      },
-      analysis = {
-        disableOrganizeImports = false,
-        autoImportCompletions = true,
-        diagnosticMode = "openFilesOnly",
-        diagnosticSeverityOverrides = {},
-        stubPath = "typings",
-        useLibraryCodeForTypes = true,
-        autoSearchPaths = true,
-      },
-    },
-  },
+lvim.format_on_save = true
+
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright", "ruff_lsp" })
+
+local lsp_manager = require("lvim.lsp.manager")
+lsp_manager.setup("pyright", {
+  on_init = require("lvim.lsp").common_on_init,
+  capabilities = require("lvim.lsp").common_capabilities(),
+})
+
+lsp_manager.setup("ruff_lsp", {
+  on_init = require("lvim.lsp").common_on_init,
+  capabilities = require("lvim.lsp").common_capabilities(),
 })
 
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
   { command = "black", filetypes = { "python" }, extra_args = { "--line-length", "120" } },
-  { command = "isort", filetypes = { "python" } },
+  { command = "isort", filetypes = { "python" }, extra_args = { "--profile", "black" } },
+})
+
+local code_actions = require("lvim.lsp.null-ls.code_actions")
+code_actions.setup({
+  {
+    command = "proselint",
+    args = { "--json" },
+  },
 })

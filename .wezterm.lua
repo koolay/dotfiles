@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+local act = wezterm.action
 
 wezterm.on("update-right-status", function(window, pane)
   -- "Wed Mar 3 08:14"
@@ -21,6 +22,21 @@ return {
   -- color_scheme = "Doom Peacock",
   color_scheme = "Batman",
   keys = {
+    { key = "x", mods = "CTRL", action = act({ CloseCurrentTab = { confirm = true } }) },
+    { key = "h", mods = "ALT", action = act({ ActivateTabRelative = -1 }) },
+    { key = "l", mods = "ALT", action = act({ ActivateTabRelative = 1 }) },
+    { key = "h", mods = "ALT|CTRL", action = act({ MoveTabRelative = -1 }) },
+    { key = "l", mods = "ALT|CTRL", action = act({ MoveTabRelative = 1 }) },
+    { key = "1", mods = "ALT", action = act({ ActivateTab = 0 }) },
+    { key = "2", mods = "ALT", action = act({ ActivateTab = 1 }) },
+    { key = "3", mods = "ALT", action = act({ ActivateTab = 2 }) },
+    { key = "4", mods = "ALT", action = act({ ActivateTab = 3 }) },
+    { key = "5", mods = "ALT", action = act({ ActivateTab = 4 }) },
+    { key = "6", mods = "ALT", action = act({ ActivateTab = 5 }) },
+    { key = "7", mods = "ALT", action = act({ ActivateTab = 6 }) },
+    { key = "8", mods = "ALT", action = act({ ActivateTab = 7 }) },
+    { key = "9", mods = "ALT", action = act({ ActivateTab = 8 }) },
+
     { key = "f", mods = "CTRL|SUPER", action = "ToggleFullScreen" },
     { key = "=", mods = "CTRL", action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
     { key = "-", mods = "CTRL", action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
