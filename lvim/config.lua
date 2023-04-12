@@ -70,7 +70,7 @@ lvim.builtin.telescope.defaults.layout_config.width = 0.99
 lvim.format_on_save = {
   enabled = true,
   ---@usage pattern string pattern used for the autocommand (Default: '*')
-  pattern = "*.go,*.js,*.ts,*.rs,*.md,*.lua,*.json,*.proto,*.sql",
+  pattern = "*.go,*.js,*.ts,*.rs,*.md,*.lua,*.json,*.proto,*.sql,*.html",
   ---@usage timeout number timeout in ms for the format request (Default: 1000)
   timeout = 5000,
 }
@@ -604,6 +604,19 @@ lvim.plugins = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
+  },
+  {
+    "ellisonleao/glow.nvim",
+    config = function()
+      require("glow").setup({
+        style = "dark",
+        width = 180,
+        height = 140,
+        width_ratio = 1,
+        heigh_ratio = 1,
+      })
+    end,
+    cmd = "Glow",
   },
   -- {
   --   -- TODO fix

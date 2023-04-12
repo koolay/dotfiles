@@ -1,4 +1,6 @@
 packer_compiled.lua
 fish/
 state.yaml
+lazy-lock.json
 
+lazygit/
