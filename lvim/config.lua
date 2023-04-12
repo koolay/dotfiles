@@ -70,7 +70,7 @@ lvim.builtin.telescope.defaults.layout_config.width = 0.99
 lvim.format_on_save = {
   enabled = true,
   ---@usage pattern string pattern used for the autocommand (Default: '*')
-  pattern = "*.go,*.js,*.ts,*.rs,*.md,*.lua,*.json,*.proto,*.sql,*.html",
+  pattern = "*.go,*.js,*.ts,*.rs,*.md,*.lua,*.json,*.proto,*.sql,*.html,*.py",
   ---@usage timeout number timeout in ms for the format request (Default: 1000)
   timeout = 5000,
 }
