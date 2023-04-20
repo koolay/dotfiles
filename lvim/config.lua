@@ -520,9 +520,9 @@ lvim.plugins = {
   },
   {
     "ray-x/lsp_signature.nvim",
-    event = "BufRead",
+    event = { "BufRead", "BufNew" },
     config = function()
-      require("lsp_signature").on_attach()
+      require("user.lsp_signature").config()
     end,
   },
   {
@@ -644,15 +644,6 @@ lvim.plugins = {
 --     custom_go_actions.gostructhelper,
 --   },
 -- })
-
-lvim.lsp.on_attach_callback = function(client, _)
-  require("lsp_signature").on_attach({
-    hint_enable = false,
-    hi_parameter = "Search",
-    floating_window_above_cur_line = false,
-    fix_pos = true,
-  })
-end
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- lvim.autocommands.custom_groups = {

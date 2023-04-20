@@ -1,21 +1,8 @@
--- local linters = require("lvim.lsp.null-ls.linters")
--- linters.setup({
---   {
---     command = "golangci-lint",
---     filetypes = { "go" },
---     args = { "run", "--fix=false", "--out-format=json", "$DIRNAME", "--path-prefix", "$ROOT" },
---   },
--- })
-
 vim.list_extend(lvim.plugins, { { "leoluz/nvim-dap-go" }, { "olexsmir/gopher.nvim" } })
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "gopls" })
 
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
-  {
-    command = "goimports",
-    filetypes = { "go" },
-  },
   {
     command = "golines",
     filetypes = { "go" },
@@ -24,10 +11,11 @@ formatters.setup({
       "--base-formatter=gofumpt",
     },
   },
-  -- {
-  --   command = "goimports-reviser",
-  --   filetypes = { "go" },
-  -- },
+  {
+    command = "goimports-reviser",
+    filetypes = { "go" },
+    extra_args = { "-rm-unused", "-set-alias" },
+  },
 })
 
 local lsp_manager = require("lvim.lsp.manager")
@@ -52,7 +40,11 @@ lsp_manager.setup("gopls", {
         gc_details = true,
         test = true,
         tidy = true,
+        upgrade_dependency = true,
       },
+      completeUnimported = true,
+      staticcheck = true,
+      semanticTokens = true,
     },
   },
 })
