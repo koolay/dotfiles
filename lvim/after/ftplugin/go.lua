@@ -4,17 +4,17 @@ vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "gopls" })
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
   {
+    command = "goimports-reviser",
+    filetypes = { "go" },
+    extra_args = { "-rm-unused", "-set-alias" },
+  },
+  {
     command = "golines",
     filetypes = { "go" },
     extra_args = {
       "--max-len=120",
       "--base-formatter=gofumpt",
     },
-  },
-  {
-    command = "goimports-reviser",
-    filetypes = { "go" },
-    extra_args = { "-rm-unused", "-set-alias" },
   },
 })
 
