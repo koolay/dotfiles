@@ -32,6 +32,9 @@ An advanced log file viewer for the small-scale
 - [SketchyBar](https://github.com/FelixKratz/SketchyBar)
 MacOS 状态栏
 
+- [visidata](https://www.visidata.org/)
+VisiData is an interactive multitool for tabular data. `pip3 install visidata`
+
 ## setup.sh
 
 ```bash
