@@ -606,6 +606,12 @@ lvim.plugins = {
     },
   },
   {
+    "nvim-telescope/telescope-dap.nvim",
+    config = function()
+      require("telescope").load_extension("dap")
+    end,
+  },
+  {
     "ellisonleao/glow.nvim",
     config = function()
       require("glow").setup({
