@@ -110,9 +110,6 @@ lvim.keys.normal_mode["<C-q>"] = "<cmd>lua vim.diagnostic.setloclist()<CR>"
 lvim.keys.normal_mode["]d"] = "<Cmd>lua vim.diagnostic.goto_next()<CR>"
 lvim.keys.normal_mode["[d"] = "<Cmd>lua vim.diagnostic.goto_prev()<CR>"
 
-lvim.keys.normal_mode["sk"] = "<cmd>SplitjoinJoin<CR>"
-lvim.keys.normal_mode["sj"] = "<cmd>SplitjoinSplit<CR>"
-
 lvim.keys.insert_mode["<C-j>"] = { "v:lua.tab_complete()", { expr = true } }
 
 vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", { expr = true })
@@ -318,7 +315,6 @@ lvim.plugins = {
   { "sainnhe/gruvbox-material" },
   { "tpope/vim-surround" },
   { "nvim-treesitter/nvim-treesitter-refactor" },
-  { "AndrewRadev/splitjoin.vim" },
   { "godlygeek/tabular" },
   -- { "rrethy/vim-hexokinase", build = "make hexokinase" },
   { "nvim-telescope/telescope-live-grep-args.nvim" },
@@ -623,6 +619,38 @@ lvim.plugins = {
       })
     end,
     cmd = "Glow",
+  },
+  {
+    "Wansmer/treesj",
+    keys = { "<space>m", "<space>j", "<space>s" },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("treesj").setup({
+        -- Use default keymaps
+        -- (<space>m - toggle, <space>j - join, <space>s - split)
+        use_default_keymaps = true,
+
+        -- Node with syntax error will not be formatted
+        check_syntax_error = true,
+
+        -- If line after join will be longer than max value,
+        -- node will not be formatted
+        max_join_length = 1024,
+
+        -- hold|start|end:
+        -- hold - cursor follows the node/place on which it was called
+        -- start - cursor jumps to the first symbol of the node being formatted
+        -- end - cursor jumps to the last symbol of the node being formatted
+        cursor_behavior = "hold",
+
+        -- Notify about possible problems or not
+        notify = true,
+        -- langs = langs,
+
+        -- Use `dot` for repeat action
+        dot_repeat = true,
+      })
+    end,
   },
   -- {
   --   -- TODO fix
