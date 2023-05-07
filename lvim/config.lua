@@ -236,10 +236,9 @@ lvim.builtin.treesitter.highlight.enabled = true
 
 -- ---@usage disable automatic installation of servers
 lvim.lsp.automatic_servers_installation = false
-lvim.lsp.diagnostics.virtual_text = true
+vim.diagnostic.config({ virtual_text = true })
 lvim.lsp.default_keybinds = true
-lvim.lsp.diagnostics.update_in_insert = false
-lvim.lsp.diagnostics.underline = true
+vim.diagnostic.config({ underline = true, update_in_insert = false })
 
 -- plugin settings
 
