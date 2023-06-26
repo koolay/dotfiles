@@ -332,20 +332,41 @@ lvim.plugins = {
   },
   { "github/copilot.vim" },
   {
-    "tzachar/cmp-tabnine",
+    "Exafunction/codeium.vim",
     config = function()
-      local tabnine = require("cmp_tabnine.config")
-      tabnine:setup({
-        run_on_every_keystroke = true,
-        max_lines = 1000,
-        max_num_results = 20,
-        sort = true,
-      })
+      -- Change '<C-g>' here to any keycode you like.
+      vim.keymap.set("i", "<C-g>", function()
+        return vim.fn["codeium#Accept"]()
+      end, { expr = true })
+      -- Next suggestion
+      vim.keymap.set("i", "<C-;>", function()
+        return vim.fn["codeium#CycleCompletions"](1)
+      end, { expr = true })
+      -- Previous suggestion
+      vim.keymap.set("i", "<C-,>", function()
+        return vim.fn["codeium#CycleCompletions"](-1)
+      end, { expr = true })
+      vim.keymap.set("i", "<C-d>", function()
+        return vim.fn["codeium#Clear"]()
+      end, { expr = true })
     end,
-
-    build = "./install.sh",
-    dependencies = "hrsh7th/nvim-cmp",
   },
+  ---  high cpu usage..!!!
+  -- {
+  --   "tzachar/cmp-tabnine",
+  --   config = function()
+  --     local tabnine = require("cmp_tabnine.config")
+  --     tabnine:setup({
+  --       run_on_every_keystroke = true,
+  --       max_lines = 1000,
+  --       max_num_results = 20,
+  --       sort = true,
+  --     })
+  --   end,
+
+  --   build = "./install.sh",
+  --   dependencies = "hrsh7th/nvim-cmp",
+  -- },
   -- Easymotion like navigation
   {
     "phaazon/hop.nvim",
@@ -621,7 +642,7 @@ lvim.plugins = {
   },
   {
     "Wansmer/treesj",
-    keys = { "<space>m", "<space>j", "<space>s" },
+    keys = { "<leader>m", "<leader>j", "<leader>s" },
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
       require("treesj").setup({
