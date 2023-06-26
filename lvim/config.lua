@@ -11,48 +11,18 @@ an executable
 -- general
 -- lvim.log.level = "debug"
 lvim.log.override_notify = true
-lvim.builtin.nvimtree.highlight_opened_files = 1
+lvim.builtin.nvimtree.active = false -- using neo-tree
+-- enable treesitter integration
+lvim.builtin.treesitter.matchup.enable = true
 
 -- {{ cmp
 local cmp = require("cmp")
-local luasnip = require("luasnip")
-local jumpable = require("lvim.core.cmp").methods.jumpable
-local check_backspace = require("lvim.core.cmp").methods.has_words_before
-local is_emmet_active = require("lvim.core.cmp").methods.is_emmet_active
-
-local bookmarks = {
-  ["github"] = {
-    ["name"] = "search github from neovim",
-    ["code_search"] = "https://github.com/search?q=%s&type=code",
-    ["repo_search"] = "https://github.com/search?q=%s&type=repositories",
-    ["issues_search"] = "https://github.com/search?q=%s&type=issues",
-    ["pulls_search"] = "https://github.com/search?q=%s&type=pullrequests",
-  },
-}
 
 lvim.builtin.cmp.mapping["<CR>"] = cmp.mapping.confirm({
   behavior = cmp.ConfirmBehavior.Replace,
   select = true,
 })
 
--- lvim.builtin.cmp.mapping["<Tab>"] = cmp.mapping(function(fallback)
---   if luasnip.expandable() then
---     luasnip.expand()
---   elseif jumpable() then
---     luasnip.jump(1)
---   elseif check_backspace() then
---     fallback()
---   elseif is_emmet_active() then
---     return vim.fn["cmp#complete"]()
---   else
---     fallback()
---   end
--- end, {
---   "i",
---   "s",
--- })
-
--- }}
 -- {{ luasnip
 
 lvim.builtin.luasnip = {
@@ -100,7 +70,11 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- lvim.keys.normal_mode["<C-Up>"] = false
 -- edit a default keymapping
 
-lvim.keys.normal_mode[",e"] = "NvimTreeToggle<CR>"
+-- {{ neo-tree.nvim
+-- https://github.com/nvim-neo-tree/neo-tree.nvim/blob/main/doc/neo-tree.txt
+lvim.keys.normal_mode["<C-e>"] = "<Cmd>Neotree toggle show<CR>"
+lvim.builtin.which_key.mappings["e"] = { "<cmd>Neotree toggle show<cr>", "Toggle NeoTree" }
+-- }}
 lvim.keys.normal_mode["U"] = "<Cmd>lua vim.lsp.buf.hover()<CR>"
 lvim.keys.normal_mode[" "] = ":noh<CR>"
 lvim.keys.normal_mode["<C-p>"] = "<Cmd>Telescope find_files theme=get_ivy<CR>"
@@ -211,7 +185,7 @@ lvim.builtin.which_key.mappings["bo"] = {
 -- lvim.builtin.lualine.options.globalstatus = true
 -- lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
-lvim.builtin.nvimtree.setup.view.side = "left"
+-- lvim.builtin.nvimtree.setup.view.side = "left"
 -- lvim.builtin.nvimtree.show_icons.git = 0
 
 -- if you don't want all the parsers change this to a table of the ones you want
@@ -645,14 +619,14 @@ lvim.plugins = {
     cmd = "Glow",
   },
   {
+    -- 基于语法折叠代码块
     "Wansmer/treesj",
-    keys = { "<leader>m", "<leader>j", "<leader>s" },
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
       require("treesj").setup({
         -- Use default keymaps
         -- (<space>m - toggle, <space>j - join, <space>s - split)
-        use_default_keymaps = true,
+        use_default_keymaps = false,
 
         -- Node with syntax error will not be formatted
         check_syntax_error = true,
@@ -674,6 +648,22 @@ lvim.plugins = {
         -- Use `dot` for repeat action
         dot_repeat = true,
       })
+      vim.keymap.set("n", "<leader>m", require("treesj").toggle)
+    end,
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    cmd = "Neotree",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+    },
+    init = function()
+      vim.g.neo_tree_remove_legacy_commands = true
+    end,
+    config = function()
+      require("user.neotree").setup()
     end,
   },
   {
