@@ -15,6 +15,9 @@ return {
   font_size = 16.0,
   font_antialias = "Subpixel",
   font_hinting = "Full",
+  check_for_updates = false,
+  show_update_window = false,
+
   font = wezterm.font_with_fallback({
     "JetBrainsMono Nerd Font",
   }),
@@ -22,7 +25,7 @@ return {
   -- color_scheme = "Doom Peacock",
   color_scheme = "Batman",
   keys = {
-    { key = "x", mods = "CTRL", action = act({ CloseCurrentTab = { confirm = true } }) },
+    { key = "q", mods = "CTRL", action = act({ CloseCurrentTab = { confirm = true } }) },
     { key = "h", mods = "ALT", action = act({ ActivateTabRelative = -1 }) },
     { key = "l", mods = "ALT", action = act({ ActivateTabRelative = 1 }) },
     { key = "h", mods = "ALT|CTRL", action = act({ MoveTabRelative = -1 }) },
