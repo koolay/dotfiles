@@ -377,7 +377,8 @@ lvim.plugins = {
       require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
     end,
   },
-  -- better %
+  -- match-up(better %) 是一个插件，可让您突出显示,导航和操作匹配文本集.
+  -- 它将 vim 的 % 键扩展到特定于语言的单词，而不仅仅是单个字符
   {
     "andymass/vim-matchup",
     event = "CursorMoved",
@@ -603,6 +604,9 @@ lvim.plugins = {
     end,
   },
   {
+    -- 基于搜索的导航与快速跳转功能相结合
+    -- 1. press s to search
+    -- 2. press :xx to jump
     "woosaaahh/sj.nvim",
     config = function()
       local sj = require("sj")
