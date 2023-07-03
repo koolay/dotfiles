@@ -2,6 +2,9 @@
 
 ## tools 
 
+- [tea](https://tea.xyz/)
+  the revolutionary, cross-platform package manager.
+
 - [cheat](https://github.com/cheat/cheat)
   命令行提示帮助工具, the only linux command
 
