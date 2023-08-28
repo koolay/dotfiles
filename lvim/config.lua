@@ -14,6 +14,7 @@ lvim.log.override_notify = true
 lvim.builtin.nvimtree.active = false -- using neo-tree
 -- enable treesitter integration
 lvim.builtin.treesitter.matchup.enable = true
+lvim.lsp.installer.setup.automatic_installation = false
 
 -- {{ cmp
 local cmp = require("cmp")
@@ -676,6 +677,12 @@ lvim.plugins = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
     },
+  },
+  {
+    "Hoffs/omnisharp-extended-lsp.nvim",
+  },
+  {
+    "Decodetalkers/csharpls-extended-lsp.nvim",
   },
   -- {
   --   -- TODO fix

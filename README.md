@@ -41,6 +41,9 @@ VisiData is an interactive multitool for tabular data. `pip3 install visidata`
 - [monokle](https://monokle.io/)
 Monokle lets you create, analyze, and deploy YAML manifests with a visual UI, and provides policy validation and cluster management.
 
+- [kail](github.com/boz/kail)
+View log of kubernetes more friendly
+
 ## setup.sh
 
 ```bash
