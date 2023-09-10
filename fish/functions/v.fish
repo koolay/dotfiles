@@ -1,3 +1,4 @@
-function v --wraps=nvim --wraps=lvim --description 'alias v=lvim'
-  lvim $argv; 
+function v --wraps=nvim --description 'alias v=nvim'
+  nvim $argv
+        
 end
