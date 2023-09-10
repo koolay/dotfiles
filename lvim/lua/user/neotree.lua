@@ -4,12 +4,30 @@ M.setup = function()
   require("neo-tree").setup({
     auto_clean_after_session_restore = true,
     close_if_last_window = false,
+    enable_diagnostics = true,
+    popup_border_style = "rounded",
+    enable_normal_mode_for_inputs = false,
     sources = { "filesystem", "buffers", "git_status" },
     commands = {
       -- https://github.com/AstroNvim/AstroNvim/blob/main/lua/plugins/neo-tree.lua
 
       system_open = function(state)
-        require("astronvim.utils").system_open(state.tree:get_node():get_id())
+        path = state.tree:get_node():get_id()
+        if vim.ui.open then
+          return vim.ui.open(path)
+        end
+        local cmd
+        if vim.fn.has("win32") == 1 and vim.fn.executable("explorer") == 1 then
+          cmd = { "cmd.exe", "/K", "explorer" }
+        elseif vim.fn.has("unix") == 1 and vim.fn.executable("xdg-open") == 1 then
+          cmd = { "xdg-open" }
+        elseif (vim.fn.has("mac") == 1 or vim.fn.has("unix") == 1) and vim.fn.executable("open") == 1 then
+          cmd = { "open" }
+        end
+        if not cmd then
+          M.notify("Available system opening tool not found!", vim.log.levels.ERROR)
+        end
+        vim.fn.jobstart(vim.fn.extend(cmd, { path or vim.fn.expand("<cfile>") }), { detach = true })
       end,
       parent_or_close = function(state)
         local node = state.tree:get_node()
@@ -82,7 +100,11 @@ M.setup = function()
       },
     },
     filesystem = {
-      follow_current_file = true,
+      follow_current_file = {
+        enabled = true, -- This will find and focus the file in the active buffer every time
+        --               -- the current file is changed while the tree is open.
+        leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+      },
       hijack_netrw_behavior = "open_current",
       use_libuv_file_watcher = true,
       filtered_items = {

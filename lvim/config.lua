@@ -362,13 +362,17 @@ lvim.plugins = {
   },
   -- match-up(better %) 是一个插件，可让您突出显示,导航和操作匹配文本集.
   -- 它将 vim 的 % 键扩展到特定于语言的单词，而不仅仅是单个字符
-  {
-    "andymass/vim-matchup",
-    event = "CursorMoved",
-    config = function()
-      vim.g.matchup_matchparen_offscreen = { method = "popup" }
-    end,
-  },
+  -- {
+  --   "andymass/vim-matchup",
+  --   event = "CursorMoved",
+  --   after = "nvim-treesitter",
+  --   config = function()
+  --     require("nvim-treesitter.configs").setup({ matchup = { enable = true, disable = { "c", "lua" } } })
+  --     vim.g.matchup_surround_enabled = 1
+  --     vim.g.matchup_matchparen_deferred = 1
+  --     vim.g.matchup_matchparen_offscreen = { method = "popup" }
+  --   end,
+  -- },
   {
     "ThePrimeagen/refactoring.nvim",
     branch = "master",
