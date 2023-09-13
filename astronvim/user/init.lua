@@ -18,7 +18,8 @@ return {
   },
 
   -- Set colorscheme to use
-  colorscheme = "everforest",
+  -- colorscheme = "kanagawa",
+  colorscheme = "gruvbox-material",
 
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
@@ -34,7 +35,7 @@ return {
           -- "python",
         },
       },
-      timeout_ms = 1000, -- default format timeout
+      timeout_ms = 3000, -- default format timeout
       filter = function(client) -- fully override the default formatting function
         return true
       end,

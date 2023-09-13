@@ -5,11 +5,18 @@ return {
   -- available plugins can be found at https://github.com/AstroNvim/astrocommunity
 
   {
-    import = "astrocommunity.colorscheme.everforest",
+    import = "astrocommunity.colorscheme.kanagawa-nvim",
+  },
+  {
+    "rebelot/kanagawa.nvim",
+    lazy = false,
+    -- wave,dragon,lotus
+    event = "VeryLazy",
     opts = {
-      everforest_background = "soft",
+      theme = "dragon",
     },
   },
+
   { import = "astrocommunity.pack.python" },
   { import = "astrocommunity.pack.go" },
   { import = "astrocommunity.pack.lua" },

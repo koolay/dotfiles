@@ -1,4 +1,5 @@
 return {
+  { "sainnhe/gruvbox-material" },
   { "Bekaboo/dropbar.nvim" },
   {
     "onsails/lspkind.nvim",
