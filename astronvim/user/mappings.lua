@@ -30,6 +30,11 @@ return {
     -- tables with the `name` key will be registered with which-key if it's installed
     -- this is useful for naming menus
     ["<leader>b"] = { name = "Buffers" },
+    -- Diffview // overrides default diff
+    ["<leader>gdf"] = { "<cmd>DiffviewOpen<cr>", desc = "Diffview open" },
+    ["<leader>gdh"] = { "<cmd>DiffviewFileHistory %<cr>", desc = "Diff current file" },
+    ["<leader>gdp"] = { "<cmd>DiffviewFileHistory<cr>", desc = "Diff current branch" },
+    ["<leader>gc"] = { "<cmd>DiffviewClose<cr>", desc = "Diffview close" },
     -- quick save
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
   },
