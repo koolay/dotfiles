@@ -35,6 +35,12 @@ return {
     ["<leader>gdh"] = { "<cmd>DiffviewFileHistory %<cr>", desc = "Diff current file" },
     ["<leader>gdp"] = { "<cmd>DiffviewFileHistory<cr>", desc = "Diff current branch" },
     ["<leader>gc"] = { "<cmd>DiffviewClose<cr>", desc = "Diffview close" },
+    ["<C-p>"] = { "<cmd>Telescope find_files<cr>", desc = "Find Files" },
+    ["<C-w>"] = {
+      function() require("telescope").extensions.live_grep_args.live_grep_args() end,
+      desc = "live grep (args)",
+    },
+    ["<leader>fp"] = { "<cmd>Telescope projects<cr>", desc = "Toggle Projects Picker" },
     -- quick save
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
   },

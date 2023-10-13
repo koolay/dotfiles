@@ -30,4 +30,5 @@ return {
   { import = "astrocommunity.markdown-and-latex.glow-nvim" },
   { import = "astrocommunity.git.neogit" },
   { import = "astrocommunity.git.diffview-nvim" },
+  { import = "astrocommunity.utility.telescope-live-grep-args-nvim" },
 }
