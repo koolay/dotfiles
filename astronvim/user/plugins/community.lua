@@ -35,4 +35,8 @@ return {
   { import = "astrocommunity.motion.nvim-surround" },
   { import = "astrocommunity.motion.vim-matchup" },
   { import = "astrocommunity.motion.grapple-nvim" },
+  { import = "astrocommunity.editing-support.refactoring-nvim" },
+  { import = "astrocommunity.note-taking.obsidian-nvim" },
+
+  -- color/vim-highlighter
 }
