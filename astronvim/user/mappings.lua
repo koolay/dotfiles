@@ -19,6 +19,8 @@ return {
     -- },
 
     -- mappings seen under group name "Buffer"
+    --
+    ["<C-s>"] = { "<cmd>w !sudo tee > /dev/null %<cr>", desc = "Force save" },
     ["<leader>bD"] = {
       function()
         require("astronvim.utils.status").heirline.buffer_picker(
