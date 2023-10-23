@@ -41,3 +41,30 @@ $ npm install -g sql-formatter
 ~/.local/share/lunarvim/site/pack/packer/start/{package}
 
 ```
+
+## Key mappings
+
+### Jump
+
+- location jump
+`s + keyword` OR `S + label`
+
+- find matchup
+`%`
+
+- file jump
+`add file to tag`
+
+### Search
+
+- find words in current file
+`/ + keyword`
+
+- find keymapings
+`, + f + k`
+
+- find buffer files
+`, + f + f`
+
+- find words in files in workspace
+`, + f + w`
