@@ -25,11 +25,19 @@ return {
   -- You can also add new plugins here as well:
   -- Add plugins, the lazy syntax
   -- "andweeb/presence.nvim",
-  -- {
-  --   "ray-x/lsp_signature.nvim",
-  --   event = "BufRead",
-  --   config = function()
-  --     require("lsp_signature").setup()
-  --   end,
-  -- },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "BufRead",
+    config = function()
+      require("lsp_signature").setup {
+        floating_window = true,
+        hint_scheme = "Comment",
+        hint_enable = true,
+        hi_parameter = "Search",
+        hint_prefix = "",
+        floating_window_above_cur_line = true,
+        fix_pos = true,
+      }
+    end,
+  },
 }
