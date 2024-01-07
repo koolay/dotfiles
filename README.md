@@ -21,7 +21,7 @@
   Commandline tool for running SQL queries against JSON, CSV, Excel, Parquet, and more.
 
 - [ cargo ]( https://github.com/ekzhang/bore )
-  `Bore`` is a simple CLI tool for making tunnels to localhost
+  `Bore` is a simple CLI tool for making tunnels to localhost
 
 - [ xplr ](https://github.com/sayanarijit/xplr)
   `xplr` is a terminal UI based file explorer that aims to increase our terminal productivity by being a flexible, interactive orchestrator for the ever growing awesome command-line utilities that work with the file-system.
@@ -43,6 +43,13 @@ Monokle lets you create, analyze, and deploy YAML manifests with a visual UI, an
 
 - [kail](github.com/boz/kail)
 View log of kubernetes more friendly
+
+- [tailspin](https://github.com/bensadeh/tailspin)
+A log file highlighter
+
+- [navi](https://github.com/denisidoro/navi)
+An interactive cheatsheet tool for the command-line
+
 
 ## setup.sh
 

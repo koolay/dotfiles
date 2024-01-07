@@ -3,12 +3,13 @@ return {
   opts = function(_, config)
     null_ls = require "null-ls"
     config.handlers = {
-      golines = function()
-        null_ls.register(null_ls.builtins.formatting.golines.with {
-          args = { "-m", "120", "--no-reformat-tags", "--base-formatter", "gofumpt" },
-        })
-      end,
+      -- golines = function()
+      --   null_ls.register(null_ls.builtins.formatting.golines.with {
+      --     args = { "--max-len", "120", "--base-formatter", "gofumpt" },
+      --   })
+      -- end,
       goimports = function() end,
+      gofumpt = function() end,
       goimports_reviser = function() null_ls.register(null_ls.builtins.formatting.goimports_reviser) end,
     }
 
@@ -21,6 +22,9 @@ return {
     config.sources = {
       -- Set a formatter
       null_ls.builtins.formatting.goimports_reviser,
+      null_ls.builtins.formatting.gofumpt,
+      -- null_ls.builtins.formatting.golines,
+      null_ls.builtins.diagnostics.golangci_lint,
       -- null_ls.builtins.formatting.stylua,
     }
     return config -- return final config table
