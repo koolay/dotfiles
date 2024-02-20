@@ -50,6 +50,17 @@ A log file highlighter
 - [navi](https://github.com/denisidoro/navi)
 An interactive cheatsheet tool for the command-line
 
+- [ugrep](https://ugrep.com/)
+A more powerful, ultra fast, user-friendly, compatible grep
+
+- [better-comment](https://github.com/Everduin94/better-commits)
+A CLI for writing better commits, following the conventional commits specification.
+
+- [gitbutler](https://github.com/gitbutlerapp/gitbutler)
+GitButler is a git client that lets you work on multiple branches at the same time. 
+It allows you to quickly organize file changes into separate branches while still having them applied to your working directory. 
+You can then push branches individually to your remote, or directly create pull requests.
+
 
 ## setup.sh
 
