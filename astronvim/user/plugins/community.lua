@@ -23,6 +23,7 @@ return {
   { import = "astrocommunity.lsp.lsp-signature-nvim" },
   { import = "astrocommunity.completion.codeium-vim" },
   { import = "astrocommunity.editing-support.treesj" },
+  { import = "astrocommunity.editing-support.chatgpt-nvim" },
   -- { import = "astrocommunity.bars-and-lines.dropbar-nvim" },
   { import = "astrocommunity.bars-and-lines.scope-nvim" },
   { import = "astrocommunity.project.project-nvim" },
@@ -39,5 +40,42 @@ return {
   { import = "astrocommunity.note-taking.obsidian-nvim" },
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
   { import = "astrocommunity.test.neotest" },
-  { import = "astrocommunity.workflow.hardtime-nvim" },
+  -- { import = "astrocommunity.workflow.hardtime-nvim" },
+  {
+    "m4xshen/hardtime.nvim",
+    event = "User AstroFile",
+    opts = {
+      -- Maximum count of repeated key presses allowed within the max_time period.
+      max_count = 4,
+      restriction_mode = "hint", -- block or hint
+      disabled_keys = {
+        ["<Insert>"] = { "", "i" },
+        ["<Home>"] = { "", "i" },
+        ["<End>"] = { "", "i" },
+        ["<PageUp>"] = { "", "i" },
+        ["<PageDown>"] = { "", "i" },
+        ["<Up>"] = {},
+        ["<Down>"] = {},
+        ["<Left>"] = {},
+        ["<Right>"] = {},
+      },
+      disabled_filetypes = {
+        "qf",
+        "neo-tree",
+        "lazy",
+        "mason",
+        "NeogitStatus",
+        "lspinfo",
+        "null-ls-info",
+      },
+      restricted_keys = {
+        ["j"] = {},
+        ["k"] = {},
+      },
+    },
+    config = function(_, opts)
+      require("hardtime").setup(opts)
+      require("hardtime").enable()
+    end,
+  },
 }
