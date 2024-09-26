@@ -61,6 +61,9 @@ GitButler is a git client that lets you work on multiple branches at the same ti
 It allows you to quickly organize file changes into separate branches while still having them applied to your working directory. 
 You can then push branches individually to your remote, or directly create pull requests.
 
+- [git-absorb](https://github.com/nickgerace/git-absorb)
+git-absorb is a tool for managing git branches and commits.
+
 
 ## setup.sh
 
