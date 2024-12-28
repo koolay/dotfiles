@@ -9,3 +9,7 @@ starship init fish | source
 zoxide init fish | source
 direnv hook fish | source
 atuin init fish | source
+/Users/huwl/.local/bin/mise activate fish | source
+
+# Added by Windsurf
+fish_add_path /Users/huwl/.codeium/windsurf/bin
