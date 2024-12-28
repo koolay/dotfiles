@@ -1,5 +1,8 @@
 # astronvim
 
+
+已经废弃
+
 https://astronvim.com/
 
 ## Setup 
