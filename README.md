@@ -2,6 +2,9 @@
 
 ## tools 
 
+- [mise](https://mise.jdx.dev/)
+开发环境依赖管理工具. 添加到PATH: `export PATH="$HOME/.local/share/mise/shims:$PATH"`
+
 - [tea](https://tea.xyz/)
   the revolutionary, cross-platform package manager.
 
