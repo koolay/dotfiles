@@ -20,8 +20,9 @@
 - [ colima ]( https://github.com/abiosoft/colima )
   Container runtimes on macOS (and Linux) with minimal setup
 
-- [ dsq ]( https://github.com/multiprocessio/dsq )
-  Commandline tool for running SQL queries against JSON, CSV, Excel, Parquet, and more.
+- [rsql](https://github.com/theseus-rs/rsql)
+  rsql is a command line interface for databases. Arrow, Avro, CockroachDB, CSV, Delimited, DuckDB, JSON, JSONL, 
+  LibSQL (Turso), MariaDB, MySQL, Parquet, PostgreSQL, Redshift, Snowflake, SQLite3, SQL Server, TSV, XML, YAML.
 
 - [ cargo ]( https://github.com/ekzhang/bore )
   `Bore` is a simple CLI tool for making tunnels to localhost
