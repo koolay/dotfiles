@@ -30,6 +30,9 @@
 - [ xplr ](https://github.com/sayanarijit/xplr)
   `xplr` is a terminal UI based file explorer that aims to increase our terminal productivity by being a flexible, interactive orchestrator for the ever growing awesome command-line utilities that work with the file-system.
 
+- [Shunpo](https://github.com/egurapha/Shunpo)
+  一个简约的 bash 工具，可以使目录导航变得更快一点, 支持bookmark
+
 - [ ugit ](https://github.com/Bhupesh-V/ugit)
   ugit helps undo git commands. 
   
