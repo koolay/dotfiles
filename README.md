@@ -71,6 +71,9 @@ You can then push branches individually to your remote, or directly create pull 
 - [git-absorb](https://github.com/nickgerace/git-absorb)
 git-absorb is a tool for managing git branches and commits.
 
+- [http client](https://github.com/mountain-loop/yaak)
+Yet Another HTTP Client
+
 
 ## setup.sh
 
