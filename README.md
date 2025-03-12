@@ -74,6 +74,12 @@ git-absorb is a tool for managing git branches and commits.
 - [http client](https://github.com/mountain-loop/yaak)
 Yet Another HTTP Client
 
+- [xpipe](https://github.com/xpipe-io/xpipe)
+xpipe is a command-line tool for cross-platform data transfer between applications.
+
+- [krep](https://github.com/davidesantangelo/krep)
+A High-Performance String Search Utility
+
 
 ## setup.sh
 

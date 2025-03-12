@@ -4,3 +4,4 @@ state.yaml
 lazy-lock.json
 
 lazygit/
+.aider*
