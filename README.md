@@ -80,6 +80,9 @@ xpipe is a command-line tool for cross-platform data transfer between applicatio
 - [krep](https://github.com/davidesantangelo/krep)
 A High-Performance String Search Utility
 
+- [intelli-shell](https://github.com/lasantosr/intelli-shell)
+IntelliShell is a powerful command template and snippet manager for your shell.
+
 
 ## setup.sh
 
